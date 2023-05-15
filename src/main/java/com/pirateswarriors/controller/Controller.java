@@ -1,6 +1,7 @@
 package com.pirateswarriors.controller;
 
-import com.pirateswarriors.model.map.Map_1;
+import com.pirateswarriors.view.Map;
+import com.pirateswarriors.view.Map_1;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.TilePane;
@@ -13,14 +14,9 @@ public class Controller implements Initializable {
     @FXML
     TilePane tilePane;
 
-    private Map_1 map_1;
+    private Map map_1;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.tilePane = new TilePane();
-        try {
-            this.map_1 = new Map_1(tilePane);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        this.map_1 = new Map_1(tilePane);
     }
 }
