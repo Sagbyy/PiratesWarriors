@@ -1,0 +1,56 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "PiratesWarriorTIles.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "PiratesWarriorTIles.tmx": {
+            "scale": 0.33,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 1066.6666666666667,
+                "y": 577.2727272727274
+            }
+        },
+        "Preview_KenneyNL.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "tiles_sheet@2.tsx": {
+            "scaleInDock": 0.5,
+            "scaleInEditor": 1
+        },
+        "tiles_vector.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.exportedFilePath": "/home/sagby/Documents/TilesPiratesWarriors",
+    "last.imagePath": "/home/sagby/Documents/PiratesWarrior/Tilesheet",
+    "map.lastUsedExportFilter": "CSV files (*.csv)",
+    "map.lastUsedFormat": "tmx",
+    "map.layerDataFormat": null,
+    "map.tileHeight": 64,
+    "map.tileWidth": 64,
+    "openFiles": [
+        "tiles_sheet@2.tsx",
+        "PiratesWarriorTIles.tmx"
+    ],
+    "project": "PiratesWarrior.tiled-project",
+    "recentFiles": [
+        "tiles_sheet@2.tsx",
+        "PiratesWarriorTIles.tmx",
+        "tiles_vector.tsx",
+        "Preview_KenneyNL.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 64,
+        "width": 64
+    }
+}
