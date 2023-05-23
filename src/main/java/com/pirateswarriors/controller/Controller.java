@@ -6,9 +6,16 @@ import com.pirateswarriors.view.map.Carte_1;
 import com.pirateswarriors.view.PersonnageVue;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
@@ -17,23 +24,20 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-    @FXML
-    TilePane tilePane;
 
-    private Personnage personnage;
-    private PersonnageVue personnageVue;
     @FXML
-    private Label welcomeText;
-
+    private TilePane tilePane;
     @FXML
     private Pane paneCentral;
-
+    @FXML
+    private Button buttonAddDefense;
+    private DoubleProperty mouseX;
+    private DoubleProperty mouseY;
+    private Personnage personnage;
+    private PersonnageVue personnageVue;
     private Carte carte_1;
-
     private Timeline gameLoop;
-
     private int temps;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -41,18 +45,31 @@ public class Controller implements Initializable {
         this.personnageVue = new PersonnageVue(this.personnage);
         this.carte_1 = new Carte_1(tilePane);
         this.paneCentral.getChildren().add(personnageVue.getImageBateau());
+
+        // Mouse Property
+        this.mouseY = new SimpleDoubleProperty(0);
+        this.mouseX = new SimpleDoubleProperty(0);
+
+        // Get mouse position
+        paneCentral.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                mouseX.setValue(mouseEvent.getX());
+                mouseY.setValue(mouseEvent.getY());
+            }
+        });
+
+        // Bind du bateau
+
         this.personnageVue.getImageBateau().xProperty().bind(this.personnage.positionXProperty());
         this.personnageVue.getImageBateau().yProperty().bind(this.personnage.positionYProperty());
-        initAnimation();
+
         // demarre l'animation
+
+        initAnimation();
         gameLoop.play();
 
     }
-
-    public Pane getPaneCentral() {
-        return this.paneCentral;
-    }
-
 
     private void initAnimation() {
         gameLoop = new Timeline();
@@ -86,6 +103,28 @@ public class Controller implements Initializable {
     }
 
 
+    public void ajoutDefense(ActionEvent event) {
+        System.out.println("Bouton cliqué !");
 
+        // Récupère l'image de la défense
+        ImageView imageShip = new ImageView(new Image("ship.png"));
 
+        // Bindings des positions de la défense avec celle de la souris
+        imageShip.xProperty().bind(mouseX);
+        imageShip.yProperty().bind(mouseY);
+
+        // Ajout de la défense dans la pane
+        paneCentral.getChildren().add(imageShip);
+
+        // Lorsque qu'on clique sur la map on laisse la position au clique
+        paneCentral.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                imageShip.xProperty().unbind();
+                imageShip.yProperty().unbind();
+
+                System.out.println("Bateau ajouter à : " + "\nx : " + imageShip.getX() + " | y : " + imageShip.getY());
+            }
+        });
+    }
 }
