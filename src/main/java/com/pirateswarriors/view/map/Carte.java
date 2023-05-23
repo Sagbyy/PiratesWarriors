@@ -1,4 +1,4 @@
-package com.pirateswarriors.view;
+package com.pirateswarriors.view.map;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
 
-public abstract class Map {
+public abstract class Carte {
     // Balise TilePane du FXML
     private TilePane tilePane;
 
@@ -20,20 +20,20 @@ public abstract class Map {
     public final int TILE_SIZE = 64;
 
     // Nombre de ligne de la map
-    public final int ROWS_MAP = 30;
+    public final int ROWS_MAP = 12;
 
     // Nombre de colonne de la map
     public final int COLUMNS_MAP = 20;
 
-    public Map(TilePane tilePane, String fileCsvName) {
+    public Carte(TilePane tilePane, String fileCsvName) {
         this.tilePane = tilePane;
         this.genererMap(fileCsvName);
     }
 
     public void genererMap(String fileCsvName) {
         // Configure la taille de la map
-        tilePane.setPrefColumns(ROWS_MAP);
-        tilePane.setPrefRows(COLUMNS_MAP);
+        tilePane.setPrefColumns(COLUMNS_MAP);
+        tilePane.setPrefRows(ROWS_MAP);
 
         try {
             // Overture du fichier CSV
@@ -80,5 +80,12 @@ public abstract class Map {
      * @param tile L'imageView de la tile
      * @param value Valeur du CSV
      */
-    public abstract void parametreViewPort(String value, ImageView tile);
+    public void parametreViewPort(String value, ImageView tile) {
+        // Pour chaque valeur du CSV attribuer un tile
+        // Récuperation des positions pour zoomer sur la map
+        int x = Integer.parseInt(value) / 32;
+        int y = Integer.parseInt(value) - 32 * x;
+
+        tile.setViewport(new Rectangle2D(y * TILE_SIZE, x * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+    }
 }
