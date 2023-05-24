@@ -1,6 +1,8 @@
 package com.pirateswarriors.controller;
 
+import com.pirateswarriors.model.Tresor;
 import com.pirateswarriors.model.ennemies.Personnage;
+import com.pirateswarriors.view.TresorVue;
 import com.pirateswarriors.view.map.Carte;
 import com.pirateswarriors.view.map.Carte_1;
 import com.pirateswarriors.view.PersonnageVue;
@@ -35,16 +37,27 @@ public class Controller implements Initializable {
     private DoubleProperty mouseY;
     private Personnage personnage;
     private PersonnageVue personnageVue;
+    private Tresor tresor;
+    private TresorVue tresorVue;
     private Carte carte_1;
     private Timeline gameLoop;
     private int temps;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Ayoub
+
         this.personnage = new Personnage();
         this.personnageVue = new PersonnageVue(this.personnage);
         this.carte_1 = new Carte_1(tilePane);
         this.paneCentral.getChildren().add(personnageVue.getImageBateau());
+        this.personnageVue.getImageBateau().xProperty().bind(this.personnage.positionXProperty());
+        this.personnageVue.getImageBateau().yProperty().bind(this.personnage.positionYProperty());
+        this.tresor = new Tresor(1000);
+        this.tresorVue = new TresorVue(tresor);
+        this.paneCentral.getChildren().add(tresorVue.getImgTresor());
+        this.tresorVue.getImgTresor().setX(0);
+        this.tresorVue.getImgTresor().setY(635);
 
         // Mouse Property
         this.mouseY = new SimpleDoubleProperty(0);
@@ -88,7 +101,7 @@ public class Controller implements Initializable {
                     }
                     else if (temps%5==0){
                         System.out.println("un tour");
-                       this.personnage.setPositionX(this.personnage.getPositionX()-1);
+                       this.personnage.setPositionX(this.personnage.getPositionX() + 10);
                        // this.personnageVue.getImageBateau().setX(this.personnage.getPositionX());
 
                         this.personnage.setPositionY(this.personnage.getPositionY());
