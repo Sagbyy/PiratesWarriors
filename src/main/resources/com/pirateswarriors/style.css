@@ -3,3 +3,7 @@
 .main-bottom-vbox {
     -fx-background-color: #000;
 }
+
+.menuDefense {
+    -fx-background-image: url("images/defenseMenu/woodWallpaper.jpg");
+}
