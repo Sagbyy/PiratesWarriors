@@ -27,6 +27,6 @@
       </VBox>
    </right>
    <bottom>
-      <HBox prefHeight="312.0" prefWidth="1242.0" style="-fx-background-color: #008000;" BorderPane.alignment="CENTER" />
+      <HBox prefHeight="312.0" prefWidth="1242.0" styleClass="menuDefense" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>
