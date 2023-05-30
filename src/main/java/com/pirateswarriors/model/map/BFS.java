@@ -16,8 +16,8 @@ public class BFS {
 
     public BFS(CarteModele g){
         this.g = g;
-        this.source = new Couple(2, 29) ;
-        this.objectif = new Couple(10, 0);
+        this.source = new Couple(1, 19) ;
+        this.objectif = new Couple(6, 0);
         parcours = new ArrayList<Couple>();
         predecesseurs = new HashMap<Couple, Couple>();
         algoBFS();
@@ -76,12 +76,12 @@ public class BFS {
         ArrayList<Couple> chemin = new ArrayList<>();
         chemin.add(this.source);
         Couple courant = predecesseurs.get(this.objectif);
+
         //System.out.println(courant);
         chemin.add(courant);
         while(!courant.equals(source)){
             courant = predecesseurs.get(courant);
             chemin.add(courant);
-
         }
         Collections.reverse(chemin);
         return chemin;

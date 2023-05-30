@@ -99,20 +99,17 @@ public class Controller implements Initializable {
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
                 (ev ->{
-                    if(temps==50){
-                        System.out.println("fini");
-                        gameLoop.stop();
-                    }
-                    else if (temps%5==0){
-                        System.out.println("un tour");
-                       this.personnage.setPositionX(this.personnage.getPositionX() + 10);
+
+                       //this.personnage.setPositionX(this.personnage.getPositionX() + 10);
                        // this.personnageVue.getImageBateau().setX(this.personnage.getPositionX());
 
-                        this.personnage.setPositionY(this.personnage.getPositionY());
+                        //this.personnage.setPositionY(this.personnage.getPositionY());
                         /*this.personnageVue.getImageBateau().setY(this.personnage.getPositionY());
                         System.out.println(this.personnageVue.getImageBateau().getX());*/
 
-                    }
+
+
+                    this.personnage.avance();
                     temps++;
                 })
         );
