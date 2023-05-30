@@ -16,6 +16,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -162,12 +163,16 @@ public class Controller implements Initializable {
                 break;
         }
 
+        Label labelPv = new Label("Vie : " + defense.getPv());
+
         // Bindings des positions de la défense avec celle de la souris
         imageShip.xProperty().bind(mouseX);
         imageShip.yProperty().bind(mouseY);
 
-        // Ajout de la défense dans la pane
+        // Ajout de la défense et du label dans la pane
+        paneCentral.getChildren().add(labelPv);
         paneCentral.getChildren().add(imageShip);
+
 
         // Lorsque qu'on clique sur la map on laisse la position au clique
         paneCentral.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -175,6 +180,9 @@ public class Controller implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 imageShip.xProperty().unbind();
                 imageShip.yProperty().unbind();
+
+                labelPv.setLayoutX(imageShip.getX() + 10);
+                labelPv.setLayoutY(imageShip.getY() - 25);
 
                 System.out.println("Bateau ajouter à : " + "\nx : " + imageShip.getX() + " | y : " + imageShip.getY());
             }
