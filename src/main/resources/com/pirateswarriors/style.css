@@ -3,3 +3,19 @@
 .main-bottom-vbox {
     -fx-background-color: #000;
 }
+
+.menuDefense {
+    -fx-background-image: url("images/defenseMenu/woodWallpaper.jpg");
+}
+
+.buttonDefense {
+    -fx-background-image: url("images/defenseMenu/backgroundButton.jpg");
+    -fx-background-size: 175px;
+    -fx-background-clip: padding-box;
+    -fx-transition: background-color 0.8s;
+    -fx-cursor: pointer;
+    -fx-padding: 20px;
+    -fx-border-color: #804a00;
+    -fx-border-width: 4px;
+}
+

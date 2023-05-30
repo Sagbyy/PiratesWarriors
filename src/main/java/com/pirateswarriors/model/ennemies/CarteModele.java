@@ -1,9 +1,13 @@
 package com.pirateswarriors.model.ennemies;
 
+import com.pirateswarriors.model.map.Couple;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class CarteModele {
 
@@ -31,6 +35,37 @@ public class CarteModele {
         return tabCarte;
 
     }
+
+    public Set<Couple> getadjacents(int i, int j){
+        //System.out.println(tabCarte[i][j]);
+        Set<Couple> ads = new HashSet<Couple>(4);
+        if((i+1) != COLUMNS_MAP) {
+            Couple h = new Couple(i + 1, j);
+            if(getPosition(h.getX(),h.getY()) == 148 || getPosition(h.getX(),h.getY()) == 147 || getPosition(h.getX(),h.getY()) == 142) {
+                ads.add(h);
+            }
+        }
+        if((i-1) != -1) {
+            Couple b = new Couple(i - 1, j);
+            if(getPosition(b.getX(), b.getY()) == 148 || getPosition(b.getX(), b.getY()) == 147 || getPosition(b.getX(), b.getY()) == 142) {
+                ads.add(b);
+            }
+        }
+        if((j-1) != -1) {
+            Couple g = new Couple(i, j - 1);
+            if(getPosition(g.getX(),g.getY()) == 148 || getPosition(g.getX(),g.getY()) == 147 || getPosition(g.getX(),g.getY()) == 142) {
+                ads.add(g);
+            }
+        }
+        if((j+1) != ROWS_MAP) {
+            Couple d = new Couple(i, j + 1);
+            if(getPosition(d.getX(),d.getY()) == 148 || getPosition(d.getX(),d.getY()) == 147 || getPosition(d.getX(),d.getY()) == 142) {
+                ads.add(d);
+            }
+        }
+        return ads;
+    }
+
 
     public int getPosition(int i, int j){
         System.out.println(tabCarte[i][j]);
