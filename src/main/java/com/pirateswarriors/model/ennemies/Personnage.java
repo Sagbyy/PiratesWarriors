@@ -15,12 +15,12 @@ public class Personnage {
     private int pos;
 
     ArrayList chemin;
-    CarteModele g = new CarteModele("PiratesWarriorTIles_Couche1.csv");
+    CarteModele g = new CarteModele("newMap1.csv");
     com.pirateswarriors.model.map.BFS BFS = new BFS(g);
 
     public Personnage(){
-        positionX = new SimpleDoubleProperty(1900);
-        positionY = new SimpleDoubleProperty(100);
+        positionX = new SimpleDoubleProperty(1216);
+        positionY = new SimpleDoubleProperty(64);
         this.chemin = BFS.cheminVersSource();
         this.dir = "";
         this.pos = 0;
