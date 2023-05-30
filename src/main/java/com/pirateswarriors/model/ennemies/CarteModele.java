@@ -9,16 +9,16 @@ public class CarteModele {
 
 
     public static void main(String[] args) {
-        CarteModele c = new CarteModele("PiratesWarriorTIles_Couche1.csv");
+        CarteModele c = new CarteModele("newMap1.csv");
         c.getTabCarte();
         c.getPosition(2, 29);
     }
 
     // Nombre de ligne de la map
-    public final int ROWS_MAP = 30;
+    public final int ROWS_MAP = 20;
 
     // Nombre de colonne de la map
-    public final int COLUMNS_MAP = 20;
+    public final int COLUMNS_MAP = 12;
 
     int[][] tabCarte = new int[COLUMNS_MAP][ROWS_MAP];
 
