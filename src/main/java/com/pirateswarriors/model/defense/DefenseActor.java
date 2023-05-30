@@ -9,4 +9,8 @@ public class DefenseActor {
             this.pv = pv;
             this.prix = prix;
         }
+
+        public int getPv() {
+            return this.pv;
+        }
 }
