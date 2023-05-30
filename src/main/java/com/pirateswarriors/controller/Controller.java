@@ -1,6 +1,7 @@
 package com.pirateswarriors.controller;
 
 import com.pirateswarriors.model.Tresor;
+import com.pirateswarriors.model.defense.DefenseActor;
 import com.pirateswarriors.model.ennemies.Personnage;
 import com.pirateswarriors.view.TresorVue;
 import com.pirateswarriors.view.map.Carte;
@@ -22,7 +23,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -119,8 +122,45 @@ public class Controller implements Initializable {
     public void ajoutDefense(ActionEvent event) {
         System.out.println("Bouton cliqué !");
 
-        // Récupère l'image de la défense
-        ImageView imageShip = new ImageView(new Image("ship.png"));
+        String buttonId = ((Button) event.getSource()).getId();
+
+        // Nouvelle instance de la défense
+        DefenseActor defense;
+        ImageView imageShip;
+
+        switch (buttonId) {
+            case "defense1":
+                // Récupère l'image de la défense
+                imageShip = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (1).png"))));
+                // Nouvelle instance de la défense
+                defense = new DefenseActor(50, 15);
+                break;
+            case "defense2":
+                imageShip = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (2).png"))));
+                defense = new DefenseActor(50, 15);
+                break;
+            case "defense3":
+                imageShip = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (3).png"))));
+                defense = new DefenseActor(50, 15);
+                break;
+            case "defense4":
+                imageShip = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (4).png"))));
+                defense = new DefenseActor(50, 15);
+                break;
+            case "defense5":
+                imageShip = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (5).png"))));
+                defense = new DefenseActor(50, 15);
+                break;
+            case "defense6":
+                imageShip = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (6).png"))));
+                defense = new DefenseActor(50, 15);
+                break;
+            default:
+                imageShip = null;
+                defense = null;
+                System.out.println("Erreur : defense n'existe pas");
+                break;
+        }
 
         // Bindings des positions de la défense avec celle de la souris
         imageShip.xProperty().bind(mouseX);

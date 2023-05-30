@@ -34,7 +34,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" styleClass="buttonDefense">
+                  <Button fx:id="defense1" mnemonicParsing="false" styleClass="buttonDefense" onAction="#ajoutDefense">
                      <graphic>
                         <ImageView>
                            <Image url="@images/defense/ship (1).png"/>
@@ -44,7 +44,7 @@
                         <Insets right="25.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" styleClass="buttonDefense">
+                  <Button fx:id="defense2" mnemonicParsing="false" styleClass="buttonDefense" onAction="#ajoutDefense">
                      <graphic>
                         <ImageView>
                            <Image url="@images/defense/ship (2).png"/>
@@ -54,7 +54,7 @@
                         <Insets right="25.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" styleClass="buttonDefense">
+                  <Button fx:id="defense3" mnemonicParsing="false" styleClass="buttonDefense" onAction="#ajoutDefense">
                      <graphic>
                         <ImageView>
                            <Image url="@images/defense/ship (3).png"/>
@@ -64,7 +64,7 @@
                         <Insets right="25.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" styleClass="buttonDefense">
+                  <Button fx:id="defense4" mnemonicParsing="false" styleClass="buttonDefense" onAction="#ajoutDefense">
                      <graphic>
                         <ImageView>
                            <Image url="@images/defense/ship (4).png"/>
@@ -74,7 +74,7 @@
                         <Insets right="25.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" styleClass="buttonDefense">
+                  <Button fx:id="defense5" mnemonicParsing="false" styleClass="buttonDefense" onAction="#ajoutDefense">
                      <graphic>
                         <ImageView>
                            <Image url="@images/defense/ship (5).png"/>
@@ -84,7 +84,7 @@
                         <Insets right="25.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" styleClass="buttonDefense">
+                  <Button fx:id="defense6" mnemonicParsing="false" styleClass="buttonDefense" onAction="#ajoutDefense">
                      <graphic>
                         <ImageView>
                            <Image url="@images/defense/ship (6).png"/>
