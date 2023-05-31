@@ -50,6 +50,11 @@ public class Controller implements Initializable {
     private int temps;
     private PorteMonnaie porteMonnaie;
     private PorteMonnaieVue porteMonnaieVue;
+    @FXML
+    private ImageView imgTresor;
+
+    @FXML
+    private Label labelVieTresor;
 
 
 
@@ -66,11 +71,11 @@ public class Controller implements Initializable {
         this.paneCentral.getChildren().add(personnageVue.getImageBateau());
         this.personnageVue.getImageBateau().xProperty().bind(this.personnage.positionXProperty());
         this.personnageVue.getImageBateau().yProperty().bind(this.personnage.positionYProperty());
-        this.tresor = new Tresor(1000);
+        this.tresor = new Tresor(5000);
         this.tresorVue = new TresorVue(tresor);
-        this.paneCentral.getChildren().add(tresorVue.getImgTresor());
-        this.tresorVue.getImgTresor().setX(0);
-        this.tresorVue.getImgTresor().setY(335);
+//        this.paneCentral.getChildren().add(tresorVue.getImgTresor());
+//        this.tresorVue.getImgTresor().setX(0);
+//        this.tresorVue.getImgTresor().setY(335);
         this.porteMonnaie = new PorteMonnaie();
         porteMonnaie.setNb(1000);
         this.porteMonnaieVue = new PorteMonnaieVue(porteMonnaie);
@@ -78,6 +83,7 @@ public class Controller implements Initializable {
 //        this.porteMonnaieVue.getImgPorteMonnaie().setX(1200);
 //        this.porteMonnaieVue.getImgPorteMonnaie().setY(800);
         nbPieces.textProperty().bind(porteMonnaie.nbProperty().asString());
+        labelVieTresor.setText("vie: " + String.valueOf(tresor.getPv()));
 
 
         // Mouse Property
@@ -197,28 +203,31 @@ public class Controller implements Initializable {
 
         Label labelPv = new Label("Vie : " + defense.getPv());
 
+        if (!porteMonnaie.argentVide()){
+            // Bindings des positions de la défense avec celle de la souris
+            imageShip.xProperty().bind(mouseX);
+            imageShip.yProperty().bind(mouseY);
 
-        // Bindings des positions de la défense avec celle de la souris
-        imageShip.xProperty().bind(mouseX);
-        imageShip.yProperty().bind(mouseY);
+            // Ajout de la défense et du label dans la pane
+            paneCentral.getChildren().add(labelPv);
+            paneCentral.getChildren().add(imageShip);
+        }
 
-        // Ajout de la défense et du label dans la pane
-        paneCentral.getChildren().add(labelPv);
-        paneCentral.getChildren().add(imageShip);
 
 
         // Lorsque qu'on clique sur la map on laisse la position au clique
         paneCentral.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                imageShip.xProperty().unbind();
-                imageShip.yProperty().unbind();
+                if(!porteMonnaie.argentVide()){
+                    imageShip.xProperty().unbind();
+                    imageShip.yProperty().unbind();
 
-                labelPv.setLayoutX(imageShip.getX() + 10);
-                labelPv.setLayoutY(imageShip.getY() - 25);
-// retrait du cout de la defense
-                if (!porteMonnaie.argentVide()){
+                    labelPv.setLayoutX(imageShip.getX() + 10);
+                    labelPv.setLayoutY(imageShip.getY() - 25);
+                    // retrait du cout de la defense
                     porteMonnaie.ajoutMonnaie(-500);
+                    System.out.println("somme après retrait du prix de la defense: "+ porteMonnaie.getNb());
                 }
                 else
                     //nbPieces.;
@@ -228,7 +237,7 @@ public class Controller implements Initializable {
             }
         });
 
-        System.out.println("somme après retrait du prix de la defense: "+ porteMonnaie.getNb() );
+
     }
 
 }
