@@ -227,8 +227,7 @@ public class Controller implements Initializable {
                 System.out.println("Bateau ajouter à : " + "\nx : " + imageShip.getX() + " | y : " + imageShip.getY());
             }
         });
-        // retrait du cout de la defense
-        porteMonnaie.ajoutMonnaie(-10);
+
         System.out.println("somme après retrait du prix de la defense: "+ porteMonnaie.getNb() );
     }
 
