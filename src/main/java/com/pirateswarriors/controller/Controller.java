@@ -1,8 +1,10 @@
 package com.pirateswarriors.controller;
 
+import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.Tresor;
 import com.pirateswarriors.model.defense.DefenseActor;
 import com.pirateswarriors.model.ennemies.Personnage;
+import com.pirateswarriors.view.PorteMonnaieVue;
 import com.pirateswarriors.view.TresorVue;
 import com.pirateswarriors.view.map.Carte;
 import com.pirateswarriors.view.map.Carte_1;
@@ -46,6 +48,13 @@ public class Controller implements Initializable {
     private Carte carte_1;
     private Timeline gameLoop;
     private int temps;
+    private PorteMonnaie porteMonnaie;
+    private PorteMonnaieVue porteMonnaieVue;
+
+
+
+    @FXML
+    private Label nbPieces;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -61,7 +70,15 @@ public class Controller implements Initializable {
         this.tresorVue = new TresorVue(tresor);
         this.paneCentral.getChildren().add(tresorVue.getImgTresor());
         this.tresorVue.getImgTresor().setX(0);
-        this.tresorVue.getImgTresor().setY(635);
+        this.tresorVue.getImgTresor().setY(335);
+        this.porteMonnaie = new PorteMonnaie();
+        porteMonnaie.setNb(1000);
+        this.porteMonnaieVue = new PorteMonnaieVue(porteMonnaie);
+//        this.paneCentral.getChildren().add(porteMonnaieVue.getImgPorteMonnaie());
+//        this.porteMonnaieVue.getImgPorteMonnaie().setX(1200);
+//        this.porteMonnaieVue.getImgPorteMonnaie().setY(800);
+        nbPieces.textProperty().bind(porteMonnaie.nbProperty().asString());
+
 
         // Mouse Property
         this.mouseY = new SimpleDoubleProperty(0);
@@ -78,8 +95,8 @@ public class Controller implements Initializable {
 
         // Bind du bateau
 
-        this.personnageVue.getImageBateau().xProperty().bind(this.personnage.positionXProperty());
-        this.personnageVue.getImageBateau().yProperty().bind(this.personnage.positionYProperty());
+        //this.personnageVue.getImageBateau().xProperty().bind(this.personnage.positionXProperty());
+        //  this.personnageVue.getImageBateau().yProperty().bind(this.personnage.positionYProperty());
 
         // demarre l'animation
 
@@ -101,15 +118,33 @@ public class Controller implements Initializable {
                 (ev ->{
 
                        //this.personnage.setPositionX(this.personnage.getPositionX() + 10);
+
                        // this.personnageVue.getImageBateau().setX(this.personnage.getPositionX());
 
-                        //this.personnage.setPositionY(this.personnage.getPositionY());
-                        /*this.personnageVue.getImageBateau().setY(this.personnage.getPositionY());
-                        System.out.println(this.personnageVue.getImageBateau().getX());*/
-
-
+//                    if(temps==50){
+//                        System.out.println("fini");
+//                        gameLoop.stop();
+//                    }
+//
+//                    else if (temps%5==0) {
+//                        System.out.println("un tour");
+//                        this.personnage.setPositionX(this.personnage.getPositionX() - 1);
+//
+//
+//                        // this.personnageVue.getImageBateau().setX(this.personnage.getPositionX());
+//
+//                        //this.personnage.setPositionY(this.personnage.getPositionY());
+//                        this.personnageVue.getImageBateau().setY(this.personnage.getPositionY());
+//                        System.out.println(this.personnageVue.getImageBateau().getX());
+//                        // ajout de monnaie a chaque tour
+//                        porteMonnaie.ajoutMonnaie(500);
+//                        System.out.println("nouvelle valeur du porte monnaie: " + porteMonnaie.getNb());
+//
+//                    }
 
                     this.personnage.avance();
+
+
                     temps++;
                 })
         );
@@ -162,6 +197,7 @@ public class Controller implements Initializable {
 
         Label labelPv = new Label("Vie : " + defense.getPv());
 
+
         // Bindings des positions de la défense avec celle de la souris
         imageShip.xProperty().bind(mouseX);
         imageShip.yProperty().bind(mouseY);
@@ -184,5 +220,9 @@ public class Controller implements Initializable {
                 System.out.println("Bateau ajouter à : " + "\nx : " + imageShip.getX() + " | y : " + imageShip.getY());
             }
         });
+        // retrait du cout de la defense
+        porteMonnaie.ajoutMonnaie(-10);
+        System.out.println("somme après retrait du prix de la defense: "+ porteMonnaie.getNb() );
     }
+
 }
