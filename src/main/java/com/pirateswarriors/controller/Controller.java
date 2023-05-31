@@ -216,13 +216,7 @@ public class Controller implements Initializable {
 
                 labelPv.setLayoutX(imageShip.getX() + 10);
                 labelPv.setLayoutY(imageShip.getY() - 25);
-// retrait du cout de la defense
-                if (!porteMonnaie.argentVide()){
-                    porteMonnaie.ajoutMonnaie(-500);
-                }
-                else
-                    //nbPieces.;
-                    System.out.printf("Vous n'avez pas assez d'argent !/n");
+
 
                 System.out.println("Bateau ajouter à : " + "\nx : " + imageShip.getX() + " | y : " + imageShip.getY());
             }
