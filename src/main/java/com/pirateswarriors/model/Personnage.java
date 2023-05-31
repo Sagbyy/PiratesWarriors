@@ -12,8 +12,8 @@ public class Personnage {
     private DoubleProperty positionY;
 
     public Personnage(){
-        positionX = new SimpleDoubleProperty(0);
-        positionY = new SimpleDoubleProperty(0);
+        positionX = new SimpleDoubleProperty(800);
+        positionY = new SimpleDoubleProperty(100);
     }
 
     // Getters et setters pour les attributs
