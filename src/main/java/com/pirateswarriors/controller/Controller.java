@@ -72,7 +72,7 @@ public class Controller implements Initializable {
         this.tresorVue.getImgTresor().setX(0);
         this.tresorVue.getImgTresor().setY(335);
         this.porteMonnaie = new PorteMonnaie();
-        porteMonnaie.setNb(100);
+        porteMonnaie.setNb(1000);
         this.porteMonnaieVue = new PorteMonnaieVue(porteMonnaie);
 //        this.paneCentral.getChildren().add(porteMonnaieVue.getImgPorteMonnaie());
 //        this.porteMonnaieVue.getImgPorteMonnaie().setX(1200);
@@ -116,23 +116,35 @@ public class Controller implements Initializable {
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
                 (ev ->{
-                    if(temps==50){
-                        System.out.println("fini");
-                        gameLoop.stop();
-                    }
-                    else if (temps%5==0){
-                        System.out.println("un tour");
-                        this.personnage.setPositionX(this.personnage.getPositionX() - 1);
-                        // this.personnageVue.getImageBateau().setX(this.personnage.getPositionX());
 
-                        this.personnage.setPositionY(this.personnage.getPositionY());
-                        /*this.personnageVue.getImageBateau().setY(this.personnage.getPositionY());
-                        System.out.println(this.personnageVue.getImageBateau().getX());*/
+                       //this.personnage.setPositionX(this.personnage.getPositionX() + 10);
 
-                        // ajout de monnaie a chaque tour
-                        porteMonnaie.ajoutMonnaie(500);
-                        System.out.println("nouvelle valeur du porte monnaie: " + porteMonnaie.getNb());
-                    }
+                       // this.personnageVue.getImageBateau().setX(this.personnage.getPositionX());
+
+//                    if(temps==50){
+//                        System.out.println("fini");
+//                        gameLoop.stop();
+//                    }
+//
+//                    else if (temps%5==0) {
+//                        System.out.println("un tour");
+//                        this.personnage.setPositionX(this.personnage.getPositionX() - 1);
+//
+//
+//                        // this.personnageVue.getImageBateau().setX(this.personnage.getPositionX());
+//
+//                        //this.personnage.setPositionY(this.personnage.getPositionY());
+//                        this.personnageVue.getImageBateau().setY(this.personnage.getPositionY());
+//                        System.out.println(this.personnageVue.getImageBateau().getX());
+//                        // ajout de monnaie a chaque tour
+//                        porteMonnaie.ajoutMonnaie(500);
+//                        System.out.println("nouvelle valeur du porte monnaie: " + porteMonnaie.getNb());
+//
+//                    }
+
+                    this.personnage.avance();
+
+
                     temps++;
                 })
         );
@@ -215,8 +227,8 @@ public class Controller implements Initializable {
                 System.out.println("Bateau ajouter à : " + "\nx : " + imageShip.getX() + " | y : " + imageShip.getY());
             }
         });
-
-
+        // retrait du cout de la defense
+        porteMonnaie.ajoutMonnaie(-10);
         System.out.println("somme après retrait du prix de la defense: "+ porteMonnaie.getNb() );
     }
 
