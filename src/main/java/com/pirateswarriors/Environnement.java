@@ -15,7 +15,7 @@ public class Environnement {
     private IntegerProperty nbScore;
     private IntegerProperty nbArgent;
 
-    public Environnement(int width, int height) {
+    public Environnement() {
         super();
         this.width = width;
         this.height = height;
