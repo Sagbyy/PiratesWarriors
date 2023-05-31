@@ -8,7 +8,7 @@ public class PorteMonnaieVue {
     private ImageView imgPorteMonnaie;
 
     public PorteMonnaieVue(PorteMonnaie porteMonnaie){
-        Image image = new Image("porteMonnaie.png");
+        Image image = new Image("coin.png");
         imgPorteMonnaie = new ImageView(image);
     }
 

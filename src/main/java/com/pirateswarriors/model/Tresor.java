@@ -6,7 +6,6 @@ public class Tresor {
 
     public Tresor(int pv){
         this.pv = pv;
-
     }
 
     //recuperer les pv du tresor

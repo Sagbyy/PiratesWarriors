@@ -28,6 +28,13 @@ public class PorteMonnaie {
         this.nbProperty().set(nbProperty().get() + s);
     }
 
+    public boolean argentVide(){
+        if (nb.equals(0)){
+            return false;
+        }
+        else return true;
+    }
+
 
 }
 
