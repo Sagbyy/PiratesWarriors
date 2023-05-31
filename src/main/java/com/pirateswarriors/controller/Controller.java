@@ -2,10 +2,12 @@ package com.pirateswarriors.controller;
 
 import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.Tresor;
+import com.pirateswarriors.model.defense.ControleurAjoutDefense;
 import com.pirateswarriors.model.defense.DefenseActor;
 import com.pirateswarriors.model.ennemies.Personnage;
 import com.pirateswarriors.view.PorteMonnaieVue;
 import com.pirateswarriors.view.TresorVue;
+import com.pirateswarriors.view.defense.AjoutDefense;
 import com.pirateswarriors.view.map.Carte;
 import com.pirateswarriors.view.map.Carte_1;
 import com.pirateswarriors.view.PersonnageVue;
@@ -143,8 +145,6 @@ public class Controller implements Initializable {
 //                    }
 
                     this.personnage.avance();
-
-
                     temps++;
                 })
         );
@@ -152,74 +152,21 @@ public class Controller implements Initializable {
     }
 
 
+    @FXML
     public void ajoutDefense(ActionEvent event) {
         System.out.println("Bouton cliqué !");
 
         String buttonId = ((Button) event.getSource()).getId();
 
-        // Nouvelle instance de la défense
-        DefenseActor defense;
-        ImageView imageShip;
-
-        switch (buttonId) {
-            case "defense1":
-                // Récupère l'image de la défense
-                imageShip = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (1).png"))));
-                // Nouvelle instance de la défense
-                defense = new DefenseActor(50, 15);
-                break;
-            case "defense2":
-                imageShip = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (2).png"))));
-                defense = new DefenseActor(50, 15);
-                break;
-            case "defense3":
-                imageShip = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (3).png"))));
-                defense = new DefenseActor(50, 15);
-                break;
-            case "defense4":
-                imageShip = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (4).png"))));
-                defense = new DefenseActor(50, 15);
-                break;
-            case "defense5":
-                imageShip = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (5).png"))));
-                defense = new DefenseActor(50, 15);
-                break;
-            case "defense6":
-                imageShip = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (6).png"))));
-                defense = new DefenseActor(50, 15);
-                break;
-            default:
-                imageShip = null;
-                defense = null;
-                System.out.println("Erreur : defense n'existe pas");
-                break;
-        }
-
-        Label labelPv = new Label("Vie : " + defense.getPv());
-
-
-        // Bindings des positions de la défense avec celle de la souris
-        imageShip.xProperty().bind(mouseX);
-        imageShip.yProperty().bind(mouseY);
-
-        // Ajout de la défense et du label dans la pane
-        paneCentral.getChildren().add(labelPv);
-        paneCentral.getChildren().add(imageShip);
-
+        // Ajout de la vue
+        AjoutDefense ajoutDefense = new AjoutDefense(paneCentral, buttonId);
+        ajoutDefense.ajoutDefense();
+        ajoutDefense.bindImage(mouseX, mouseY);
 
         // Lorsque qu'on clique sur la map on laisse la position au clique
-        paneCentral.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                imageShip.xProperty().unbind();
-                imageShip.yProperty().unbind();
+        ControleurAjoutDefense controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getImageShip(), ajoutDefense.getLabelPv());
+        paneCentral.addEventHandler(MouseEvent.MOUSE_CLICKED, controleurAjoutDefense);
 
-                labelPv.setLayoutX(imageShip.getX() + 10);
-                labelPv.setLayoutY(imageShip.getY() - 25);
-
-                System.out.println("Bateau ajouter à : " + "\nx : " + imageShip.getX() + " | y : " + imageShip.getY());
-            }
-        });
         // retrait du cout de la defense
         porteMonnaie.ajoutMonnaie(-10);
         System.out.println("somme après retrait du prix de la defense: "+ porteMonnaie.getNb() );
