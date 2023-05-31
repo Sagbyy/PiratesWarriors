@@ -4,6 +4,7 @@ import com.pirateswarriors.Ennemis;
 import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.Tresor;
 import com.pirateswarriors.model.defense.DefenseActor;
+import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
 import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
 import com.pirateswarriors.view.PorteMonnaieVue;
 import com.pirateswarriors.view.TresorVue;
@@ -42,7 +43,9 @@ public class Controller implements Initializable {
     private DoubleProperty mouseX;
     private DoubleProperty mouseY;
     private Ennemis ennemis;
+    private Ennemis ennemis2;
     private EnnemiVue personnageVue;
+    private EnnemiVue personnageVue2;
     private Tresor tresor;
     private TresorVue tresorVue;
     private Carte carte_1;
@@ -61,11 +64,16 @@ public class Controller implements Initializable {
         // Ayoub
 
         this.ennemis = new PirateFusil();
+        this.ennemis2 = new BarqueCanon();
         this.personnageVue = new EnnemiVue(this.ennemis);
+        this.personnageVue2 = new EnnemiVue(this.ennemis2);
         this.carte_1 = new Carte_1(tilePane);
         this.paneCentral.getChildren().add(personnageVue.getImageBateau());
+        this.paneCentral.getChildren().add(personnageVue2.getImageBateau());
         this.personnageVue.getImageBateau().xProperty().bind(this.ennemis.positionXProperty());
         this.personnageVue.getImageBateau().yProperty().bind(this.ennemis.positionYProperty());
+        this.personnageVue2.getImageBateau().xProperty().bind(this.ennemis2.positionXProperty());
+        this.personnageVue2.getImageBateau().yProperty().bind(this.ennemis2.positionYProperty());
         this.tresor = new Tresor(1000);
         this.tresorVue = new TresorVue(tresor);
         this.paneCentral.getChildren().add(tresorVue.getImgTresor());
@@ -100,8 +108,8 @@ public class Controller implements Initializable {
 
         // demarre l'animation
 
-        initAnimation();
-        gameLoop.play();
+
+
 
     }
 
@@ -143,7 +151,7 @@ public class Controller implements Initializable {
 //                    }
 
                     this.ennemis.avance();
-
+                    this.ennemis2.avance();
 
                     temps++;
                 })
@@ -151,7 +159,7 @@ public class Controller implements Initializable {
         gameLoop.getKeyFrames().add(kf);
     }
 
-@FXML
+    @FXML
     public void ajoutDefense(ActionEvent event) {
         System.out.println("Bouton cliqué !");
 
@@ -198,6 +206,7 @@ public class Controller implements Initializable {
         Label labelPv = new Label("Vie : " + defense.getPv());
 
 
+
         // Bindings des positions de la défense avec celle de la souris
         imageShip.xProperty().bind(mouseX);
         imageShip.yProperty().bind(mouseY);
@@ -231,4 +240,14 @@ public class Controller implements Initializable {
         System.out.println("somme après retrait du prix de la defense: "+ porteMonnaie.getNb() );
     }
 
+    @FXML
+    public void lancerVagues(ActionEvent actionEvent) {
+        initAnimation();
+        gameLoop.play();
+    }
+
+    @FXML
+    public void Pause(ActionEvent actionEvent) {
+        gameLoop.stop();
+    }
 }
