@@ -3,7 +3,6 @@ package com.pirateswarriors.controller;
 import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.Tresor;
 import com.pirateswarriors.model.defense.ControleurAjoutDefense;
-import com.pirateswarriors.model.defense.DefenseActor;
 import com.pirateswarriors.model.ennemies.Personnage;
 import com.pirateswarriors.view.PorteMonnaieVue;
 import com.pirateswarriors.view.TresorVue;
@@ -21,16 +20,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -164,7 +159,7 @@ public class Controller implements Initializable {
         ajoutDefense.bindImage(mouseX, mouseY);
 
         // Lorsque qu'on clique sur la map on laisse la position au clique
-        ControleurAjoutDefense controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getImageShip(), ajoutDefense.getLabelPv());
+        ControleurAjoutDefense controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getImageShip(), ajoutDefense.getLabelPv(), porteMonnaie);
         paneCentral.addEventHandler(MouseEvent.MOUSE_CLICKED, controleurAjoutDefense);
 
         // retrait du cout de la defense
