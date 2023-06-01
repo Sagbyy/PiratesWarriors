@@ -1,5 +1,6 @@
 package com.pirateswarriors.view.defense;
 
+import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.defense.DefenseActor;
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.control.Label;
@@ -17,9 +18,11 @@ public class AjoutDefense {
     private DefenseActor defense;
     private String buttonId;
     private Label labelPv;
+    private PorteMonnaie porteMonnaie;
 
-    public AjoutDefense(Pane paneCentral, String buttonId) {
+    public AjoutDefense(Pane paneCentral, String buttonId, PorteMonnaie porteMonnaie) {
         this.paneCentral = paneCentral;
+        this.porteMonnaie = porteMonnaie;
         this.boxDefense = new VBox();
         this.imageShip = new ImageView();
         this.labelPv = new Label();
@@ -61,16 +64,18 @@ public class AjoutDefense {
         }
 
         labelPv.setText("Vie : " + defense.getPv());
-
-        // Ajout de la défense et du label dans la pane
-        paneCentral.getChildren().add(labelPv);
-        paneCentral.getChildren().add(imageShip);
     }
 
     public void bindImage(DoubleProperty mouseX, DoubleProperty mouseY) {
-        // Bindings des positions de la défense avec celle de la souris
-        imageShip.xProperty().bind(mouseX);
-        imageShip.yProperty().bind(mouseY);
+        if (!porteMonnaie.argentVide()){
+            // Bindings des positions de la défense avec celle de la souris
+            imageShip.xProperty().bind(mouseX);
+            imageShip.yProperty().bind(mouseY);
+
+            // Ajout de la défense et du label dans la pane
+            paneCentral.getChildren().add(labelPv);
+            paneCentral.getChildren().add(imageShip);
+        }
     }
 
     // Getter & Setter
