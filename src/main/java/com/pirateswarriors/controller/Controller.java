@@ -78,7 +78,7 @@ public class Controller implements Initializable {
 //        this.tresorVue.getImgTresor().setX(0);
 //        this.tresorVue.getImgTresor().setY(335);
         this.porteMonnaie = new PorteMonnaie();
-        porteMonnaie.setNb(5000);
+        porteMonnaie.setNb(1500);
         this.porteMonnaieVue = new PorteMonnaieVue(porteMonnaie);
 //        this.paneCentral.getChildren().add(porteMonnaieVue.getImgPorteMonnaie());
 //        this.porteMonnaieVue.getImgPorteMonnaie().setX(1200);
