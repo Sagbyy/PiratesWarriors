@@ -72,13 +72,13 @@ public class Controller implements Initializable {
         this.paneCentral.getChildren().add(personnageVue.getImageBateau());
         this.personnageVue.getImageBateau().xProperty().bind(this.personnage.positionXProperty());
         this.personnageVue.getImageBateau().yProperty().bind(this.personnage.positionYProperty());
-        this.tresor = new Tresor(5000);
+        this.tresor = new Tresor(10000);
         this.tresorVue = new TresorVue(tresor);
 //        this.paneCentral.getChildren().add(tresorVue.getImgTresor());
 //        this.tresorVue.getImgTresor().setX(0);
 //        this.tresorVue.getImgTresor().setY(335);
         this.porteMonnaie = new PorteMonnaie();
-        porteMonnaie.setNb(5000);
+        porteMonnaie.setNb(1500);
         this.porteMonnaieVue = new PorteMonnaieVue(porteMonnaie);
 //        this.paneCentral.getChildren().add(porteMonnaieVue.getImgPorteMonnaie());
 //        this.porteMonnaieVue.getImgPorteMonnaie().setX(1200);
@@ -227,11 +227,12 @@ public class Controller implements Initializable {
                     labelPv.setLayoutX(imageShip.getX() + 10);
                     labelPv.setLayoutY(imageShip.getY() - 25);
                     // retrait du cout de la defense
+
                     porteMonnaie.ajoutMonnaie(-500);
                     System.out.println("somme après retrait du prix de la defense: "+ porteMonnaie.getNb());
                 }
                 else
-                    //nbPieces.;
+                    //nbPieces.;0
                     System.out.printf("Vous n'avez pas assez d'argent !/n");
 
                 System.out.println("Bateau ajouter à : " + "\nx : " + imageShip.getX() + " | y : " + imageShip.getY());
