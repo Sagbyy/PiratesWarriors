@@ -18,11 +18,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -49,6 +51,10 @@ public class Controller implements Initializable {
     private PorteMonnaieVue porteMonnaieVue;
 
 
+    @FXML
+    private Label labelVieTresor;
+
+
 
     @FXML
     private Label nbPieces;
@@ -63,18 +69,19 @@ public class Controller implements Initializable {
         this.paneCentral.getChildren().add(personnageVue.getImageBateau());
         this.personnageVue.getImageBateau().xProperty().bind(this.personnage.positionXProperty());
         this.personnageVue.getImageBateau().yProperty().bind(this.personnage.positionYProperty());
-        this.tresor = new Tresor(1000);
+        this.tresor = new Tresor(10000);
         this.tresorVue = new TresorVue(tresor);
-        this.paneCentral.getChildren().add(tresorVue.getImgTresor());
-        this.tresorVue.getImgTresor().setX(0);
-        this.tresorVue.getImgTresor().setY(335);
+//        this.paneCentral.getChildren().add(tresorVue.getImgTresor());
+//        this.tresorVue.getImgTresor().setX(0);
+//        this.tresorVue.getImgTresor().setY(335);
         this.porteMonnaie = new PorteMonnaie();
-        porteMonnaie.setNb(1000);
+        porteMonnaie.setNb(1500);
         this.porteMonnaieVue = new PorteMonnaieVue(porteMonnaie);
 //        this.paneCentral.getChildren().add(porteMonnaieVue.getImgPorteMonnaie());
 //        this.porteMonnaieVue.getImgPorteMonnaie().setX(1200);
 //        this.porteMonnaieVue.getImgPorteMonnaie().setY(800);
         nbPieces.textProperty().bind(porteMonnaie.nbProperty().asString());
+        labelVieTresor.setText("vie: " + String.valueOf(tresor.getPv()));
 
 
         // Mouse Property
