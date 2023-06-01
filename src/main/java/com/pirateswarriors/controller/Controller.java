@@ -1,6 +1,7 @@
 package com.pirateswarriors.controller;
 
 import com.pirateswarriors.Ennemis;
+import com.pirateswarriors.Environnement;
 import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.Tresor;
 import com.pirateswarriors.model.defense.DefenseActor;
@@ -53,7 +54,8 @@ public class Controller implements Initializable {
     private int temps;
     private PorteMonnaie porteMonnaie;
     private PorteMonnaieVue porteMonnaieVue;
-    private int lcn;
+    private int lcn, lop, nbenn;
+    private Environnement jeu;
 
 
 
@@ -62,19 +64,21 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Ayoub
 
-        this.ennemis = new PirateFusil();
-        this.ennemis2 = new BarqueCanon();
-        this.personnageVue = new EnnemiVue(this.ennemis);
-        this.personnageVue2 = new EnnemiVue(this.ennemis2);
+
+
+        this.jeu = new Environnement();
+//        this.ennemis = new PirateFusil();
+//        this.ennemis2 = new BarqueCanon();
+//        this.personnageVue = new EnnemiVue(this.ennemis);
+//        this.personnageVue2 = new EnnemiVue(this.ennemis2);
         this.carte_1 = new Carte_1(tilePane);
-        this.paneCentral.getChildren().add(personnageVue.getImageBateau());
-        this.paneCentral.getChildren().add(personnageVue2.getImageBateau());
-        this.personnageVue.getImageBateau().xProperty().bind(this.ennemis.positionXProperty());
-        this.personnageVue.getImageBateau().yProperty().bind(this.ennemis.positionYProperty());
-        this.personnageVue2.getImageBateau().xProperty().bind(this.ennemis2.positionXProperty());
-        this.personnageVue2.getImageBateau().yProperty().bind(this.ennemis2.positionYProperty());
+//        this.paneCentral.getChildren().add(personnageVue.getImageBateau());
+//        this.paneCentral.getChildren().add(personnageVue2.getImageBateau());
+//        this.personnageVue.getImageBateau().xProperty().bind(this.ennemis.positionXProperty());
+//        this.personnageVue.getImageBateau().yProperty().bind(this.ennemis.positionYProperty());
+//        this.personnageVue2.getImageBateau().xProperty().bind(this.ennemis2.positionXProperty());
+//        this.personnageVue2.getImageBateau().yProperty().bind(this.ennemis2.positionYProperty());
         this.tresor = new Tresor(1000);
         this.tresorVue = new TresorVue(tresor);
         this.paneCentral.getChildren().add(tresorVue.getImgTresor());
@@ -102,59 +106,61 @@ public class Controller implements Initializable {
             }
         });
 
-        // Bind du bateau
-
-        //this.personnageVue.getImageBateau().xProperty().bind(this.personnage.positionXProperty());
-        //  this.personnageVue.getImageBateau().yProperty().bind(this.personnage.positionYProperty());
-
-        // demarre l'animation
 
 
+        //jeu.NouvelleVagues();
 
 
+        initAnimation();
+        gameLoop.play();
     }
 
     private void initAnimation() {
         gameLoop = new Timeline();
         temps=0;
+        lop = 0;
+        nbenn = 0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
         KeyFrame kf = new KeyFrame(
                 // on définit le FPS (nbre de frame par seconde)
-                Duration.seconds(0.007),
+                Duration.seconds(0.017),
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
                 (ev ->{
 
-                    //this.personnage.setPositionX(this.personnage.getPositionX() + 10);
+                    if(!(nbenn ==jeu.getNbEnnemis())){
+                        if(lop%35==0) {
+                            int rand = (int) (Math.random() * 2) + 1;
+                            if (rand == 1) {
+                                jeu.getEnnemis().add(new BarqueCanon());
 
-                    // this.personnageVue.getImageBateau().setX(this.personnage.getPositionX());
+                            }
+                            if (rand == 2) {
+                                jeu.getEnnemis().add(new PirateFusil());
+                            }
+                            nbenn++;
+                        }
 
-//                    if(temps==50){
-//                        System.out.println("fini");
-//                        gameLoop.stop();
-//                    }
-//
-//                    else if (temps%5==0) {
-//                        System.out.println("un tour");
-//                        this.personnage.setPositionX(this.personnage.getPositionX() - 1);
-//
-//
-//                        // this.personnageVue.getImageBateau().setX(this.personnage.getPositionX());
-//
-//                        //this.personnage.setPositionY(this.personnage.getPositionY());
-//                        this.personnageVue.getImageBateau().setY(this.personnage.getPositionY());
-//                        System.out.println(this.personnageVue.getImageBateau().getX());
-//                        // ajout de monnaie a chaque tour
-//                        porteMonnaie.ajoutMonnaie(500);
-//                        System.out.println("nouvelle valeur du porte monnaie: " + porteMonnaie.getNb());
-//
-//                    }
+                    }
+                    lop++;
 
-                    this.ennemis.avance();
-                    this.ennemis2.avance();
+                    for (int i =0; i < jeu.getEnnemis().size(); i++){
+                        Ennemis e = jeu.getEnnemis().get(i);
+                        EnnemiVue v = new EnnemiVue (jeu.getEnnemis().get(i));
+                        this.paneCentral.getChildren().add(v.getImageBateau());
+                        v.getImageBateau().xProperty().bind(e.positionXProperty());
+                        v.getImageBateau().yProperty().bind(e.positionYProperty());
+                    }
+
+                    jeu.untour();
+
+                    //this.ennemis.avance();
+                    //this.ennemis2.avance();
 
                     temps++;
+
+
                 })
         );
         gameLoop.getKeyFrames().add(kf);
@@ -243,9 +249,9 @@ public class Controller implements Initializable {
 
     @FXML
     public void lancerVagues(ActionEvent actionEvent) {
+
         if(lcn==0){
-            initAnimation();
-            gameLoop.play();
+
             lcn++;
         }
 
