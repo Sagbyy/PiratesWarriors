@@ -53,6 +53,7 @@ public class Controller implements Initializable {
     private int temps;
     private PorteMonnaie porteMonnaie;
     private PorteMonnaieVue porteMonnaieVue;
+    private int lcn;
 
 
 
@@ -242,12 +243,19 @@ public class Controller implements Initializable {
 
     @FXML
     public void lancerVagues(ActionEvent actionEvent) {
-        initAnimation();
-        gameLoop.play();
+        if(lcn==0){
+            initAnimation();
+            gameLoop.play();
+            lcn++;
+        }
+
     }
 
     @FXML
     public void Pause(ActionEvent actionEvent) {
-        gameLoop.stop();
+        if(lcn==1){
+            gameLoop.stop();
+            lcn--;
+        }
     }
 }
