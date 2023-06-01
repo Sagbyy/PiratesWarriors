@@ -11,6 +11,8 @@ public class Environnement {
 
     private ArrayList<Ennemis> ennemis;
     private ArrayList<Defense> defenses;
+    private ArrayList<Ennemis> ennemisTerrain;
+
 
     private IntegerProperty nbVague;
     private IntegerProperty nbScore;
@@ -24,11 +26,24 @@ public class Environnement {
         this.nbArgent = new SimpleIntegerProperty(0);
         this.ennemis= new ArrayList<>();
         this.defenses= new ArrayList<>();
+        this.ennemisTerrain = new ArrayList<>();
         this.nbEnnemis = 10;
+    }
+
+    public ArrayList<Ennemis> getEnnemis() {
+        return ennemis;
     }
 
     public void ajouter(Ennemis a){
         this.ennemis.add(a);
+    }
+
+    public ArrayList<Ennemis> getEnnemisTerrain() {
+        return ennemisTerrain;
+    }
+
+    public int getNbEnnemis() {
+        return nbEnnemis;
     }
 
     public int getNbVague() {
@@ -39,22 +54,47 @@ public class Environnement {
         this.nbVague.set(nbVague);
     }
 
-    public void créerVagues(){
-        for(int i = 0; i <= this.nbEnnemis; i++){
-            int rand = (int)(Math.random() * 2) + 1;
-            if(rand == 1){
-                this.ennemis.add(new BarqueCanon());
+    public void NouvelleVagues(){
+        int temps = 0;
+
+        while(!(this.ennemis.size() ==nbEnnemis)){
+            if(temps%3==0) {
+                int rand = (int) (Math.random() * 2) + 1;
+                if (rand == 1) {
+                    this.ennemis.add(new BarqueCanon());
+
+                }
+                if (rand == 2) {
+                    this.ennemis.add(new PirateFusil());
+                }
+
             }
-            if(rand == 2){
-                this.ennemis.add(new PirateFusil());
-            }
+            temps++;
         }
         setNbVague(getNbVague()+1);
-        this.nbEnnemis =  this.nbEnnemis * 2;
+
+
     }
 
-    public void jeu(){
-        créerVagues();
+    public void untour(){
+        tousAvancent();
+        sontMorts();
+    }
+
+    public void tousAvancent(){
+        for(int i = 0; i < getEnnemis().size()-1;i++){
+            getEnnemis().get(i).avance();
+        }
+    }
+
+    public void sontMorts(){
+        for(int i=getEnnemis().size()-1; i>=0;i--){
+            Ennemis a = getEnnemis().get(i);
+            if(a.estMort()){
+                System.out.println("mort de : " + a);
+                getEnnemis().remove(i);
+            }
+        }
     }
 
 
