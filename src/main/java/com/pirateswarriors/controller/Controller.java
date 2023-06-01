@@ -18,13 +18,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -161,17 +159,13 @@ public class Controller implements Initializable {
         String buttonId = ((Button) event.getSource()).getId();
 
         // Ajout de la vue
-        AjoutDefense ajoutDefense = new AjoutDefense(paneCentral, buttonId);
+        AjoutDefense ajoutDefense = new AjoutDefense(paneCentral, buttonId, porteMonnaie);
         ajoutDefense.ajoutDefense();
         ajoutDefense.bindImage(mouseX, mouseY);
 
         // Lorsque qu'on clique sur la map on laisse la position au clique
         ControleurAjoutDefense controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getImageShip(), ajoutDefense.getLabelPv(), porteMonnaie);
         paneCentral.addEventHandler(MouseEvent.MOUSE_CLICKED, controleurAjoutDefense);
-
-        // retrait du cout de la defense
-        porteMonnaie.ajoutMonnaie(-10);
-        System.out.println("somme après retrait du prix de la defense: "+ porteMonnaie.getNb() );
     }
 
 }
