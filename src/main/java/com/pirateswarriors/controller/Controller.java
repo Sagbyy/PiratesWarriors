@@ -54,7 +54,7 @@ public class Controller implements Initializable {
     private int temps;
     private PorteMonnaie porteMonnaie;
     private PorteMonnaieVue porteMonnaieVue;
-    private int lcn, lop, nbenn;
+    private int lcn;
     private Environnement jeu;
 
 
@@ -68,17 +68,9 @@ public class Controller implements Initializable {
 
 
         this.jeu = new Environnement();
-//        this.ennemis = new PirateFusil();
-//        this.ennemis2 = new BarqueCanon();
-//        this.personnageVue = new EnnemiVue(this.ennemis);
-//        this.personnageVue2 = new EnnemiVue(this.ennemis2);
+
         this.carte_1 = new Carte_1(tilePane);
-//        this.paneCentral.getChildren().add(personnageVue.getImageBateau());
-//        this.paneCentral.getChildren().add(personnageVue2.getImageBateau());
-//        this.personnageVue.getImageBateau().xProperty().bind(this.ennemis.positionXProperty());
-//        this.personnageVue.getImageBateau().yProperty().bind(this.ennemis.positionYProperty());
-//        this.personnageVue2.getImageBateau().xProperty().bind(this.ennemis2.positionXProperty());
-//        this.personnageVue2.getImageBateau().yProperty().bind(this.ennemis2.positionYProperty());
+
         this.tresor = new Tresor(1000);
         this.tresorVue = new TresorVue(tresor);
         this.paneCentral.getChildren().add(tresorVue.getImgTresor());
@@ -108,18 +100,15 @@ public class Controller implements Initializable {
 
 
 
-        //jeu.NouvelleVagues();
 
 
-        initAnimation();
-        gameLoop.play();
+
     }
 
     private void initAnimation() {
         gameLoop = new Timeline();
         temps=0;
-        lop = 0;
-        nbenn = 0;
+
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
         KeyFrame kf = new KeyFrame(
@@ -129,21 +118,7 @@ public class Controller implements Initializable {
                 // c'est un eventHandler d'ou le lambda
                 (ev ->{
 
-                    if(!(nbenn ==jeu.getNbEnnemis())){
-                        if(lop%35==0) {
-                            int rand = (int) (Math.random() * 2) + 1;
-                            if (rand == 1) {
-                                jeu.getEnnemis().add(new BarqueCanon());
 
-                            }
-                            if (rand == 2) {
-                                jeu.getEnnemis().add(new PirateFusil());
-                            }
-                            nbenn++;
-                        }
-
-                    }
-                    lop++;
 
                     for (int i =0; i < jeu.getEnnemis().size(); i++){
                         Ennemis e = jeu.getEnnemis().get(i);
@@ -251,17 +226,18 @@ public class Controller implements Initializable {
     public void lancerVagues(ActionEvent actionEvent) {
 
         if(lcn==0){
+            initAnimation();
 
             lcn++;
         }
-
+        gameLoop.play();
     }
 
     @FXML
     public void Pause(ActionEvent actionEvent) {
         if(lcn==1){
             gameLoop.stop();
-            lcn--;
+
         }
     }
 }

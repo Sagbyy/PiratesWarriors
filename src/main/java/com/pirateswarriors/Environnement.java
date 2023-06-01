@@ -11,7 +11,7 @@ public class Environnement {
 
     private ArrayList<Ennemis> ennemis;
     private ArrayList<Defense> defenses;
-    private ArrayList<Ennemis> ennemisTerrain;
+    private ArrayList<Ennemis> ennemisBack;
 
 
     private IntegerProperty nbVague;
@@ -26,8 +26,8 @@ public class Environnement {
         this.nbArgent = new SimpleIntegerProperty(0);
         this.ennemis= new ArrayList<>();
         this.defenses= new ArrayList<>();
-        this.ennemisTerrain = new ArrayList<>();
-        this.nbEnnemis = 10;
+        this.ennemisBack = new ArrayList<>();
+        this.nbEnnemis = 0;
     }
 
     public ArrayList<Ennemis> getEnnemis() {
@@ -38,8 +38,8 @@ public class Environnement {
         this.ennemis.add(a);
     }
 
-    public ArrayList<Ennemis> getEnnemisTerrain() {
-        return ennemisTerrain;
+    public ArrayList<Ennemis> getEnnemisBack() {
+        return ennemisBack;
     }
 
     public int getNbEnnemis() {
@@ -54,35 +54,20 @@ public class Environnement {
         this.nbVague.set(nbVague);
     }
 
-    public void NouvelleVagues(){
-        int temps = 0;
-
-        while(!(this.ennemis.size() ==nbEnnemis)){
-            if(temps%3==0) {
-                int rand = (int) (Math.random() * 2) + 1;
-                if (rand == 1) {
-                    this.ennemis.add(new BarqueCanon());
-
-                }
-                if (rand == 2) {
-                    this.ennemis.add(new PirateFusil());
-                }
-
-            }
-            temps++;
-        }
-        setNbVague(getNbVague()+1);
-
-
-    }
 
     public void untour(){
+        if(ennemis.size()==0){
+            this.nbEnnemis+=10;
+            vague();
+        }
+
+        vague();
         tousAvancent();
         sontMorts();
     }
 
     public void tousAvancent(){
-        for(int i = 0; i < getEnnemis().size()-1;i++){
+        for(int i = 0; i < getEnnemis().size();i++){
             getEnnemis().get(i).avance();
         }
     }
@@ -97,5 +82,25 @@ public class Environnement {
         }
     }
 
+
+
+    int nbenn, lop;
+    public void vague(){
+        if(!(nbenn ==getNbEnnemis())){
+            if(lop%75==0) {
+                int rand = (int) (Math.random() * 2) + 1;
+                if (rand == 1) {
+                    getEnnemis().add(new BarqueCanon());
+                }
+                if (rand == 2) {
+                    getEnnemis().add(new PirateFusil());
+                }
+                nbenn++;
+            }
+
+        }
+        lop = lop + (int) (Math.random() * 3) + 1;
+
+    }
 
 }
