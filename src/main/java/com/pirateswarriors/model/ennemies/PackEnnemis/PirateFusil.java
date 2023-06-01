@@ -12,21 +12,22 @@ import java.util.ArrayList;
 public class PirateFusil extends Ennemis {
 
     Environnement jeu = new Environnement();
-    Image imagepirate;
 
     private DoubleProperty positionX;
     private DoubleProperty positionY;
 
     public PirateFusil() {
+        setPositionX(getPositionX()-64);
+        setPositionY(getPositionY()-64);
         this.jeu = jeu;
-        this.image = new Image("ship.png");
-        this.positionX = new SimpleDoubleProperty(1216);
-        this.positionY = new SimpleDoubleProperty(64);
+        this.image = new Image("testanim.gif");
+        this.positionX = positionX;
+        this.positionY = positionY;
         this.pts_vie = 10;
         this.pts_score = 7;
         this.pts_pièces = 10;
         this.pts_attaque = 10;
-        this.vitesse = 1;
+        this.vitesse = 2;
     }
 
     //    public PirateFusil( ) {

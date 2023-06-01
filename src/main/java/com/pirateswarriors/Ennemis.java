@@ -34,7 +34,7 @@ public class Ennemis {
         this.pts_score = pts_score;
         this.pts_pièces = pts_pièces;
         this.pts_attaque = pts_attaque;
-        this.positionX = new SimpleDoubleProperty(1216);
+        this.positionX = new SimpleDoubleProperty(1280);
         this.positionY = new SimpleDoubleProperty(64);
         this.vitesse = vitesse;
         this.env = env;
@@ -127,15 +127,15 @@ public class Ennemis {
             }
 
             if(dir.equals("b")){
-                setPositionY(getPositionY()-1);
+                setPositionY(getPositionY()-this.vitesse);
             }
 
             if(dir.equals("g")){
-                setPositionX(getPositionX()-1);
+                setPositionX(getPositionX()-this.vitesse);
             }
 
             if(dir.equals("h")){
-                setPositionY(getPositionY()+1);
+                setPositionY(getPositionY()+this.vitesse);
             }
 
             System.out.println(dir);

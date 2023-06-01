@@ -5,6 +5,8 @@ import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.Tresor;
 import com.pirateswarriors.model.defense.ControleurAjoutDefense;
 import com.pirateswarriors.view.EnnemiVue;
+import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
+import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
 import com.pirateswarriors.view.PorteMonnaieVue;
 import com.pirateswarriors.view.TresorVue;
 import com.pirateswarriors.view.defense.AjoutDefense;
@@ -38,8 +40,11 @@ public class Controller implements Initializable {
     private Button buttonAddDefense;
     private DoubleProperty mouseX;
     private DoubleProperty mouseY;
-    private Ennemis personnage;
+
+    private Ennemis ennemis;
+    private Ennemis ennemis2;
     private EnnemiVue personnageVue;
+    private EnnemiVue personnageVue2;
     private Tresor tresor;
     private TresorVue tresorVue;
     private Carte carte_1;
@@ -61,13 +66,19 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Ayoub
 
-        this.personnage = new Ennemis();
-        this.personnageVue = new EnnemiVue(this.personnage);
+
+        this.ennemis = new PirateFusil();
+        this.ennemis2 = new BarqueCanon();
+        this.personnageVue = new EnnemiVue(this.ennemis);
+        this.personnageVue2 = new EnnemiVue(this.ennemis2);
         this.carte_1 = new Carte_1(tilePane);
         this.paneCentral.getChildren().add(personnageVue.getImageBateau());
-        this.personnageVue.getImageBateau().xProperty().bind(this.personnage.positionXProperty());
-        this.personnageVue.getImageBateau().yProperty().bind(this.personnage.positionYProperty());
-        this.tresor = new Tresor(10000);
+        this.paneCentral.getChildren().add(personnageVue2.getImageBateau());
+        this.personnageVue.getImageBateau().xProperty().bind(this.ennemis.positionXProperty());
+        this.personnageVue.getImageBateau().yProperty().bind(this.ennemis.positionYProperty());
+        this.personnageVue2.getImageBateau().xProperty().bind(this.ennemis2.positionXProperty());
+        this.personnageVue2.getImageBateau().yProperty().bind(this.ennemis2.positionYProperty());
+        this.tresor = new Tresor(1000);
         this.tresorVue = new TresorVue(tresor);
 //        this.paneCentral.getChildren().add(tresorVue.getImgTresor());
 //        this.tresorVue.getImgTresor().setX(0);
@@ -102,8 +113,8 @@ public class Controller implements Initializable {
 
         // demarre l'animation
 
-        initAnimation();
-        gameLoop.play();
+
+
 
     }
 
@@ -144,7 +155,10 @@ public class Controller implements Initializable {
 //
 //                    }
 
-                    this.personnage.avance();
+
+                    this.ennemis.avance();
+                    this.ennemis2.avance();
+
                     temps++;
                 })
         );
@@ -163,9 +177,20 @@ public class Controller implements Initializable {
         ajoutDefense.ajoutDefense();
         ajoutDefense.bindImage(mouseX, mouseY);
 
+
         // Lorsque qu'on clique sur la map on laisse la position au clique
         ControleurAjoutDefense controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getImageShip(), ajoutDefense.getLabelPv(), porteMonnaie);
         paneCentral.addEventHandler(MouseEvent.MOUSE_CLICKED, controleurAjoutDefense);
     }
 
+    @FXML
+    public void lancerVagues(ActionEvent actionEvent) {
+        initAnimation();
+        gameLoop.play();
+    }
+
+    @FXML
+    public void Pause(ActionEvent actionEvent) {
+        gameLoop.stop();
+    }
 }

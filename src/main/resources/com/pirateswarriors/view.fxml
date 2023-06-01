@@ -39,7 +39,17 @@
          <children>
             <Button fx:id="buttonAddDefense" mnemonicParsing="false" onAction="#ajoutDefense" text="Placer une défense" textOverrun="CLIP">
                <font>
-                  <Font size="35.0" />
+                  <Font size="22.0" />
+               </font>
+            </Button>
+            <Button fx:id="lancerJeu" mnemonicParsing="false" onAction="#lancerVagues" text="Lancer" textOverrun="CLIP">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Button>
+            <Button fx:id="pause" mnemonicParsing="false" onAction="#Pause" text="Pause" textOverrun="CLIP">
+               <font>
+                  <Font size="22.0" />
                </font>
             </Button>
          </children>
