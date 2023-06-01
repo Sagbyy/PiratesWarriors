@@ -1,14 +1,16 @@
 package com.pirateswarriors.controller;
 
+import com.pirateswarriors.Ennemis;
 import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.Tresor;
 import com.pirateswarriors.model.defense.DefenseActor;
-import com.pirateswarriors.model.ennemies.Personnage;
+import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
+import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
 import com.pirateswarriors.view.PorteMonnaieVue;
 import com.pirateswarriors.view.TresorVue;
 import com.pirateswarriors.view.map.Carte;
 import com.pirateswarriors.view.map.Carte_1;
-import com.pirateswarriors.view.PersonnageVue;
+import com.pirateswarriors.view.EnnemiVue;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.DoubleProperty;
@@ -28,7 +30,6 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -43,8 +44,10 @@ public class Controller implements Initializable {
     private Button buttonAddDefense;
     private DoubleProperty mouseX;
     private DoubleProperty mouseY;
-    private Personnage personnage;
-    private PersonnageVue personnageVue;
+    private Ennemis ennemis;
+    private Ennemis ennemis2;
+    private EnnemiVue personnageVue;
+    private EnnemiVue personnageVue2;
     private Tresor tresor;
     private TresorVue tresorVue;
     private Carte carte_1;
@@ -66,13 +69,24 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Ayoub
 
-        this.personnage = new Personnage();
-        this.personnageVue = new PersonnageVue(this.personnage);
+        this.ennemis = new PirateFusil();
+        this.ennemis2 = new BarqueCanon();
+        this.personnageVue = new EnnemiVue(this.ennemis);
+        this.personnageVue2 = new EnnemiVue(this.ennemis2);
         this.carte_1 = new Carte_1(tilePane);
         this.paneCentral.getChildren().add(personnageVue.getImageBateau());
-        this.personnageVue.getImageBateau().xProperty().bind(this.personnage.positionXProperty());
-        this.personnageVue.getImageBateau().yProperty().bind(this.personnage.positionYProperty());
+
+        this.personnageVue.getImageBateau().xProperty().bind(this.ennemis.positionXProperty());
+        this.personnageVue.getImageBateau().yProperty().bind(this.ennemis.positionYProperty());
         this.tresor = new Tresor(5000);
+
+        this.paneCentral.getChildren().add(personnageVue2.getImageBateau());
+        this.personnageVue.getImageBateau().xProperty().bind(this.ennemis.positionXProperty());
+        this.personnageVue.getImageBateau().yProperty().bind(this.ennemis.positionYProperty());
+        this.personnageVue2.getImageBateau().xProperty().bind(this.ennemis2.positionXProperty());
+        this.personnageVue2.getImageBateau().yProperty().bind(this.ennemis2.positionYProperty());
+        this.tresor = new Tresor(1000);
+
         this.tresorVue = new TresorVue(tresor);
 //        this.paneCentral.getChildren().add(tresorVue.getImgTresor());
 //        this.tresorVue.getImgTresor().setX(0);
@@ -107,8 +121,8 @@ public class Controller implements Initializable {
 
         // demarre l'animation
 
-        initAnimation();
-        gameLoop.play();
+
+
 
     }
 
@@ -149,8 +163,8 @@ public class Controller implements Initializable {
 //
 //                    }
 
-                    this.personnage.avance();
-
+                    this.ennemis.avance();
+                    this.ennemis2.avance();
 
                     temps++;
                 })
@@ -158,7 +172,7 @@ public class Controller implements Initializable {
         gameLoop.getKeyFrames().add(kf);
     }
 
-
+    @FXML
     public void ajoutDefense(ActionEvent event) {
         System.out.println("Bouton cliqué !");
 
@@ -209,10 +223,17 @@ public class Controller implements Initializable {
             imageShip.xProperty().bind(mouseX);
             imageShip.yProperty().bind(mouseY);
 
+
             // Ajout de la défense et du label dans la pane
             paneCentral.getChildren().add(labelPv);
             paneCentral.getChildren().add(imageShip);
         }
+
+
+        // Bindings des positions de la défense avec celle de la souris
+        imageShip.xProperty().bind(mouseX);
+        imageShip.yProperty().bind(mouseY);
+
 
 
 
@@ -241,4 +262,14 @@ public class Controller implements Initializable {
 
     }
 
+    @FXML
+    public void lancerVagues(ActionEvent actionEvent) {
+        initAnimation();
+        gameLoop.play();
+    }
+
+    @FXML
+    public void Pause(ActionEvent actionEvent) {
+        gameLoop.stop();
+    }
 }
