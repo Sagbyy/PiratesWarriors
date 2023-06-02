@@ -26,7 +26,7 @@
          <VBox fx:id="vboxTresor" alignment="CENTER" layoutY="270.0" prefHeight="200.0" prefWidth="100.0">
             <children>
                <Label fx:id="labelVieTresor" alignment="BOTTOM_CENTER" prefHeight="88.0" prefWidth="118.0" text="h" />
-               <ImageView fitHeight="116.0" fitWidth="118.0">
+               <ImageView fx:id="imgTresor"   fitHeight="116.0" fitWidth="118.0">
                   <Image url="@images/tresor/chest1.png" />
                </ImageView>
 
