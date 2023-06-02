@@ -1,11 +1,13 @@
 package com.pirateswarriors;
 
+import com.pirateswarriors.model.Tresor;
 import com.pirateswarriors.model.ennemies.CarteModele;
 import com.pirateswarriors.model.map.BFS;
 import com.pirateswarriors.model.map.Couple;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 
@@ -23,6 +25,10 @@ public class Ennemis {
     protected Image image;
     private String dir;
     private int pos;
+
+    private Tresor tresor;
+    private Ennemis ennemis;
+    private ImageView imgTresor;
 
     ArrayList chemin;
     CarteModele g = new CarteModele("newMap1.csv");
@@ -138,7 +144,33 @@ public class Ennemis {
                 setPositionY(getPositionY()+this.vitesse);
             }
 
-            System.out.println(dir);
+            //System.out.println(dir);
+        }
+
+    }
+    public void attaque (Tresor tresor){
+        while (tresor.estPasDetruit()){
+            System.out.println("attaque du trésor");
+            tresor.damage(pts_attaque);
         }
     }
+
+//    public boolean ennemiProche(){
+//        double distanceX = Math.abs(ennemis.getPositionX() - imgTresor.getX());
+//        System.out.println("distanceX: " + distanceX);
+//        double distanceY = Math.abs(ennemis.getPositionY() - imgTresor.getY());
+//
+//        // Calcul de la distance entre l'ennemi et le trésor
+//        double distance = Math.sqrt(distanceX * distanceX - distanceY * distanceY);
+//        System.out.println("distance: " + distance);
+//        double maxDistance = 5;
+//
+//        if (distance <= maxDistance) {
+//            System.out.println("distance proche");
+//            return true;
+//        }
+//        else{
+//            return false;
+//        }
+//    }
 }

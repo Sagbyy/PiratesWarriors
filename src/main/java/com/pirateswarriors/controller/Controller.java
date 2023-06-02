@@ -20,16 +20,19 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -55,15 +58,14 @@ public class Controller implements Initializable {
     private int temps;
     private PorteMonnaie porteMonnaie;
     private PorteMonnaieVue porteMonnaieVue;
-
-
     @FXML
     private Label labelVieTresor;
-
-
-
     @FXML
     private Label nbPieces;
+    @FXML
+    private ImageView imgTresor;
+    private int tre;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -129,18 +131,24 @@ public class Controller implements Initializable {
     private void initAnimation() {
         gameLoop = new Timeline();
         temps=0;
+        tre = 0;
+
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
-        KeyFrame kf = new KeyFrame(
-                // on définit le FPS (nbre de frame par seconde)
-                Duration.seconds(0.007),
-                // on définit ce qui se passe à chaque frame
-                // c'est un eventHandler d'ou le lambda
-                (ev ->{
+        //while (tresor.estPasDetruit()){
+            KeyFrame kf = new KeyFrame(
+                    // on définit le FPS (nbre de frame par seconde)
+                    Duration.seconds(0.017),
+                    // on définit ce qui se passe à chaque frame
+                    // c'est un eventHandler d'ou le lambda
+                    (ev ->{
+                        int frameCount = 0;
+                        int intervalleFrame = 500; // Une frame toutes les n itérations
 
-                       //this.personnage.setPositionX(this.personnage.getPositionX() + 10);
 
-                       // this.personnageVue.getImageBateau().setX(this.personnage.getPositionX());
+                        //this.personnage.setPositionX(this.personnage.getPositionX() + 10);
+
+                        // this.personnageVue.getImageBateau().setX(this.personnage.getPositionX());
 
 //                    if(temps==50){
 //                        System.out.println("fini");
@@ -163,13 +171,51 @@ public class Controller implements Initializable {
 //
 //                    }
 
-                    this.ennemis.avance();
-                    this.ennemis2.avance();
+                        this.ennemis.avance();
+                        this.ennemis2.avance();
 
-                    temps++;
-                })
-        );
-        gameLoop.getKeyFrames().add(kf);
+                        if (tresor.estPasDetruit()){
+                        // Vérifier si on atteint l'intervalle de frame
+                            if (frameCount % intervalleFrame == 0) {
+                            // Infliger des dégâts au trésor
+
+                                //if ((tre%100)==0){
+                                if (ennemiProche()){
+                                    ennemis.attaque(this.tresor);
+                                    labelVieTresor.setText("vie: " + String.valueOf(this.tresor.getPv()));
+                                }
+                                //}
+                            }
+                        }
+
+                        temps++;
+                        frameCount++;
+
+                    })
+            );
+            gameLoop.getKeyFrames().add(kf);
+
+        //}
+
+
+    }
+    public boolean ennemiProche(){
+        double distanceX = Math.abs(ennemis.getPositionX() - imgTresor.getX());
+        System.out.println("distanceX: " + distanceX);
+        double distanceY = Math.abs(ennemis.getPositionY() - imgTresor.getY());
+
+        // Calcul de la distance entre l'ennemi et le trésor
+        double distance = Math.sqrt(distanceX * distanceX - distanceY * distanceY);
+        System.out.println("distance: " + distance);
+        double maxDistance = 5;
+
+        if (distance <= maxDistance) {
+            System.out.println("distance proche");
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     @FXML
@@ -272,4 +318,5 @@ public class Controller implements Initializable {
     public void Pause(ActionEvent actionEvent) {
         gameLoop.stop();
     }
+
 }
