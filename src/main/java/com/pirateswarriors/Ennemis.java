@@ -1,5 +1,6 @@
 package com.pirateswarriors;
 
+import com.pirateswarriors.model.Environnement;
 import com.pirateswarriors.model.ennemies.CarteModele;
 import com.pirateswarriors.model.map.BFS;
 import com.pirateswarriors.model.map.Couple;
