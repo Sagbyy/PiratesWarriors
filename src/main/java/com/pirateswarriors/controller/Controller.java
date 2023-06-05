@@ -134,7 +134,7 @@ public class Controller implements Initializable {
 //                        System.out.println("nouvelle valeur du porte monnaie: " + porteMonnaie.getNb());
 //
 //                    }
-                    for (int i =0; i < jeu.getEnnemisList().size(); i++){
+                    for (int i = 0; i < jeu.getEnnemisList().size(); i++){
                         Ennemis e = jeu.getEnnemisList().get(i);
                         EnnemiVue v = new EnnemiVue (jeu.getEnnemisList().get(i));
                         this.paneCentral.getChildren().add(v.getImageBateau());
@@ -142,7 +142,7 @@ public class Controller implements Initializable {
                         v.getImageBateau().yProperty().bind(e.positionYProperty());
                     }
 
-                    jeu.unTour();
+                    jeu.untour();
                     temps++;
                 })
         );

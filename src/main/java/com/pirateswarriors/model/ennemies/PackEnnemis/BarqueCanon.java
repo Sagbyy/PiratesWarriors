@@ -1,6 +1,5 @@
 package com.pirateswarriors.model.ennemies.PackEnnemis;
 
-
 import com.pirateswarriors.model.ennemies.Ennemis;
 import com.pirateswarriors.model.Environnement;
 import javafx.beans.property.DoubleProperty;
