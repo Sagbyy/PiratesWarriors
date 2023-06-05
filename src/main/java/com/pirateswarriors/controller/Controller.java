@@ -78,13 +78,13 @@ public class Controller implements Initializable {
         this.personnageVue.getImageBateau().yProperty().bind(this.ennemis.positionYProperty());
         this.personnageVue2.getImageBateau().xProperty().bind(this.ennemis2.positionXProperty());
         this.personnageVue2.getImageBateau().yProperty().bind(this.ennemis2.positionYProperty());
-        this.tresor = new Tresor(1000);
+        this.tresor = new Tresor(2000);
         this.tresorVue = new TresorVue(tresor);
 //        this.paneCentral.getChildren().add(tresorVue.getImgTresor());
 //        this.tresorVue.getImgTresor().setX(0);
 //        this.tresorVue.getImgTresor().setY(335);
         this.porteMonnaie = new PorteMonnaie();
-        porteMonnaie.setNb(1500);
+        porteMonnaie.setNb(3000);
         this.porteMonnaieVue = new PorteMonnaieVue(porteMonnaie);
 //        this.paneCentral.getChildren().add(porteMonnaieVue.getImgPorteMonnaie());
 //        this.porteMonnaieVue.getImgPorteMonnaie().setX(1200);
