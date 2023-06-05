@@ -14,7 +14,7 @@ public class EnnemiVue {
     private Label labelPv;
     private Pane paneCentrale;
 
-    public EnnemiVue(Ennemis ennemi, Pane paneCentrale) {
+    public EnnemiVue(Ennemis ennemi) {
         this.image = ennemi.getImage() ;
         //imageBateau.setImage(image);
         imageEnnemi = new ImageView(image);
@@ -28,11 +28,15 @@ public class EnnemiVue {
         ennemi.positionYProperty().addListener((obs, old, nouv) -> {
             this.labelPv.setLayoutY((Double) nouv);
         });
-        this.paneCentrale = paneCentrale;
-        this.paneCentrale.getChildren().addAll(this.imageEnnemi, this.labelPv);
+//        this.paneCentrale = paneCentrale;
+//        this.paneCentrale.getChildren().addAll(this.imageEnnemi, this.labelPv);
     }
 
     public ImageView getImageBateau() {
         return imageEnnemi;
+    }
+
+    public Pane getPaneCentrale() {
+        return paneCentrale;
     }
 }

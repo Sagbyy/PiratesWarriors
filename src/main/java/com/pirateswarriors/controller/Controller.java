@@ -1,6 +1,7 @@
 package com.pirateswarriors.controller;
 
 import com.pirateswarriors.Ennemis;
+import com.pirateswarriors.Environnement;
 import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.Tresor;
 import com.pirateswarriors.model.defense.ControleurAjoutDefense;
@@ -54,6 +55,8 @@ public class Controller implements Initializable {
     private int temps;
     private PorteMonnaie porteMonnaie;
     private PorteMonnaieVue porteMonnaieVue;
+    private int lcn;
+    private Environnement jeu;
 
 
     @FXML
@@ -66,13 +69,12 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Ayoub
 
 
         this.ennemis = new PirateFusil();
         this.ennemis2 = new BarqueCanon();
-        this.personnageVue = new EnnemiVue(this.ennemis, paneCentral);
-        this.personnageVue2 = new EnnemiVue(this.ennemis2, paneCentral);
+        this.personnageVue = new EnnemiVue(this.ennemis);
+        this.personnageVue2 = new EnnemiVue(this.ennemis2);
         this.carte_1 = new Carte_1(tilePane);
         this.personnageVue.getImageBateau().xProperty().bind(this.ennemis.positionXProperty());
         this.personnageVue.getImageBateau().yProperty().bind(this.ennemis.positionYProperty());
@@ -92,7 +94,7 @@ public class Controller implements Initializable {
         nbPieces.textProperty().bind(porteMonnaie.nbProperty().asString());
         labelVieTresor.setText("vie: " + String.valueOf(tresor.getPv()));
 
-
+        this.jeu = new Environnement();
         // Mouse Property
         this.mouseY = new SimpleDoubleProperty(0);
         this.mouseX = new SimpleDoubleProperty(0);
@@ -106,12 +108,7 @@ public class Controller implements Initializable {
             }
         });
 
-        // Bind du bateau
 
-        //this.personnageVue.getImageBateau().xProperty().bind(this.personnage.positionXProperty());
-        //  this.personnageVue.getImageBateau().yProperty().bind(this.personnage.positionYProperty());
-
-        // demarre l'animation
 
 
 
@@ -121,15 +118,15 @@ public class Controller implements Initializable {
     private void initAnimation() {
         gameLoop = new Timeline();
         temps=0;
+
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
         KeyFrame kf = new KeyFrame(
                 // on définit le FPS (nbre de frame par seconde)
-                Duration.seconds(0.007),
+                Duration.seconds(0.017),
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
                 (ev ->{
-
                        //this.personnage.setPositionX(this.personnage.getPositionX() + 10);
 
                        // this.personnageVue.getImageBateau().setX(this.personnage.getPositionX());
@@ -154,11 +151,15 @@ public class Controller implements Initializable {
 //                        System.out.println("nouvelle valeur du porte monnaie: " + porteMonnaie.getNb());
 //
 //                    }
+                    for (int i =0; i < jeu.getEnnemis().size(); i++){
+                        Ennemis e = jeu.getEnnemis().get(i);
+                        EnnemiVue v = new EnnemiVue (jeu.getEnnemis().get(i));
+                        this.paneCentral.getChildren().add(v.getImageBateau());
+                        v.getImageBateau().xProperty().bind(e.positionXProperty());
+                        v.getImageBateau().yProperty().bind(e.positionYProperty());
+                    }
 
-
-                    this.ennemis.avance();
-                    this.ennemis2.avance();
-
+                    jeu.untour();
                     temps++;
                 })
         );
@@ -184,12 +185,20 @@ public class Controller implements Initializable {
 
     @FXML
     public void lancerVagues(ActionEvent actionEvent) {
-        initAnimation();
+
+        if(lcn==0){
+            initAnimation();
+
+            lcn++;
+        }
         gameLoop.play();
     }
 
     @FXML
     public void Pause(ActionEvent actionEvent) {
-        gameLoop.stop();
+        if(lcn==1){
+            gameLoop.stop();
+
+        }
     }
 }
