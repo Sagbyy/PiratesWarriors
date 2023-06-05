@@ -29,10 +29,11 @@ public class PorteMonnaie {
     }
 
     public boolean argentVide(){
-        if (nb.equals(0)){
-            return false;
+        if (nb.get() < 499){
+            return true;
         }
-        else return true;
+        else
+            return false;
     }
 
 
