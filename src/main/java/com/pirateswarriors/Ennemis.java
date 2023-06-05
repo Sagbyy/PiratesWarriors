@@ -25,6 +25,8 @@ public class Ennemis {
     protected Image image;
     private String dir;
     private int pos;
+    public static int compteur=0;
+
 
     ArrayList chemin;
     CarteModele g = new CarteModele("newMap1.csv");
@@ -43,6 +45,8 @@ public class Ennemis {
         this.chemin = BFS.cheminVersSource();
         this.dir = "";
         this.pos = 0;
+        this.id = "E"+compteur;
+        compteur++;
     }
 
 
