@@ -1,8 +1,10 @@
 package com.pirateswarriors.view.defense;
 
+import com.pirateswarriors.model.Environnement;
 import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.defense.DefenseActor;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,15 +21,18 @@ public class AjoutDefense {
     private String buttonId;
     private Label labelPv;
     private PorteMonnaie porteMonnaie;
+    private Environnement env;
 
-    public AjoutDefense(Pane paneCentral, String buttonId, PorteMonnaie porteMonnaie) {
+    public AjoutDefense(Pane paneCentral, String buttonId, PorteMonnaie porteMonnai, Environnement env) {
         this.paneCentral = paneCentral;
-        this.porteMonnaie = porteMonnaie;
+        this.porteMonnaie = porteMonnai;
         this.boxDefense = new VBox();
         this.imageShip = new ImageView();
         this.labelPv = new Label();
         this.buttonId = buttonId;
+        this.env = env;
     }
+
     public void ajoutDefense() {
         switch (this.buttonId) {
             case "defense1" -> {
@@ -63,14 +68,20 @@ public class AjoutDefense {
             }
         }
 
+        // Bind des positions de l'acteur avec l'image
+        imageShip.xProperty().bind(defense.positionXProperty());
+        imageShip.yProperty().bind(defense.positionYProperty());
+
+        this.env.ajouterDefense(this.defense);
         labelPv.setText("Vie : " + defense.getPv());
     }
 
     public void bindImage(DoubleProperty mouseX, DoubleProperty mouseY) {
         if (!porteMonnaie.argentVide()){
             // Bindings des positions de la défense avec celle de la souris
-            imageShip.xProperty().bind(mouseX);
-            imageShip.yProperty().bind(mouseY);
+            defense.positionXProperty().bind(mouseX);
+            defense.positionYProperty().bind(mouseY);
+            System.out.println(imageShip.getX());
 
             // Ajout de la défense et du label dans la pane
             paneCentral.getChildren().add(labelPv);

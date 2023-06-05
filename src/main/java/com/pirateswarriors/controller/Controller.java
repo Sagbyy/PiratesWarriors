@@ -1,9 +1,9 @@
 package com.pirateswarriors.controller;
 
-import com.pirateswarriors.Ennemis;
+import com.pirateswarriors.model.Environnement;
+import com.pirateswarriors.model.ennemies.Ennemis;
 import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.Tresor;
-import com.pirateswarriors.model.defense.ControleurAjoutDefense;
 import com.pirateswarriors.view.EnnemiVue;
 import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
 import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
@@ -29,8 +29,6 @@ import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Controller implements Initializable {
 
@@ -54,20 +52,15 @@ public class Controller implements Initializable {
     private int temps;
     private PorteMonnaie porteMonnaie;
     private PorteMonnaieVue porteMonnaieVue;
-
-
     @FXML
     private Label labelVieTresor;
-
-
-
     @FXML
     private Label nbPieces;
+    private Environnement env;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Ayoub
-
 
         this.ennemis = new PirateFusil();
         this.ennemis2 = new BarqueCanon();
@@ -86,12 +79,13 @@ public class Controller implements Initializable {
         this.porteMonnaie = new PorteMonnaie();
         porteMonnaie.setNb(3000);
         this.porteMonnaieVue = new PorteMonnaieVue(porteMonnaie);
-//        this.paneCentral.getChildren().add(porteMonnaieVue.getImgPorteMonnaie());
-//        this.porteMonnaieVue.getImgPorteMonnaie().setX(1200);
-//        this.porteMonnaieVue.getImgPorteMonnaie().setY(800);
+
+
         nbPieces.textProperty().bind(porteMonnaie.nbProperty().asString());
         labelVieTresor.setText("vie: " + String.valueOf(tresor.getPv()));
 
+        // Salah
+        this.env = new Environnement();
 
         // Mouse Property
         this.mouseY = new SimpleDoubleProperty(0);
@@ -105,17 +99,6 @@ public class Controller implements Initializable {
                 mouseY.setValue(mouseEvent.getY());
             }
         });
-
-        // Bind du bateau
-
-        //this.personnageVue.getImageBateau().xProperty().bind(this.personnage.positionXProperty());
-        //  this.personnageVue.getImageBateau().yProperty().bind(this.personnage.positionYProperty());
-
-        // demarre l'animation
-
-
-
-
     }
 
     private void initAnimation() {
@@ -128,36 +111,11 @@ public class Controller implements Initializable {
                 Duration.seconds(0.007),
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
-                (ev ->{
-
-                       //this.personnage.setPositionX(this.personnage.getPositionX() + 10);
-
-                       // this.personnageVue.getImageBateau().setX(this.personnage.getPositionX());
-
-//                    if(temps==50){
-//                        System.out.println("fini");
-//                        gameLoop.stop();
-//                    }
-//
-//                    else if (temps%5==0) {
-//                        System.out.println("un tour");
-//                        this.personnage.setPositionX(this.personnage.getPositionX() - 1);
-//
-//
-//                        // this.personnageVue.getImageBateau().setX(this.personnage.getPositionX());
-//
-//                        //this.personnage.setPositionY(this.personnage.getPositionY());
-//                        this.personnageVue.getImageBateau().setY(this.personnage.getPositionY());
-//                        System.out.println(this.personnageVue.getImageBateau().getX());
-//                        // ajout de monnaie a chaque tour
-//                        porteMonnaie.ajoutMonnaie(500);
-//                        System.out.println("nouvelle valeur du porte monnaie: " + porteMonnaie.getNb());
-//
-//                    }
-
-
+                (ev -> {
                     this.ennemis.avance();
                     this.ennemis2.avance();
+
+                    this.env.unTour();
 
                     temps++;
                 })
@@ -173,12 +131,12 @@ public class Controller implements Initializable {
         String buttonId = ((Button) event.getSource()).getId();
 
         // Ajout de la vue
-        AjoutDefense ajoutDefense = new AjoutDefense(paneCentral, buttonId, porteMonnaie);
+        AjoutDefense ajoutDefense = new AjoutDefense(paneCentral, buttonId, porteMonnaie, env);
         ajoutDefense.ajoutDefense();
         ajoutDefense.bindImage(mouseX, mouseY);
 
         // Lorsque qu'on clique sur la map on laisse la position au clique
-        ControleurAjoutDefense controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getImageShip(), ajoutDefense.getLabelPv(), porteMonnaie);
+        ControleurAjoutDefense controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getImageShip(), ajoutDefense.getLabelPv(), porteMonnaie, paneCentral);
         paneCentral.addEventHandler(MouseEvent.MOUSE_CLICKED, controleurAjoutDefense);
     }
 

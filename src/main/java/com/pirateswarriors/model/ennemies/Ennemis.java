@@ -1,6 +1,6 @@
-package com.pirateswarriors;
+package com.pirateswarriors.model.ennemies;
 
-import com.pirateswarriors.model.ennemies.CarteModele;
+import com.pirateswarriors.model.Environnement;
 import com.pirateswarriors.model.map.BFS;
 import com.pirateswarriors.model.map.Couple;
 import javafx.beans.property.DoubleProperty;
@@ -150,7 +150,6 @@ public class Ennemis {
                 setPositionY(getPositionY()+this.vitesse);
             }
 
-            System.out.println(dir);
         }
     }
 }

@@ -21,7 +21,6 @@ public class CarteModele {
         c.getTabCarte();
         c.getPosition(6, 0);
         BFS test = new BFS(c);
-        System.out.println(test.cheminVersSource());
     }
 
     // Nombre de ligne de la map
@@ -74,7 +73,6 @@ public class CarteModele {
 
 
     public int getPosition(int i, int j){
-        System.out.println(tabCarte[i][j]);
         return tabCarte[i][j];
     }
 
@@ -102,15 +100,6 @@ public class CarteModele {
                     tabValues[i][j] = Integer.parseInt(values[j]);
                 }
                 i++;
-            }
-
-            System.out.println(tabValues);
-
-            for(int k =0; k< tabValues.length; k++){
-                for (int l = 0; l<tabValues.length; l++){
-                    System.out.print(tabValues[k][l] + " ");
-                }
-                System.out.println();
             }
 
             this.tabCarte = tabValues;
