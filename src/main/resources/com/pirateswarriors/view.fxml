@@ -22,7 +22,7 @@
     <center>
 
         <Pane fx:id="paneCentral" prefHeight="200.0" prefWidth="1300.0" BorderPane.alignment="CENTER">
-            <TilePane fx:id="tilePane" alignment="CENTER_LEFT" prefHeight="768.0" prefWidth="1280.0" style="-fx-background-color: #ff0000;" />
+            <TilePane fx:id="tilePane" alignment="CENTER_LEFT" style="-fx-background-color: #ff0000;" />
          <VBox fx:id="vboxTresor" alignment="CENTER" layoutY="270.0" prefHeight="200.0" prefWidth="100.0">
             <children>
                <Label fx:id="labelVieTresor" alignment="BOTTOM_CENTER" prefHeight="88.0" prefWidth="118.0" text="h" />
@@ -35,7 +35,7 @@
         </Pane>
     </center>
    <right>
-      <VBox alignment="CENTER" prefHeight="1084.0" prefWidth="640.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="1084.0" prefWidth="320.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="buttonAddDefense" mnemonicParsing="false" onAction="#ajoutDefense" text="Placer une défense" textOverrun="CLIP">
                <font>
