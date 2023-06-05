@@ -3,14 +3,15 @@ package com.pirateswarriors.controller;
 import com.pirateswarriors.Ennemis;
 import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.Tresor;
-import com.pirateswarriors.model.defense.DefenseActor;
+import com.pirateswarriors.model.defense.ControleurAjoutDefense;
+import com.pirateswarriors.view.EnnemiVue;
 import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
 import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
 import com.pirateswarriors.view.PorteMonnaieVue;
 import com.pirateswarriors.view.TresorVue;
+import com.pirateswarriors.view.defense.AjoutDefense;
 import com.pirateswarriors.view.map.Carte;
 import com.pirateswarriors.view.map.Carte_1;
-import com.pirateswarriors.view.EnnemiVue;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.DoubleProperty;
@@ -19,23 +20,20 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import javax.swing.*;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Controller implements Initializable {
 
@@ -47,6 +45,7 @@ public class Controller implements Initializable {
     private Button buttonAddDefense;
     private DoubleProperty mouseX;
     private DoubleProperty mouseY;
+
     private Ennemis ennemis;
     private Ennemis ennemis2;
     private EnnemiVue personnageVue;
@@ -71,32 +70,23 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Ayoub
 
+
         this.ennemis = new PirateFusil();
         this.ennemis2 = new BarqueCanon();
-        this.personnageVue = new EnnemiVue(this.ennemis);
-        this.personnageVue2 = new EnnemiVue(this.ennemis2);
+        this.personnageVue = new EnnemiVue(this.ennemis, paneCentral);
+        this.personnageVue2 = new EnnemiVue(this.ennemis2, paneCentral);
         this.carte_1 = new Carte_1(tilePane);
-        this.paneCentral.getChildren().add(personnageVue.getImageBateau());
-
-
-        this.personnageVue.getImageBateau().xProperty().bind(this.ennemis.positionXProperty());
-        this.personnageVue.getImageBateau().yProperty().bind(this.ennemis.positionYProperty());
-        this.tresor = new Tresor(5000);
-
-        this.paneCentral.getChildren().add(personnageVue2.getImageBateau());
         this.personnageVue.getImageBateau().xProperty().bind(this.ennemis.positionXProperty());
         this.personnageVue.getImageBateau().yProperty().bind(this.ennemis.positionYProperty());
         this.personnageVue2.getImageBateau().xProperty().bind(this.ennemis2.positionXProperty());
         this.personnageVue2.getImageBateau().yProperty().bind(this.ennemis2.positionYProperty());
-        this.tresor = new Tresor(1000);
-
-
+        this.tresor = new Tresor(2000);
         this.tresorVue = new TresorVue(tresor);
 //        this.paneCentral.getChildren().add(tresorVue.getImgTresor());
 //        this.tresorVue.getImgTresor().setX(0);
 //        this.tresorVue.getImgTresor().setY(335);
         this.porteMonnaie = new PorteMonnaie();
-        porteMonnaie.setNb(1500);
+        porteMonnaie.setNb(3000);
         this.porteMonnaieVue = new PorteMonnaieVue(porteMonnaie);
 //        this.paneCentral.getChildren().add(porteMonnaieVue.getImgPorteMonnaie());
 //        this.porteMonnaieVue.getImgPorteMonnaie().setX(1200);
@@ -170,8 +160,9 @@ public class Controller implements Initializable {
 //
 //                    }
 
-                        this.ennemis.avance();
-                        this.ennemis2.avance();
+                    this.ennemis.avance();
+                    this.ennemis2.avance();
+
 
                         if (tresor.estPasDetruit()){
                         // Infliger des dégâts au trésor
@@ -220,95 +211,21 @@ public class Controller implements Initializable {
         }
     }
 
+
     @FXML
     public void ajoutDefense(ActionEvent event) {
         System.out.println("Bouton cliqué !");
 
         String buttonId = ((Button) event.getSource()).getId();
 
-        // Nouvelle instance de la défense
-        DefenseActor defense;
-        ImageView imageShip;
-
-        switch (buttonId) {
-            case "defense1":
-                // Récupère l'image de la défense
-                imageShip = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (1).png"))));
-                // Nouvelle instance de la défense
-                defense = new DefenseActor(50, 15);
-                break;
-            case "defense2":
-                imageShip = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (2).png"))));
-                defense = new DefenseActor(50, 15);
-                break;
-            case "defense3":
-                imageShip = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (3).png"))));
-                defense = new DefenseActor(50, 15);
-                break;
-            case "defense4":
-                imageShip = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (4).png"))));
-                defense = new DefenseActor(50, 15);
-                break;
-            case "defense5":
-                imageShip = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (5).png"))));
-                defense = new DefenseActor(50, 15);
-                break;
-            case "defense6":
-                imageShip = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (6).png"))));
-                defense = new DefenseActor(50, 15);
-                break;
-            default:
-                imageShip = null;
-                defense = null;
-                System.out.println("Erreur : defense n'existe pas");
-                break;
-        }
-
-        Label labelPv = new Label("Vie : " + defense.getPv());
-
-        if (!porteMonnaie.argentVide()){
-            // Bindings des positions de la défense avec celle de la souris
-            imageShip.xProperty().bind(mouseX);
-            imageShip.yProperty().bind(mouseY);
-
-
-            // Ajout de la défense et du label dans la pane
-            paneCentral.getChildren().add(labelPv);
-            paneCentral.getChildren().add(imageShip);
-        }
-
-
-        // Bindings des positions de la défense avec celle de la souris
-        imageShip.xProperty().bind(mouseX);
-        imageShip.yProperty().bind(mouseY);
-
-
-
+        // Ajout de la vue
+        AjoutDefense ajoutDefense = new AjoutDefense(paneCentral, buttonId, porteMonnaie);
+        ajoutDefense.ajoutDefense();
+        ajoutDefense.bindImage(mouseX, mouseY);
 
         // Lorsque qu'on clique sur la map on laisse la position au clique
-        paneCentral.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if(!porteMonnaie.argentVide()){
-                    imageShip.xProperty().unbind();
-                    imageShip.yProperty().unbind();
-
-                    labelPv.setLayoutX(imageShip.getX() + 10);
-                    labelPv.setLayoutY(imageShip.getY() - 25);
-                    // retrait du cout de la defense
-
-                    porteMonnaie.ajoutMonnaie(-500);
-                    System.out.println("somme après retrait du prix de la defense: "+ porteMonnaie.getNb());
-                }
-                else
-                    //nbPieces.;0
-                    System.out.printf("Vous n'avez pas assez d'argent !/n");
-
-                System.out.println("Bateau ajouter à : " + "\nx : " + imageShip.getX() + " | y : " + imageShip.getY());
-            }
-        });
-
-
+        ControleurAjoutDefense controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getImageShip(), ajoutDefense.getLabelPv(), porteMonnaie);
+        paneCentral.addEventHandler(MouseEvent.MOUSE_CLICKED, controleurAjoutDefense);
     }
 
     @FXML
