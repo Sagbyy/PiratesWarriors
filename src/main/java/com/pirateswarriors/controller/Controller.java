@@ -78,6 +78,7 @@ public class Controller implements Initializable {
         this.carte_1 = new Carte_1(tilePane);
         this.paneCentral.getChildren().add(personnageVue.getImageBateau());
 
+
         this.personnageVue.getImageBateau().xProperty().bind(this.ennemis.positionXProperty());
         this.personnageVue.getImageBateau().yProperty().bind(this.ennemis.positionYProperty());
         this.tresor = new Tresor(5000);
@@ -88,6 +89,7 @@ public class Controller implements Initializable {
         this.personnageVue2.getImageBateau().xProperty().bind(this.ennemis2.positionXProperty());
         this.personnageVue2.getImageBateau().yProperty().bind(this.ennemis2.positionYProperty());
         this.tresor = new Tresor(1000);
+
 
         this.tresorVue = new TresorVue(tresor);
 //        this.paneCentral.getChildren().add(tresorVue.getImgTresor());
@@ -294,11 +296,12 @@ public class Controller implements Initializable {
                     labelPv.setLayoutX(imageShip.getX() + 10);
                     labelPv.setLayoutY(imageShip.getY() - 25);
                     // retrait du cout de la defense
+
                     porteMonnaie.ajoutMonnaie(-500);
                     System.out.println("somme après retrait du prix de la defense: "+ porteMonnaie.getNb());
                 }
                 else
-                    //nbPieces.;
+                    //nbPieces.;0
                     System.out.printf("Vous n'avez pas assez d'argent !/n");
 
                 System.out.println("Bateau ajouter à : " + "\nx : " + imageShip.getX() + " | y : " + imageShip.getY());
