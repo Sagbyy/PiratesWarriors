@@ -39,6 +39,10 @@ public class Environnement {
         this.nbVague.set(nbVague);
     }
 
+    public ArrayList<Ennemis> getEnnemis() {
+        return this.ennemis;
+    }
+
     public void créerVagues(){
         for(int i = 0; i <= this.nbEnnemis; i++){
             int rand = (int)(Math.random() * 2) + 1;
