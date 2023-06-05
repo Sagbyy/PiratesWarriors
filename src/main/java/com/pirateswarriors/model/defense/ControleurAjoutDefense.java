@@ -22,7 +22,7 @@ public class ControleurAjoutDefense implements EventHandler<MouseEvent> {
     // Lorsque qu'on clique sur la map on laisse la position au clique
         @Override
         public void handle(MouseEvent mouseEvent) {
-            if(!porteMonnaie.argentVide()){
+            if (!porteMonnaie.argentVide()) {
                 imageShip.xProperty().unbind();
                 imageShip.yProperty().unbind();
 
@@ -31,20 +31,10 @@ public class ControleurAjoutDefense implements EventHandler<MouseEvent> {
                 // retrait du cout de la defense
 
                 porteMonnaie.ajoutMonnaie(-500);
-                System.out.println("somme après retrait du prix de la defense: "+ porteMonnaie.getNb());
-            }
-            else
+                System.out.println("somme après retrait du prix de la defense: " + porteMonnaie.getNb());
+            } else
                 //nbPieces.;0
                 System.out.printf("Vous n'avez pas assez d'argent !/n");
 
-            // retrait du cout de la defense
-            if (!this.porteMonnaie.argentVide()){
-                this.porteMonnaie.ajoutMonnaie(-500);
-            }
-            else {
-                //nbPieces.;
-                System.out.printf("Vous n'avez pas assez d'argent !/n");
-            }
-            System.out.println("Bateau ajouter à : " + "\nx : " + imageShip.getX() + " | y : " + imageShip.getY());
         }
 }

@@ -192,6 +192,8 @@ public class Controller implements Initializable {
 
 
     }
+
+
     public boolean ennemiProche(){
         double distanceX = Math.abs(ennemis.getPositionX() - imgTresor.getX());
         System.out.println("distanceX: " + distanceX);

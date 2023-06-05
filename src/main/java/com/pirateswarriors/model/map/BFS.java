@@ -16,8 +16,8 @@ public class BFS {
 
     public BFS(CarteModele g){
         this.g = g;
-        this.source = new Couple(1, 19) ;
-        this.objectif = new Couple(6, 0);
+        this.source = new Couple(3, 24) ;
+        this.objectif = new Couple(0, 6);
         parcours = new ArrayList<Couple>();
         predecesseurs = new HashMap<Couple, Couple>();
         algoBFS();
