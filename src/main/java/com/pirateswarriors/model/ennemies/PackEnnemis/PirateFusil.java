@@ -5,6 +5,7 @@ import com.pirateswarriors.Environnement;
 import com.pirateswarriors.model.map.Couple;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class PirateFusil extends Ennemis {
         this.image = new Image("testanim.gif");
         this.positionX = positionX;
         this.positionY = positionY;
-        this.pts_vie = 10;
+        this.pts_vie = new SimpleIntegerProperty(10);
         this.pts_score = 7;
         this.pts_pièces = 10;
         this.pts_attaque = 10;
