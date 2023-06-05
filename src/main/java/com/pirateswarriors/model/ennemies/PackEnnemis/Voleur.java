@@ -1,7 +1,7 @@
 package com.pirateswarriors.model.ennemies.PackEnnemis;
 
 import com.pirateswarriors.Ennemis;
-import com.pirateswarriors.Environnement;
+import com.pirateswarriors.model.Environnement;
 import javafx.scene.image.Image;
 
 public class Voleur extends Ennemis {

@@ -1,5 +1,6 @@
 package com.pirateswarriors;
 
+import com.pirateswarriors.model.Environnement;
 import javafx.beans.property.IntegerProperty;
 
 public class Defense {

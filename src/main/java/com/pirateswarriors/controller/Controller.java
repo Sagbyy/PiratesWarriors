@@ -1,7 +1,7 @@
 package com.pirateswarriors.controller;
 
 import com.pirateswarriors.Ennemis;
-import com.pirateswarriors.Environnement;
+import com.pirateswarriors.model.Environnement;
 import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.Tresor;
 import com.pirateswarriors.model.defense.ControleurAjoutDefense;
@@ -30,8 +30,6 @@ import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Controller implements Initializable {
 
