@@ -1,7 +1,7 @@
 package com.pirateswarriors.view;
 
 
-import com.pirateswarriors.Ennemis;
+import com.pirateswarriors.model.ennemies.Ennemis;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

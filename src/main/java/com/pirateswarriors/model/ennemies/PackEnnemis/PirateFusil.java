@@ -1,14 +1,10 @@
 package com.pirateswarriors.model.ennemies.PackEnnemis;
 
-import com.pirateswarriors.Ennemis;
-import com.pirateswarriors.Environnement;
-import com.pirateswarriors.model.map.Couple;
+import com.pirateswarriors.model.ennemies.Ennemis;
+import com.pirateswarriors.model.Environnement;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
-
-import java.util.ArrayList;
 
 public class PirateFusil extends Ennemis {
 
