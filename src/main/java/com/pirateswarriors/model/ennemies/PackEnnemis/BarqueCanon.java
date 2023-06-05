@@ -5,6 +5,7 @@ import com.pirateswarriors.Ennemis;
 import com.pirateswarriors.Environnement;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 
 public class BarqueCanon extends Ennemis {
@@ -18,7 +19,7 @@ public class BarqueCanon extends Ennemis {
         this.image = new Image("ship.png");
         this.positionX = new SimpleDoubleProperty(1216);
         this.positionY = new SimpleDoubleProperty(64);
-        this.pts_vie = 10;
+        this.pts_vie = new SimpleIntegerProperty(10);
         this.pts_score = 7;
         this.pts_pièces = 10;
         this.pts_attaque = 10;

@@ -29,6 +29,8 @@ import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Controller implements Initializable {
 
@@ -69,11 +71,9 @@ public class Controller implements Initializable {
 
         this.ennemis = new PirateFusil();
         this.ennemis2 = new BarqueCanon();
-        this.personnageVue = new EnnemiVue(this.ennemis);
-        this.personnageVue2 = new EnnemiVue(this.ennemis2);
+        this.personnageVue = new EnnemiVue(this.ennemis, paneCentral);
+        this.personnageVue2 = new EnnemiVue(this.ennemis2, paneCentral);
         this.carte_1 = new Carte_1(tilePane);
-        this.paneCentral.getChildren().add(personnageVue.getImageBateau());
-        this.paneCentral.getChildren().add(personnageVue2.getImageBateau());
         this.personnageVue.getImageBateau().xProperty().bind(this.ennemis.positionXProperty());
         this.personnageVue.getImageBateau().yProperty().bind(this.ennemis.positionYProperty());
         this.personnageVue2.getImageBateau().xProperty().bind(this.ennemis2.positionXProperty());

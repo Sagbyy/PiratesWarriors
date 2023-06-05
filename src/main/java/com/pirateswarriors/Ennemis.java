@@ -4,13 +4,15 @@ import com.pirateswarriors.model.ennemies.CarteModele;
 import com.pirateswarriors.model.map.BFS;
 import com.pirateswarriors.model.map.Couple;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 
 public class Ennemis {
-    protected int pts_vie; // Points de vie de l'ennemi
+    protected IntegerProperty pts_vie; // Points de vie de l'ennemi
     protected int pts_score; // Nombre de points gagnés quand le joueur élimine l'ennemi
     protected int pts_pièces; // Nombre de pièces gagnés quand le joueur élimine l'ennemi
     protected int pts_attaque; // Valeur de l'attaque de l'ennemi
@@ -29,7 +31,7 @@ public class Ennemis {
     com.pirateswarriors.model.map.BFS BFS = new BFS(g);
 
     public Ennemis(int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, Image image) { // Constructeur de la class mère Ennemis
-        this.pts_vie = pts_vie;
+        this.pts_vie = new SimpleIntegerProperty(pts_vie);
         this.image = image;
         this.pts_score = pts_score;
         this.pts_pièces = pts_pièces;
@@ -62,7 +64,7 @@ public class Ennemis {
 
 
     public boolean estMort(){ // Fonction pour verfier si l'ennemi est mort ou non
-        if(this.pts_vie == 0){
+        if(this.pts_vie.getValue() == 0){
             return true; // Si oui retourne true
         }
         else return false; // Sinon retourne false
@@ -82,8 +84,6 @@ public class Ennemis {
         return this.chemin;
     }
 
-
-
     public double getPositionY() {
         return positionY.getValue();
     }
@@ -94,12 +94,24 @@ public class Ennemis {
         return positionY;
     }
 
+    public IntegerProperty getPts_vieProperty() {
+        return this.pts_vie;
+    }
+
+    public int getPts_vie() {
+        return this.pts_vie.getValue();
+    }
+
+    public void setPts_vie(int newPtsVie) {
+        this.pts_vie.setValue(newPtsVie);
+    }
+
     public void enleverPv(int n) {
-        this.pts_vie-=n;
+        this.pts_vie.setValue(this.pts_vie.getValue() - n);
     }
 
     public void ajoutPv(int n) {
-        this.pts_vie+=n;
+        this.pts_vie.setValue(this.pts_vie.getValue() + n);
     }
 
     public Image getImage(){
