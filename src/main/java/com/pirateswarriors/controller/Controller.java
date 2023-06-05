@@ -131,7 +131,7 @@ public class Controller implements Initializable {
     private void initAnimation() {
         gameLoop = new Timeline();
         temps=0;
-        tre = 0;
+        //tre = 0;
 
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
@@ -142,9 +142,6 @@ public class Controller implements Initializable {
                     // on définit ce qui se passe à chaque frame
                     // c'est un eventHandler d'ou le lambda
                     (ev ->{
-                        int frameCount = 0;
-                        int intervalleFrame = 500; // Une frame toutes les n itérations
-
 
                         //this.personnage.setPositionX(this.personnage.getPositionX() + 10);
 
@@ -175,21 +172,24 @@ public class Controller implements Initializable {
                         this.ennemis2.avance();
 
                         if (tresor.estPasDetruit()){
-                        // Vérifier si on atteint l'intervalle de frame
-                            if (frameCount % intervalleFrame == 0) {
-                            // Infliger des dégâts au trésor
-
-                                //if ((tre%100)==0){
-                                if (ennemiProche()){
+                        // Infliger des dégâts au trésor
+                            if (ennemiProche()){
+                                if ((temps%20)==0){
+                                    System.out.println("temps:" + temps);
                                     ennemis.attaque(this.tresor);
+                                    ennemis2.attaque(this.tresor);
                                     labelVieTresor.setText("vie: " + String.valueOf(this.tresor.getPv()));
                                 }
-                                //}
                             }
                         }
 
+                        //remplacement de l'image trésor
+//                        else{
+//                            int i = paneCentral.getChildren().indexOf(imgTresor);
+//                            paneCentral.getChildren().set(i, tresorVue.imgTresorDetruit());
+//                        }
+
                         temps++;
-                        frameCount++;
 
                     })
             );
@@ -205,9 +205,9 @@ public class Controller implements Initializable {
         double distanceY = Math.abs(ennemis.getPositionY() - imgTresor.getY());
 
         // Calcul de la distance entre l'ennemi et le trésor
-        double distance = Math.sqrt(distanceX * distanceX - distanceY * distanceY);
+        double distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
         System.out.println("distance: " + distance);
-        double maxDistance = 5;
+        double maxDistance = 800;
 
         if (distance <= maxDistance) {
             System.out.println("distance proche");

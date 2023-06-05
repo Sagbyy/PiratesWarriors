@@ -149,10 +149,10 @@ public class Ennemis {
 
     }
     public void attaque (Tresor tresor){
-        while (tresor.estPasDetruit()){
-            System.out.println("attaque du trésor");
-            tresor.damage(pts_attaque);
-        }
+        //while (tresor.estPasDetruit()){
+        System.out.println("attaque du trésor");
+        tresor.damage(pts_attaque);
+        //}
     }
 
 //    public boolean ennemiProche(){
