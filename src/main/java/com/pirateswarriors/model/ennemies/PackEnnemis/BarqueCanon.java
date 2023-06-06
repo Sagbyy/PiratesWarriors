@@ -8,17 +8,15 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 
 public class BarqueCanon extends Ennemis {
-    Environnement jeu = new Environnement();
 
     private DoubleProperty positionX;
     private DoubleProperty positionY;
 
     public BarqueCanon() {
-        this.jeu = jeu;
         this.image = new Image("ship.png");
         this.positionX = new SimpleDoubleProperty(1216);
         this.positionY = new SimpleDoubleProperty(64);
-        this.pts_vie = new SimpleIntegerProperty(10);
+        this.pts_vie = new SimpleIntegerProperty(200);
         this.pts_score = 7;
         this.pts_pièces = 10;
         this.pts_attaque = 10;

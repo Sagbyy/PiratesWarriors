@@ -51,15 +51,8 @@ public class Ennemis {
 
 
     public Ennemis() { // Constructeur de la class mère Ennemis
-        this.pts_vie = pts_vie;
-        this.image = image;
-        this.pts_score = pts_score;
-        this.pts_pièces = pts_pièces;
-        this.pts_attaque = pts_attaque;
         this.positionX = new SimpleDoubleProperty(1216);
         this.positionY = new SimpleDoubleProperty(64);
-        this.vitesse = vitesse;
-        this.env = env;
         this.chemin = BFS.cheminVersSource();
         this.dir = "";
         this.pos = 0;
@@ -68,10 +61,7 @@ public class Ennemis {
 
 
     public boolean estMort(){ // Fonction pour verfier si l'ennemi est mort ou non
-        if(this.pts_vie.getValue() == 0){
-            return true; // Si oui retourne true
-        }
-        else return false; // Sinon retourne false
+        return this.pts_vie.getValue() <= 0;
     }
 
     public double getPositionX() {
