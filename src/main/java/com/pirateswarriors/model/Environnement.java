@@ -87,18 +87,25 @@ public class Environnement {
         tousAvancent();
         sontMorts();
 
-        // Defenses qui attaque les ennemis
         // Attaque des défense
-
-
         for (Ennemis ennemies : ennemisList) {
+            if (ennemies.estMort()) {
+                ennemisList.remove(ennemies);
+                System.out.println("mort de : " + ennemies);
+            }
             for (DefenseActor defense : defenseList) {
                 double distanceX = Math.abs(ennemies.getPositionX() - defense.getPositionX());
                 double distanceY = Math.abs(ennemies.getPositionX() - defense.getPositionX());
 
-                System.out.println("Distance : " );
                 if (distanceX < 25 || distanceY < 25) {
+                    System.out.println("Ennemis trouvée : " + ennemies);
                     ennemies.enleverPv(1);
+                    ennemies.positionXProperty().addListener((obs, old, nouv) -> {
+                        defense.rotateImage((Double) nouv, ennemies.getPositionY());
+                    });
+                    ennemies.positionYProperty().addListener((obs, old, nouv) -> {
+                        defense.rotateImage(ennemies.getPositionX(), (Double) nouv);
+                    });
                 }
             }
         }

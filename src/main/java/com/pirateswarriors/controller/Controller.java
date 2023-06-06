@@ -62,22 +62,16 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        this.ennemis = new PirateFusil();
-        this.ennemis2 = new BarqueCanon();
-        this.personnageVue = new EnnemiVue(this.ennemis);
-        this.personnageVue2 = new EnnemiVue(this.ennemis2);
+
         this.carte_1 = new Carte_1(tilePane);
-        this.personnageVue.getImageBateau().xProperty().bind(this.ennemis.positionXProperty());
-        this.personnageVue.getImageBateau().yProperty().bind(this.ennemis.positionYProperty());
-        this.personnageVue2.getImageBateau().xProperty().bind(this.ennemis2.positionXProperty());
-        this.personnageVue2.getImageBateau().yProperty().bind(this.ennemis2.positionYProperty());
+
         this.tresor = new Tresor(2000);
         this.tresorVue = new TresorVue(tresor);
 //        this.paneCentral.getChildren().add(tresorVue.getImgTresor());
 //        this.tresorVue.getImgTresor().setX(0);
 //        this.tresorVue.getImgTresor().setY(335);
         this.porteMonnaie = new PorteMonnaie();
-        porteMonnaie.setNb(3000);
+        porteMonnaie.setNb(9000);
         this.porteMonnaieVue = new PorteMonnaieVue(porteMonnaie);
 
         nbPieces.textProperty().bind(porteMonnaie.nbProperty().asString());
@@ -162,7 +156,7 @@ public class Controller implements Initializable {
         ajoutDefense.bindImage(mouseX, mouseY);
 
         // Lorsque qu'on clique sur la map on laisse la position au clique
-        ControleurAjoutDefense controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getImageShip(), ajoutDefense.getLabelPv(), porteMonnaie, paneCentral);
+        ControleurAjoutDefense controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getDefense(), porteMonnaie, paneCentral);
         paneCentral.addEventHandler(MouseEvent.MOUSE_CLICKED, controleurAjoutDefense);
     }
 

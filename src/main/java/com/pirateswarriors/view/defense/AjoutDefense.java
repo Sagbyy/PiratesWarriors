@@ -28,52 +28,46 @@ public class AjoutDefense {
         this.porteMonnaie = porteMonnai;
         this.boxDefense = new VBox();
         this.imageShip = new ImageView();
-        this.labelPv = new Label();
         this.buttonId = buttonId;
         this.env = env;
     }
 
     public void ajoutDefense() {
-        switch (this.buttonId) {
-            case "defense1" -> {
-                // Récupère l'image de la défense
-                imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (1).png"))));
-                // Nouvelle instance de la défense
-                this.defense = new DefenseActor(50, 15);
+        if (!porteMonnaie.argentVide()) {
+            switch (this.buttonId) {
+                case "defense1" -> {
+                    // Récupère l'image de la défense
+                    imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (1).png"))));
+                    // Nouvelle instance de la défense
+                    this.defense = new DefenseActor(50, 15, imageShip, paneCentral);
+                }
+                case "defense2" -> {
+                    imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (2).png"))));
+                    this.defense = new DefenseActor(50, 15, imageShip, paneCentral);
+                }
+                case "defense3" -> {
+                    imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (3).png"))));
+                    this.defense = new DefenseActor(50, 15, imageShip, paneCentral);
+                }
+                case "defense4" -> {
+                    imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (4).png"))));
+                    this.defense = new DefenseActor(50, 15, imageShip, paneCentral);
+                }
+                case "defense5" -> {
+                    imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (5).png"))));
+                    this.defense = new DefenseActor(50, 15, imageShip, paneCentral);
+                }
+                case "defense6" -> {
+                    imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (6).png"))));
+                    this.defense = new DefenseActor(50, 15, imageShip, paneCentral);
+                }
+                default -> {
+                    System.out.println("Erreur : defense n'existe pas");
+                }
             }
-            case "defense2" -> {
-                imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (2).png"))));
-                this.defense = new DefenseActor(50, 15);
-            }
-            case "defense3" -> {
-                imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (3).png"))));
-                this.defense = new DefenseActor(50, 15);
-            }
-            case "defense4" -> {
-                imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (4).png"))));
-                this.defense = new DefenseActor(50, 15);
-            }
-            case "defense5" -> {
-                imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (5).png"))));
-                this.defense = new DefenseActor(50, 15);
-            }
-            case "defense6" -> {
-                imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (6).png"))));
-                this.defense = new DefenseActor(50, 15);
-            }
-            default -> {
-                this.imageShip = null;
-                this.defense = null;
-                System.out.println("Erreur : defense n'existe pas");
-            }
+
+            this.env.ajouterDefense(this.defense);
         }
-
-        // Bind des positions de l'acteur avec l'image
-        imageShip.xProperty().bind(defense.positionXProperty());
-        imageShip.yProperty().bind(defense.positionYProperty());
-
-        this.env.ajouterDefense(this.defense);
-        labelPv.setText("Vie : " + defense.getPv());
     }
 
     public void bindImage(DoubleProperty mouseX, DoubleProperty mouseY) {
@@ -82,20 +76,13 @@ public class AjoutDefense {
             defense.positionXProperty().bind(mouseX);
             defense.positionYProperty().bind(mouseY);
             System.out.println(imageShip.getX());
-
-            // Ajout de la défense et du label dans la pane
-            paneCentral.getChildren().add(labelPv);
-            paneCentral.getChildren().add(imageShip);
         }
     }
 
     // Getter & Setter
 
-    public ImageView getImageShip() {
-        return this.imageShip;
+    public DefenseActor getDefense() {
+        return this.defense;
     }
 
-    public Label getLabelPv() {
-        return this.labelPv;
-    }
 }

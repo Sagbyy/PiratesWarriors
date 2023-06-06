@@ -1,6 +1,7 @@
 package com.pirateswarriors.controller;
 
 import com.pirateswarriors.model.PorteMonnaie;
+import com.pirateswarriors.model.defense.DefenseActor;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -9,14 +10,12 @@ import javafx.scene.layout.Pane;
 
 public class ControleurAjoutDefense implements EventHandler<MouseEvent> {
 
-        private ImageView imageShip;
-        private Label labelPv;
         private PorteMonnaie porteMonnaie;
         private Pane paneCentral;
+        private DefenseActor defenseActor;
 
-        public ControleurAjoutDefense(ImageView imageShip, Label labelPv, PorteMonnaie porteMonnaie, Pane paneCentral) {
-            this.imageShip = imageShip;
-            this.labelPv = labelPv;
+        public ControleurAjoutDefense(DefenseActor defenseActor, PorteMonnaie porteMonnaie, Pane paneCentral) {
+            this.defenseActor = defenseActor;
             this.porteMonnaie = porteMonnaie;
             this.paneCentral = paneCentral;
         }
@@ -25,11 +24,11 @@ public class ControleurAjoutDefense implements EventHandler<MouseEvent> {
         @Override
         public void handle(MouseEvent mouseEvent) {
             if(!porteMonnaie.argentVide()){
-                imageShip.xProperty().unbind();
-                imageShip.yProperty().unbind();
+                this.defenseActor.getImageProperty().xProperty().unbind();
+                this.defenseActor.getImageProperty().yProperty().unbind();
 
-                labelPv.setLayoutX(imageShip.getX() + 10);
-                labelPv.setLayoutY(imageShip.getY() - 25);
+                this.defenseActor.labelProperty().setLayoutX(this.defenseActor.getImageProperty().getX() + 10);
+                this.defenseActor.labelProperty().setLayoutY(this.defenseActor.getImageProperty().getY() - 25);
 
 
                 // retrait du cout de la defense
