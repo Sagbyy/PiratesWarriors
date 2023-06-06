@@ -65,8 +65,6 @@ public class AjoutDefense {
                     System.out.println("Erreur : defense n'existe pas");
                 }
             }
-
-            this.env.ajouterDefense(this.defense);
         }
     }
 
