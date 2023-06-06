@@ -78,7 +78,7 @@ public class DefenseActor {
     // Methods
 
     public void rotateImage(double posX, double posY) {
-        double angle = Math.toDegrees(Math.atan2(posY - this.image.getY(), posX - this.image.getX()));
+        double angle = Math.toDegrees(Math.atan2(this.image.getY() - posY, this.image.getX() - posX));
         this.image.setRotate(angle);
     }
 }

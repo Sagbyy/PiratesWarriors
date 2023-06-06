@@ -77,7 +77,7 @@ public class Controller implements Initializable {
         nbPieces.textProperty().bind(porteMonnaie.nbProperty().asString());
         labelVieTresor.setText("vie: " + String.valueOf(tresor.getPv()));
 
-        this.jeu = new Environnement();
+        this.jeu = new Environnement(paneCentral);
         // Mouse Property
         this.mouseY = new SimpleDoubleProperty(0);
         this.mouseX = new SimpleDoubleProperty(0);
@@ -94,7 +94,7 @@ public class Controller implements Initializable {
 
     private void initAnimation() {
         gameLoop = new Timeline();
-        temps=0;
+        temps = 0;
 
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
@@ -103,10 +103,10 @@ public class Controller implements Initializable {
                 Duration.seconds(0.017),
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
-                (ev ->{
-                       //this.personnage.setPositionX(this.personnage.getPositionX() + 10);
+                (ev -> {
+                    //this.personnage.setPositionX(this.personnage.getPositionX() + 10);
 
-                       // this.personnageVue.getImageBateau().setX(this.personnage.getPositionX());
+                    // this.personnageVue.getImageBateau().setX(this.personnage.getPositionX());
 
 //                    if(temps==50){
 //                        System.out.println("fini");
@@ -126,11 +126,10 @@ public class Controller implements Initializable {
 //                        // ajout de monnaie a chaque tour
 //                        porteMonnaie.ajoutMonnaie(500);
 //                        System.out.println("nouvelle valeur du porte monnaie: " + porteMonnaie.getNb());
-//
 //                    }
-                    for (int i = 0; i < jeu.getEnnemisList().size(); i++){
+                    for (int i = 0; i < jeu.getEnnemisList().size(); i++) {
                         Ennemis e = jeu.getEnnemisList().get(i);
-                        EnnemiVue v = new EnnemiVue (jeu.getEnnemisList().get(i));
+                        EnnemiVue v = new EnnemiVue(jeu.getEnnemisList().get(i));
                         this.paneCentral.getChildren().add(v.getImageBateau());
                         v.getImageBateau().xProperty().bind(e.positionXProperty());
                         v.getImageBateau().yProperty().bind(e.positionYProperty());
@@ -156,14 +155,14 @@ public class Controller implements Initializable {
         ajoutDefense.bindImage(mouseX, mouseY);
 
         // Lorsque qu'on clique sur la map on laisse la position au clique
-        ControleurAjoutDefense controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getDefense(), porteMonnaie, paneCentral);
+        ControleurAjoutDefense controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getDefense(), porteMonnaie, jeu);
         paneCentral.addEventHandler(MouseEvent.MOUSE_CLICKED, controleurAjoutDefense);
     }
 
     @FXML
     public void lancerVagues(ActionEvent actionEvent) {
 
-        if(lcn==0){
+        if (lcn == 0) {
             initAnimation();
 
             lcn++;
@@ -173,7 +172,7 @@ public class Controller implements Initializable {
 
     @FXML
     public void Pause(ActionEvent actionEvent) {
-        if(lcn==1){
+        if (lcn == 1) {
             gameLoop.stop();
 
         }
