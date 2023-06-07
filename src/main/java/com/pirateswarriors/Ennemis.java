@@ -2,6 +2,8 @@ package com.pirateswarriors;
 
 import com.pirateswarriors.model.Tresor;
 import com.pirateswarriors.model.ennemies.CarteModele;
+import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
+import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
 import com.pirateswarriors.model.map.BFS;
 import com.pirateswarriors.model.map.Couple;
 import javafx.beans.property.DoubleProperty;
@@ -36,7 +38,7 @@ public class Ennemis {
 
     ArrayList chemin;
     CarteModele g = new CarteModele("newMap2.csv");
-    com.pirateswarriors.model.map.BFS BFS = new BFS(g);
+    com.pirateswarriors.model.map.BFS BFS ;
 
     public Ennemis(int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, Image image) { // Constructeur de la class mère Ennemis
         this.pts_vie = new SimpleIntegerProperty(pts_vie);
@@ -48,11 +50,12 @@ public class Ennemis {
         this.positionY = new SimpleDoubleProperty(192);
         this.vitesse = vitesse;
         this.env = env;
-        this.chemin = BFS.cheminVersSource();
         this.dir = "";
         this.pos = 0;
         this.id = "E"+compteur;
         compteur++;
+        this.chemin = BFS.cheminVersSource();
+        this.BFS = new BFS(g,apparition() );
     }
 
 
@@ -66,9 +69,25 @@ public class Ennemis {
         this.positionY = new SimpleDoubleProperty(192);
         this.vitesse = vitesse;
         this.env = env;
+        this.BFS = new BFS(g,apparition() );
         this.chemin = BFS.cheminVersSource();
         this.dir = "";
         this.pos = 0;
+    }
+
+
+    public Couple apparition(){
+        Couple c = null;
+        int rand = (int) (Math.random() * 2) + 1;
+        if (rand == 1) {
+             c = new Couple(3, 24);
+        }
+        if (rand == 2) {
+             c = new Couple(12, 22);
+             setPositionY(256);
+        }
+
+        return c;
     }
 
 

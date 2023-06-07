@@ -74,48 +74,46 @@ public class Environnement {
         if (ennemis.size() == 0) {
             this.nbEnnemis += 10;
             vague();
+        }
+        vague();
+        tousAvancent();
+        sontMorts();
+    }
+
+    public void tousAvancent () {
+        for (int i = 0; i < getEnnemis().size(); i++) {
+            getEnnemis().get(i).avance();
+        }
+    }
+
+    public void sontMorts () {
+        for (int i = getEnnemis().size() - 1; i >= 0; i--) {
+            Ennemis a = getEnnemis().get(i);
+            if (a.estMort()) {
+                System.out.println("mort de : " + a);
+                getEnnemis().remove(i);
+            }
+        }
+    }
+
+
+    int nbenn, lop;
+    public void vague () {
+        if (!(nbenn == getNbEnnemis())) {
+            if (lop % 75 == 0) {
+                int rand = (int) (Math.random() * 2) + 1;
+                if (rand == 1) {
+                    getEnnemis().add(new BarqueCanon());
+                }
+                if (rand == 2) {
+                    getEnnemis().add(new PirateFusil());
+                }
+                nbenn++;
+            }
 
         }
+        lop = lop + (int) (Math.random() * 3) + 1;
 
-                vague();
-                tousAvancent();
-                sontMorts();
-            }
-
-            public void tousAvancent () {
-                for (int i = 0; i < getEnnemis().size(); i++) {
-                    getEnnemis().get(i).avance();
-                }
-            }
-
-            public void sontMorts () {
-                for (int i = getEnnemis().size() - 1; i >= 0; i--) {
-                    Ennemis a = getEnnemis().get(i);
-                    if (a.estMort()) {
-                        System.out.println("mort de : " + a);
-                        getEnnemis().remove(i);
-                    }
-                }
-            }
-
-
-            int nbenn, lop;
-            public void vague () {
-                if (!(nbenn == getNbEnnemis())) {
-                    if (lop % 75 == 0) {
-                        int rand = (int) (Math.random() * 2) + 1;
-                        if (rand == 1) {
-                            getEnnemis().add(new BarqueCanon());
-                        }
-                        if (rand == 2) {
-                            getEnnemis().add(new PirateFusil());
-                        }
-                        nbenn++;
-                    }
-
-                }
-                lop = lop + (int) (Math.random() * 3) + 1;
-
-            }
+    }
 
         }

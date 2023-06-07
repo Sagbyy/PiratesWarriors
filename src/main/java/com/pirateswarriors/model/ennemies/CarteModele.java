@@ -20,10 +20,15 @@ public class CarteModele {
     public static void main(String[] args) {
         CarteModele c = new CarteModele("newMap2.csv");
         c.getTabCarte();
-        System.out.println("test1" +c.getPosition(3, 24));
-        BFS test = new BFS(c);
-        System.out.println("test2   "+c.getPosition(6, 0));
-        System.out.println(test.cheminVersSource());
+//<<<<<<< HEAD
+//        System.out.println("test1" +c.getPosition(3, 24));
+//        BFS test = new BFS(c);
+//        System.out.println("test2   "+c.getPosition(6, 0));
+//=======
+//        c.getPosition(6, 0);
+//        BFS test = new BFS(c, new Couple(1, 19));
+//>>>>>>> 29d3682c87543286e71bdaac2acdf2f445e1107e
+//        System.out.println(test.cheminVersSource());
 
     }
 

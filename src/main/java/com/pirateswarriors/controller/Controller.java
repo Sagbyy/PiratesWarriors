@@ -73,15 +73,15 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
 
-        this.ennemis = new PirateFusil();
-        this.ennemis2 = new BarqueCanon();
-        this.personnageVue = new EnnemiVue(this.ennemis);
-        this.personnageVue2 = new EnnemiVue(this.ennemis2);
+//        this.ennemis = new PirateFusil();
+//        this.ennemis2 = new BarqueCanon();
+//        this.personnageVue = new EnnemiVue(this.ennemis);
+//        this.personnageVue2 = new EnnemiVue(this.ennemis2);
         this.carte_1 = new Carte_1(tilePane);
-        this.personnageVue.getImageBateau().xProperty().bind(this.ennemis.positionXProperty());
-        this.personnageVue.getImageBateau().yProperty().bind(this.ennemis.positionYProperty());
-        this.personnageVue2.getImageBateau().xProperty().bind(this.ennemis2.positionXProperty());
-        this.personnageVue2.getImageBateau().yProperty().bind(this.ennemis2.positionYProperty());
+//        this.personnageVue.getImageBateau().xProperty().bind(this.ennemis.positionXProperty());
+//        this.personnageVue.getImageBateau().yProperty().bind(this.ennemis.positionYProperty());
+//        this.personnageVue2.getImageBateau().xProperty().bind(this.ennemis2.positionXProperty());
+//        this.personnageVue2.getImageBateau().yProperty().bind(this.ennemis2.positionYProperty());
         this.tresor = new Tresor(2000);
         this.tresorVue = new TresorVue(tresor);
 //        this.paneCentral.getChildren().add(tresorVue.getImgTresor());
@@ -157,24 +157,23 @@ public class Controller implements Initializable {
                         this.paneCentral.getChildren().add(v.getImageBateau());
                         v.getImageBateau().xProperty().bind(e.positionXProperty());
                         v.getImageBateau().yProperty().bind(e.positionYProperty());
-                    }
-
-
-                    this.ennemis.avance();
-                    this.ennemis2.avance();
-
 
                         if (tresor.estPasDetruit()){
-                        // Infliger des dégâts au trésor
-                            if (ennemiProche()){
+                            // Infliger des dégâts au trésor
+                            if (ennemiProche(jeu.getEnnemis().get(i))){
                                 if ((temps%20)==0){
                                     System.out.println("temps:" + temps);
-                                    ennemis.attaque(this.tresor);
-                                    ennemis2.attaque(this.tresor);
+                                    jeu.getEnnemis().get(i).attaque(this.tresor);
                                     labelVieTresor.setText("vie: " + String.valueOf(this.tresor.getPv()));
                                 }
                             }
                         }
+                    }
+
+//                    for (int i=0; i < jeu.getEnnemis().size(); i++){
+//
+//
+//                    }
 
                         //remplacement de l'image trésor
 //                        else{
@@ -193,7 +192,7 @@ public class Controller implements Initializable {
 
     }
 
-    public boolean ennemiProche(){
+    public boolean ennemiProche(Ennemis ennemis){
         double distanceX = Math.abs(ennemis.getPositionX() - imgTresor.getX());
         System.out.println("distanceX: " + distanceX);
         double distanceY = Math.abs(ennemis.getPositionY() - imgTresor.getY());
