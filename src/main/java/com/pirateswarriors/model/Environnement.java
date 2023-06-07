@@ -21,8 +21,10 @@ public class Environnement {
     private IntegerProperty nbArgent;
     private int nbEnnemis;
     private Pane paneCentral;
+    private long lastExecutionTime;
 
     public Environnement(Pane paneCentral) {
+        this.lastExecutionTime = 0L;
         this.paneCentral = paneCentral;
         this.nbVague = new SimpleIntegerProperty(1);
         this.nbScore = new SimpleIntegerProperty(0);
@@ -107,9 +109,13 @@ public class Environnement {
                     if ((defense.getPositionX() + portéeDégats >= ennemies.getPositionX() && defense.getPositionX() - portéeDégats <= ennemies.getPositionX())
                             &&
                             (defense.getPositionY() + portéeDégats >= ennemies.getPositionY() && defense.getPositionY() - portéeDégats <= ennemies.getPositionY())) {
-                        ennemies.enleverPv(1);
-                        System.out.println(ennemies.getPts_vie());
                         defense.rotateImage(ennemies.getPositionX(), ennemies.getPositionY());
+
+                        long currentTime = System.currentTimeMillis();
+                        if (currentTime - lastExecutionTime >= 3000) { // ms
+                            defense.attaque(ennemies); // Appeler la méthode de la classe Defense
+                            lastExecutionTime = currentTime; // Mettre à jour le dernier instant d'exécution
+                        }
                     }
                 }
             }
