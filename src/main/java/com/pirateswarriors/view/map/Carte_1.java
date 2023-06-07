@@ -6,6 +6,6 @@ public class Carte_1 extends Carte {
 
 
     public Carte_1(TilePane tilePane) {
-        super(tilePane, "newMap1.csv");
+        super(tilePane, "newMap2.csv");
     }
 }

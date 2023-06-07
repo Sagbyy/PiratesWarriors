@@ -193,22 +193,21 @@ public class Controller implements Initializable {
 
     }
 
-    public boolean ennemiProche() {
-            double distanceX = Math.abs(ennemis.getPositionX() - imgTresor.getX());
-            System.out.println("distanceX: " + distanceX);
-            double distanceY = Math.abs(ennemis.getPositionY() - imgTresor.getY());
+    public boolean ennemiProche(){
+        double distanceX = Math.abs(ennemis.getPositionX() - imgTresor.getX());
+        System.out.println("distanceX: " + distanceX);
+        double distanceY = Math.abs(ennemis.getPositionY() - imgTresor.getY());
 
-            // Calcul de la distance entre l'ennemi et le trésor
-            double distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-            System.out.println("distance: " + distance);
-            double maxDistance = 800;
-
-            if (distance <= maxDistance) {
-                System.out.println("distance proche");
-                return true;
-            } else {
-                return false;
-            }
+        // Calcul de la distance entre l'ennemi et le trésor
+        double distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+        System.out.println("distance: " + distance);
+        double maxDistance = 266;
+        if (distance <= maxDistance) {
+            System.out.println("distance proche");
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
