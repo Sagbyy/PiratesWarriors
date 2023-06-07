@@ -71,15 +71,15 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
 
-        this.ennemis = new PirateFusil();
-        this.ennemis2 = new BarqueCanon();
-        this.personnageVue = new EnnemiVue(this.ennemis);
-        this.personnageVue2 = new EnnemiVue(this.ennemis2);
+//        this.ennemis = new PirateFusil();
+//        this.ennemis2 = new BarqueCanon();
+//        this.personnageVue = new EnnemiVue(this.ennemis);
+//        this.personnageVue2 = new EnnemiVue(this.ennemis2);
         this.carte_1 = new Carte_1(tilePane);
-        this.personnageVue.getImageBateau().xProperty().bind(this.ennemis.positionXProperty());
-        this.personnageVue.getImageBateau().yProperty().bind(this.ennemis.positionYProperty());
-        this.personnageVue2.getImageBateau().xProperty().bind(this.ennemis2.positionXProperty());
-        this.personnageVue2.getImageBateau().yProperty().bind(this.ennemis2.positionYProperty());
+//        this.personnageVue.getImageBateau().xProperty().bind(this.ennemis.positionXProperty());
+//        this.personnageVue.getImageBateau().yProperty().bind(this.ennemis.positionYProperty());
+//        this.personnageVue2.getImageBateau().xProperty().bind(this.ennemis2.positionXProperty());
+//        this.personnageVue2.getImageBateau().yProperty().bind(this.ennemis2.positionYProperty());
         this.tresor = new Tresor(2000);
         this.tresorVue = new TresorVue(tresor);
 //        this.paneCentral.getChildren().add(tresorVue.getImgTresor());
