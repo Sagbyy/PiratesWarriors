@@ -14,9 +14,9 @@ public class BFS {
     private int x, y;
     private Map<Couple, Couple> predecesseurs;
 
-    public BFS(CarteModele g){
+    public BFS(CarteModele g, Couple spawn){
         this.g = g;
-        this.source = new Couple(3, 24) ;
+        this.source = spawn ;
         this.objectif = new Couple(6, 0);
         parcours = new ArrayList<Couple>();
         predecesseurs = new HashMap<Couple, Couple>();
