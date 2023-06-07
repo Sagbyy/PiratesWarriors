@@ -1,12 +1,9 @@
 package com.pirateswarriors.model.ennemies;
 
-<<<<<<< HEAD:src/main/java/com/pirateswarriors/model/ennemies/Ennemis.java
 import com.pirateswarriors.model.Environnement;
-=======
 import com.pirateswarriors.model.ennemies.CarteModele;
 import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
 import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
->>>>>>> dev:src/main/java/com/pirateswarriors/Ennemis.java
 import com.pirateswarriors.model.map.BFS;
 import com.pirateswarriors.model.map.Couple;
 import javafx.beans.property.DoubleProperty;
@@ -60,12 +57,9 @@ public class Ennemis {
     public Ennemis() { // Constructeur de la class mère Ennemis
         this.positionX = new SimpleDoubleProperty(1216);
         this.positionY = new SimpleDoubleProperty(64);
-<<<<<<< HEAD:src/main/java/com/pirateswarriors/model/ennemies/Ennemis.java
-=======
         this.vitesse = vitesse;
         this.env = env;
         this.BFS = new BFS(g,apparition() );
->>>>>>> dev:src/main/java/com/pirateswarriors/Ennemis.java
         this.chemin = BFS.cheminVersSource();
         this.dir = "";
         this.pos = 0;
