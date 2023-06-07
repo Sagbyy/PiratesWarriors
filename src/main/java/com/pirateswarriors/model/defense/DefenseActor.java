@@ -103,9 +103,10 @@ public class DefenseActor {
 
     public void attaque(Ennemis ennemi) {
 
+        rotateImage(ennemi.getPositionX(), ennemi.getPositionY());
+
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastExecutionTime >= 3500) { // Vérifier si deux secondes se sont écoulées
-
             // Création de l'animation de déplacement de la balle
             pane.getChildren().add(bullet);
             TranslateTransition transition = new TranslateTransition(Duration.seconds(1), this.bullet);

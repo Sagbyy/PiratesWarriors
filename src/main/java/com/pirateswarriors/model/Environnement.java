@@ -104,8 +104,6 @@ public class Environnement {
             } else {
                 for (DefenseActor defense : defenseList) {
                     if ((defense.getPositionX() + portéeDégats >= ennemies.getPositionX() && defense.getPositionX() - portéeDégats <= ennemies.getPositionX()) && (defense.getPositionY() + portéeDégats >= ennemies.getPositionY() && defense.getPositionY() - portéeDégats <= ennemies.getPositionY())) {
-                        defense.rotateImage(ennemies.getPositionX(), ennemies.getPositionY());
-
                         defense.attaque(ennemies);
                     }
                 }
