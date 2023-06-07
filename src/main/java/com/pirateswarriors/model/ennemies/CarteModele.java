@@ -43,6 +43,7 @@ public class CarteModele {
 
     }
 
+
     public Set<Couple> getadjacents(int i, int j){
         //System.out.println(tabCarte[i][j]);
         Set<Couple> ads = new HashSet<Couple>(4);
