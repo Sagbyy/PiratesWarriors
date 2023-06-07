@@ -31,25 +31,22 @@ public class Tresor {
         return pv > 0;
     }
 
-//    public void ennemiProche(){
-//        double distanceX = Math.abs(ennemis.getPositionX() - imgTresor.getX());
-//        double distanceY = Math.abs(ennemis.getPositionY() - imgTresor.getY());
+//    public boolean ennemiProche(){
+//        double distanceX = Math.abs(this.ennemis.getPositionX() - this.imgTresor.getX());
+//        System.out.println("distanceX: " + distanceX);
+//        double distanceY = Math.abs(this.ennemis.getPositionY() - this.imgTresor.getY());
 //
 //        // Calcul de la distance entre l'ennemi et le trésor
 //        double distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-//        double maxDistance = 30;
+//        System.out.println("distance: " + distance);
+//        double maxDistance = 800;
 //
 //        if (distance <= maxDistance) {
-//            ennemis.attaque(this);
-//            System.out.println("attaque du trésor");
+//            System.out.println("distance proche");
+//            return true;
 //        }
 //        else{
 //            return false;
-//        }
-//
-//        if (ennemiProche()){
-//            ennemis.attaque(tresor);
-//            System.out.println("attaque du trésor");
 //        }
 //    }
 }

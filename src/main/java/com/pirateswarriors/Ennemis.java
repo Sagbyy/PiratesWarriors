@@ -35,7 +35,7 @@ public class Ennemis {
     private ImageView imgTresor;
 
     ArrayList chemin;
-    CarteModele g = new CarteModele("newMap1.csv");
+    CarteModele g = new CarteModele("newMap2.csv");
     com.pirateswarriors.model.map.BFS BFS = new BFS(g);
 
     public Ennemis(int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, Image image) { // Constructeur de la class mère Ennemis
@@ -44,8 +44,8 @@ public class Ennemis {
         this.pts_score = pts_score;
         this.pts_pièces = pts_pièces;
         this.pts_attaque = pts_attaque;
-        this.positionX = new SimpleDoubleProperty(1280);
-        this.positionY = new SimpleDoubleProperty(64);
+        this.positionX = new SimpleDoubleProperty(1536);
+        this.positionY = new SimpleDoubleProperty(192);
         this.vitesse = vitesse;
         this.env = env;
         this.chemin = BFS.cheminVersSource();
@@ -62,8 +62,8 @@ public class Ennemis {
         this.pts_score = pts_score;
         this.pts_pièces = pts_pièces;
         this.pts_attaque = pts_attaque;
-        this.positionX = new SimpleDoubleProperty(1216);
-        this.positionY = new SimpleDoubleProperty(64);
+        this.positionX = new SimpleDoubleProperty(1536);
+        this.positionY = new SimpleDoubleProperty(192);
         this.vitesse = vitesse;
         this.env = env;
         this.chemin = BFS.cheminVersSource();
