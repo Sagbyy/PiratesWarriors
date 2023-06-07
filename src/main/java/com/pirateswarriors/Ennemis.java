@@ -70,22 +70,22 @@ public class Ennemis {
 
     public Couple apparition(){
         Couple c = null;
-        int rand = (int) (Math.random() * 4) + 1;
-        if (rand == 1) {
+//        int rand = (int) (Math.random() * 4) + 1;
+//        if (rand == 1) {
              c = new Couple(1, 19);
-        }
-        if (rand == 2) {
-             c = new Couple(4, 19);
-             setPositionY(256);
-        }
-        if (rand == 3) {
-            c = new Couple(7, 19);
-           setPositionY(448);
-       }
-        if (rand == 4) {
-            c = new Couple(10, 19);
-            setPositionY(640);
-        }
+////        }
+//        if (rand == 2) {
+//             c = new Couple(4, 19);
+//             setPositionY(256);
+//        }
+//        if (rand == 3) {
+//            c = new Couple(7, 19);
+//           setPositionY(448);
+//       }
+//        if (rand == 4) {
+//            c = new Couple(10, 19);
+//            setPositionY(640);
+//        }
         return c;
     }
 
