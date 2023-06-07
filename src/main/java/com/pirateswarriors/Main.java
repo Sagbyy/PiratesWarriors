@@ -8,6 +8,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.Objects;
 
@@ -29,6 +30,13 @@ public class Main extends Application {
             // Lecture du media au lancement
             mediaPlayer.setVolume(0.44); //  disregarding the volume I set
             mediaPlayer.play();
+            // Repetition de la musique lorsqu'elle est finit
+            mediaPlayer.setOnEndOfMedia(new Runnable() {
+                @Override
+                public void run() {
+                    mediaPlayer.seek(Duration.ZERO);
+                }
+            });
 
             primaryStage.setScene(scene);
             primaryStage.show();
