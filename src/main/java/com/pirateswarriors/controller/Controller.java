@@ -22,11 +22,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -58,13 +61,16 @@ public class Controller implements Initializable {
     private Label labelVieTresor;
     @FXML
     private Label nbPieces;
+    @FXML
+    private ImageView imgTresor;
+    private int tre;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
 
         this.carte_1 = new Carte_1(tilePane);
-
         this.tresor = new Tresor(2000);
         this.tresorVue = new TresorVue(tresor);
 //        this.paneCentral.getChildren().add(tresorVue.getImgTresor());
@@ -95,7 +101,6 @@ public class Controller implements Initializable {
     private void initAnimation() {
         gameLoop = new Timeline();
         temps = 0;
-
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
         KeyFrame kf = new KeyFrame(
@@ -103,10 +108,9 @@ public class Controller implements Initializable {
                 Duration.seconds(0.017),
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
-                (ev -> {
-                    //this.personnage.setPositionX(this.personnage.getPositionX() + 10);
-
-                    // this.personnageVue.getImageBateau().setX(this.personnage.getPositionX());
+                (ev ->{
+                       //this.personnage.setPositionX(this.personnage.getPositionX() + 10);
+                        // this.personnageVue.getImageBateau().setX(this.personnage.getPositionX());
 
 //                    if(temps==50){
 //                        System.out.println("fini");
@@ -133,14 +137,58 @@ public class Controller implements Initializable {
                         this.paneCentral.getChildren().add(v.getImageBateau());
                         v.getImageBateau().xProperty().bind(e.positionXProperty());
                         v.getImageBateau().yProperty().bind(e.positionYProperty());
+
+                        if (tresor.estPasDetruit()){
+                            // Infliger des dégâts au trésor
+                            if (ennemiProche(jeu.getEnnemisList().get(i))){
+                                if ((temps%20)==0){
+                                    System.out.println("temps:" + temps);
+                                    jeu.getEnnemisList().get(i).attaque(this.tresor);
+                                    labelVieTresor.setText("vie: " + String.valueOf(this.tresor.getPv()));
+                                }
+                            }
+                        }
                     }
 
+//                    for (int i=0; i < jeu.getEnnemis().size(); i++){
+//
+//
+//                    }
+
+                        //remplacement de l'image trésor
+//                        else{
+//                            int i = paneCentral.getChildren().indexOf(imgTresor);
+//                            paneCentral.getChildren().set(i, tresorVue.imgTresorDetruit());
+//                        }
                     jeu.untour();
                     temps++;
-                })
-        );
-        gameLoop.getKeyFrames().add(kf);
+
+                    })
+            );
+            gameLoop.getKeyFrames().add(kf);
+
+        //}
+
+
     }
+
+    public boolean ennemiProche(Ennemis ennemis){
+        double distanceX = Math.abs(ennemis.getPositionX() - imgTresor.getX());
+        System.out.println("distanceX: " + distanceX);
+        double distanceY = Math.abs(ennemis.getPositionY() - imgTresor.getY());
+
+        // Calcul de la distance entre l'ennemi et le trésor
+        double distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+        System.out.println("distance: " + distance);
+        double maxDistance = 266;
+        if (distance <= maxDistance) {
+            System.out.println("distance proche");
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 
     @FXML
@@ -177,4 +225,5 @@ public class Controller implements Initializable {
 
         }
     }
+
 }

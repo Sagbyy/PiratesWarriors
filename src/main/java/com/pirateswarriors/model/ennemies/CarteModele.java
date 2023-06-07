@@ -13,19 +13,27 @@ import java.util.Set;
 public class CarteModele {
 
 
-    private int obj = 83;
-    private int route = 84;
+    private int obj = 132;
+    private int route = 54;
+    private int route2 = 131;
 
     public static void main(String[] args) {
-        CarteModele c = new CarteModele("newMap1.csv");
+        CarteModele c = new CarteModele("newMap2.csv");
         c.getTabCarte();
-        c.getPosition(6, 0);
-        BFS test = new BFS(c, new Couple(1, 19));
-        System.out.println(test.cheminVersSource());
+//<<<<<<< HEAD
+//        System.out.println("test1" +c.getPosition(3, 24));
+//        BFS test = new BFS(c);
+//        System.out.println("test2   "+c.getPosition(6, 0));
+//=======
+//        c.getPosition(6, 0);
+//        BFS test = new BFS(c, new Couple(1, 19));
+//>>>>>>> 29d3682c87543286e71bdaac2acdf2f445e1107e
+//        System.out.println(test.cheminVersSource());
+
     }
 
     // Nombre de ligne de la map
-    public final int ROWS_MAP = 20;
+    public final int ROWS_MAP = 25;
 
     // Nombre de colonne de la map
     public final int COLUMNS_MAP = 12;
@@ -42,30 +50,31 @@ public class CarteModele {
 
     }
 
+
     public Set<Couple> getadjacents(int i, int j){
         //System.out.println(tabCarte[i][j]);
         Set<Couple> ads = new HashSet<Couple>(4);
         if((i+1) != COLUMNS_MAP) {
             Couple h = new Couple(i + 1, j);
-            if(getPosition(h.getX(),h.getY()) == obj || getPosition(h.getX(),h.getY()) == route || getPosition(h.getX(),h.getY()) == 82) {
+            if(getPosition(h.getX(),h.getY()) == 132 || getPosition(h.getX(),h.getY()) == 54 || getPosition(h.getX(),h.getY()) == 53 || getPosition(h.getX(),h.getY()) == 131 ) {
                 ads.add(h);
             }
         }
         if((i-1) != -1) {
             Couple b = new Couple(i - 1, j);
-            if(getPosition(b.getX(), b.getY()) == obj || getPosition(b.getX(), b.getY()) == route || getPosition(b.getX(), b.getY()) == 82) {
+            if(getPosition(b.getX(), b.getY()) == 132 || getPosition(b.getX(), b.getY()) == 54 || getPosition(b.getX(), b.getY()) == 53 || getPosition(b.getX(),b.getY()) == 131) {
                 ads.add(b);
             }
         }
         if((j-1) != -1) {
             Couple g = new Couple(i, j - 1);
-            if(getPosition(g.getX(),g.getY()) == obj || getPosition(g.getX(),g.getY()) == route || getPosition(g.getX(),g.getY()) == 82) {
+            if(getPosition(g.getX(),g.getY()) == 132 || getPosition(g.getX(),g.getY()) == 54 || getPosition(g.getX(),g.getY()) == 53 || getPosition(g.getX(),g.getY()) == 131 ) {
                 ads.add(g);
             }
         }
         if((j+1) != ROWS_MAP) {
             Couple d = new Couple(i, j + 1);
-            if(getPosition(d.getX(),d.getY()) == obj || getPosition(d.getX(),d.getY()) == route || getPosition(d.getX(),d.getY()) == 82) {
+            if(getPosition(d.getX(),d.getY()) == 132 || getPosition(d.getX(),d.getY()) == 54 || getPosition(d.getX(),d.getY()) == 53 || getPosition(d.getX(),d.getY()) == 131 ) {
                 ads.add(d);
             }
         }

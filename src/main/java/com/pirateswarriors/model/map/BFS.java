@@ -27,6 +27,7 @@ public class BFS {
         LinkedList<Couple> fifo = new LinkedList<>();
         Couple s = this.source;
         predecesseurs.put(s, null);
+        System.out.println("test"+predecesseurs);
         parcours.add(s);
         fifo.add(s);
 
@@ -39,7 +40,7 @@ public class BFS {
                 //while(!estDedans(this.objectif, parcours)) {
                 //System.out.println("test");
                 //(g.getPosition(t.getX(), t.getY()) == 148)
-                if ( !estDedans(this.objectif, parcours)){
+                if (!estDedans(this.objectif, parcours)){
                     if (!parcours.contains(t)) {
                         predecesseurs.put(t, s);
                         parcours.add(t);
@@ -75,9 +76,9 @@ public class BFS {
     public ArrayList<Couple> cheminVersSource() {
         ArrayList<Couple> chemin = new ArrayList<>();
         chemin.add(this.source);
+        System.out.println(predecesseurs);
         Couple courant = predecesseurs.get(this.objectif);
 
-        //System.out.println(courant);
         chemin.add(courant);
         while(!courant.equals(source)){
             courant = predecesseurs.get(courant);
