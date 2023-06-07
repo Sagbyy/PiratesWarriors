@@ -1,6 +1,8 @@
-package com.pirateswarriors;
+package com.pirateswarriors.model.ennemies;
+
 
 import com.pirateswarriors.model.Tresor;
+import com.pirateswarriors.model.Environnement;
 import com.pirateswarriors.model.ennemies.CarteModele;
 import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
 import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
@@ -60,6 +62,7 @@ public class Ennemis {
 
 
     public Ennemis() { // Constructeur de la class mère Ennemis
+
         this.pts_vie = pts_vie;
         this.image = image;
         this.pts_score = pts_score;
@@ -93,10 +96,7 @@ public class Ennemis {
 
 
     public boolean estMort(){ // Fonction pour verfier si l'ennemi est mort ou non
-        if(this.pts_vie.getValue() == 0){
-            return true; // Si oui retourne true
-        }
-        else return false; // Sinon retourne false
+        return this.pts_vie.getValue() <= 0;
     }
 
     public double getPositionX() {
@@ -178,8 +178,6 @@ public class Ennemis {
             if(dir.equals("h")){
                 setPositionY(getPositionY()+this.vitesse);
             }
-
-            //System.out.println(dir);
         }
 
     }
