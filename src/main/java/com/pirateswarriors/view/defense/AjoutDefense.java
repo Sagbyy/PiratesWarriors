@@ -73,7 +73,6 @@ public class AjoutDefense {
             // Bindings des positions de la défense avec celle de la souris
             defense.positionXProperty().bind(mouseX);
             defense.positionYProperty().bind(mouseY);
-            System.out.println(imageShip.getX());
         }
     }
 
