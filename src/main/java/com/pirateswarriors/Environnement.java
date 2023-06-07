@@ -1,5 +1,6 @@
 package com.pirateswarriors;
 
+import com.pirateswarriors.model.ennemies.Ennemis;
 import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
 import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
 import javafx.beans.property.IntegerProperty;
