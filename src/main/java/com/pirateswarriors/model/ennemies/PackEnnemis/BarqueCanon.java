@@ -1,25 +1,22 @@
 package com.pirateswarriors.model.ennemies.PackEnnemis;
 
-
-import com.pirateswarriors.Ennemis;
-import com.pirateswarriors.Environnement;
+import com.pirateswarriors.model.ennemies.Ennemis;
+import com.pirateswarriors.model.Environnement;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 
 public class BarqueCanon extends Ennemis {
-    Environnement jeu = new Environnement();
 
     private DoubleProperty positionX;
     private DoubleProperty positionY;
 
     public BarqueCanon() {
-        this.jeu = jeu;
         this.image = new Image("ship.png");
         this.positionX = new SimpleDoubleProperty(1216);
         this.positionY = new SimpleDoubleProperty(64);
-        this.pts_vie = new SimpleIntegerProperty(10);
+        this.pts_vie = new SimpleIntegerProperty(200);
         this.pts_score = 7;
         this.pts_pièces = 10;
         this.pts_attaque = 10;

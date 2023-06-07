@@ -1,10 +1,9 @@
 package com.pirateswarriors.controller;
 
-import com.pirateswarriors.Ennemis;
-import com.pirateswarriors.Environnement;
+import com.pirateswarriors.model.Environnement;
+import com.pirateswarriors.model.ennemies.Ennemis;
 import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.Tresor;
-import com.pirateswarriors.model.defense.ControleurAjoutDefense;
 import com.pirateswarriors.view.EnnemiVue;
 import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
 import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
@@ -30,8 +29,6 @@ import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Controller implements Initializable {
 
@@ -57,18 +54,14 @@ public class Controller implements Initializable {
     private PorteMonnaieVue porteMonnaieVue;
     private int lcn;
     private Environnement jeu;
-
-
     @FXML
     private Label labelVieTresor;
-
-
-
     @FXML
     private Label nbPieces;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
 
 
 //        this.ennemis = new PirateFusil();
@@ -80,21 +73,23 @@ public class Controller implements Initializable {
 //        this.personnageVue.getImageBateau().yProperty().bind(this.ennemis.positionYProperty());
 //        this.personnageVue2.getImageBateau().xProperty().bind(this.ennemis2.positionXProperty());
 //        this.personnageVue2.getImageBateau().yProperty().bind(this.ennemis2.positionYProperty());
+
+        //this.carte_1 = new Carte_1(tilePane);
+
+
         this.tresor = new Tresor(2000);
         this.tresorVue = new TresorVue(tresor);
 //        this.paneCentral.getChildren().add(tresorVue.getImgTresor());
 //        this.tresorVue.getImgTresor().setX(0);
 //        this.tresorVue.getImgTresor().setY(335);
         this.porteMonnaie = new PorteMonnaie();
-        porteMonnaie.setNb(3000);
+        porteMonnaie.setNb(9000);
         this.porteMonnaieVue = new PorteMonnaieVue(porteMonnaie);
-//        this.paneCentral.getChildren().add(porteMonnaieVue.getImgPorteMonnaie());
-//        this.porteMonnaieVue.getImgPorteMonnaie().setX(1200);
-//        this.porteMonnaieVue.getImgPorteMonnaie().setY(800);
+
         nbPieces.textProperty().bind(porteMonnaie.nbProperty().asString());
         labelVieTresor.setText("vie: " + String.valueOf(tresor.getPv()));
 
-        this.jeu = new Environnement();
+        this.jeu = new Environnement(paneCentral);
         // Mouse Property
         this.mouseY = new SimpleDoubleProperty(0);
         this.mouseX = new SimpleDoubleProperty(0);
@@ -107,17 +102,11 @@ public class Controller implements Initializable {
                 mouseY.setValue(mouseEvent.getY());
             }
         });
-
-
-
-
-
-
     }
 
     private void initAnimation() {
         gameLoop = new Timeline();
-        temps=0;
+        temps = 0;
 
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
@@ -126,10 +115,10 @@ public class Controller implements Initializable {
                 Duration.seconds(0.017),
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
-                (ev ->{
-                       //this.personnage.setPositionX(this.personnage.getPositionX() + 10);
+                (ev -> {
+                    //this.personnage.setPositionX(this.personnage.getPositionX() + 10);
 
-                       // this.personnageVue.getImageBateau().setX(this.personnage.getPositionX());
+                    // this.personnageVue.getImageBateau().setX(this.personnage.getPositionX());
 
 //                    if(temps==50){
 //                        System.out.println("fini");
@@ -149,11 +138,10 @@ public class Controller implements Initializable {
 //                        // ajout de monnaie a chaque tour
 //                        porteMonnaie.ajoutMonnaie(500);
 //                        System.out.println("nouvelle valeur du porte monnaie: " + porteMonnaie.getNb());
-//
 //                    }
-                    for (int i =0; i < jeu.getEnnemis().size(); i++){
-                        Ennemis e = jeu.getEnnemis().get(i);
-                        EnnemiVue v = new EnnemiVue (jeu.getEnnemis().get(i));
+                    for (int i = 0; i < jeu.getEnnemisList().size(); i++) {
+                        Ennemis e = jeu.getEnnemisList().get(i);
+                        EnnemiVue v = new EnnemiVue(jeu.getEnnemisList().get(i));
                         this.paneCentral.getChildren().add(v.getImageBateau());
                         v.getImageBateau().xProperty().bind(e.positionXProperty());
                         v.getImageBateau().yProperty().bind(e.positionYProperty());
@@ -174,19 +162,19 @@ public class Controller implements Initializable {
         String buttonId = ((Button) event.getSource()).getId();
 
         // Ajout de la vue
-        AjoutDefense ajoutDefense = new AjoutDefense(paneCentral, buttonId, porteMonnaie);
+        AjoutDefense ajoutDefense = new AjoutDefense(paneCentral, buttonId, porteMonnaie, jeu);
         ajoutDefense.ajoutDefense();
         ajoutDefense.bindImage(mouseX, mouseY);
 
         // Lorsque qu'on clique sur la map on laisse la position au clique
-        ControleurAjoutDefense controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getImageShip(), ajoutDefense.getLabelPv(), porteMonnaie);
+        ControleurAjoutDefense controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getDefense(), porteMonnaie, jeu);
         paneCentral.addEventHandler(MouseEvent.MOUSE_CLICKED, controleurAjoutDefense);
     }
 
     @FXML
     public void lancerVagues(ActionEvent actionEvent) {
 
-        if(lcn==0){
+        if (lcn == 0) {
             initAnimation();
 
             lcn++;
@@ -196,7 +184,7 @@ public class Controller implements Initializable {
 
     @FXML
     public void Pause(ActionEvent actionEvent) {
-        if(lcn==1){
+        if (lcn == 1) {
             gameLoop.stop();
 
         }
