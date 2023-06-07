@@ -38,6 +38,7 @@ public class Ennemis {
     private Tresor tresor;
     private Ennemis ennemis;
     private ImageView imgTresor;
+    private EnnemiVue ennemiVue;
 
     ArrayList chemin;
     CarteModele g = new CarteModele("newMap2.csv");
