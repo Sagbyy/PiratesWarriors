@@ -12,10 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.util.Duration;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class DefenseActor {
 
@@ -94,18 +90,16 @@ public class DefenseActor {
 
     public void rotateImage(double posX, double posY) {
         double angle = Math.toDegrees(Math.atan2(this.image.getY() - posY, this.image.getX() - posX));
-        this.image.setRotate(angle);
+        this.image.setRotate(angle - 90);
     }
 
     public void attaque(Ennemis ennemi) {
+        System.out.println("Methode ");
 
         // Sound shoot
-        this.shootSound.stop();
         this.shootSound.play();
 
         ennemi.enleverPv(this.degat);
         System.out.println(ennemi.getPts_vie());
-        System.out.println("Methode ");
-
     }
 }

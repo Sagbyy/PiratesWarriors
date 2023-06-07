@@ -112,7 +112,7 @@ public class Environnement {
                         defense.rotateImage(ennemies.getPositionX(), ennemies.getPositionY());
 
                         long currentTime = System.currentTimeMillis();
-                        if (currentTime - lastExecutionTime >= 3000) { // ms
+                        if (currentTime - lastExecutionTime >= 2000) { // Vérifier si deux secondes se sont écoulées
                             defense.attaque(ennemies); // Appeler la méthode de la classe Defense
                             lastExecutionTime = currentTime; // Mettre à jour le dernier instant d'exécution
                         }
