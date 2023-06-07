@@ -20,7 +20,8 @@ public class CarteModele {
         CarteModele c = new CarteModele("newMap1.csv");
         c.getTabCarte();
         c.getPosition(6, 0);
-        BFS test = new BFS(c);
+        BFS test = new BFS(c, new Couple(1, 19));
+        System.out.println(test.cheminVersSource());
     }
 
     // Nombre de ligne de la map
