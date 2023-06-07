@@ -12,6 +12,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class DefenseActor {
 
@@ -25,8 +29,11 @@ public class DefenseActor {
     private int degat;
     private MediaPlayer shootSound;
     private ImageView bullet;
+    private long lastExecutionTime;
+
 
     public DefenseActor(int pv, int prix, int degats, ImageView image, Pane pane) {
+        this.lastExecutionTime = 0L;
         this.pane = pane;
         this.pv = new SimpleIntegerProperty(pv);
         this.prix = prix;
@@ -94,12 +101,17 @@ public class DefenseActor {
     }
 
     public void attaque(Ennemis ennemi) {
-        System.out.println("Methode ");
 
-        // Sound shoot
-        this.shootSound.play();
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastExecutionTime >= 2000) { // Vérifier si deux secondes se sont écoulées
 
-        ennemi.enleverPv(this.degat);
-        System.out.println(ennemi.getPts_vie());
+            // Sound shoot
+            this.shootSound.stop();
+            this.shootSound.play();
+
+            ennemi.enleverPv(this.degat);
+
+            lastExecutionTime = currentTime; // Mettre à jour le dernier instant d'exécution
+        }
     }
 }
