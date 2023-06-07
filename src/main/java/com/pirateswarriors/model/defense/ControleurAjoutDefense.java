@@ -18,7 +18,7 @@ public class ControleurAjoutDefense implements EventHandler<MouseEvent> {
             this.labelPv = labelPv;
             this.porteMonnaie = porteMonnaie;
         }
-
+        
     // Lorsque qu'on clique sur la map on laisse la position au clique
         @Override
         public void handle(MouseEvent mouseEvent) {

@@ -27,6 +27,8 @@ public class Ennemis {
     protected Image image;
     private String dir;
     private int pos;
+    public static int compteur=0;
+
 
     private Tresor tresor;
     private Ennemis ennemis;
@@ -49,6 +51,8 @@ public class Ennemis {
         this.chemin = BFS.cheminVersSource();
         this.dir = "";
         this.pos = 0;
+        this.id = "E"+compteur;
+        compteur++;
     }
 
 
