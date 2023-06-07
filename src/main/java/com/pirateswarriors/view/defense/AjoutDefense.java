@@ -67,7 +67,7 @@ public class AjoutDefense {
     }
 
     public void bindImage(DoubleProperty mouseX, DoubleProperty mouseY) {
-        if (!porteMonnaie.argentVide()){
+        if (!porteMonnaie.argentVide()) {
             // Bindings des positions de la défense avec celle de la souris
             imageShip.xProperty().bind(mouseX);
             imageShip.yProperty().bind(mouseY);
