@@ -14,9 +14,9 @@ public class BFS {
     private int x, y;
     private Map<Couple, Couple> predecesseurs;
 
-    public BFS(CarteModele g){
+    public BFS(CarteModele g, Couple spawn){
         this.g = g;
-        this.source = new Couple(1, 19) ;
+        this.source = spawn ;
         this.objectif = new Couple(6, 0);
         parcours = new ArrayList<Couple>();
         predecesseurs = new HashMap<Couple, Couple>();
@@ -27,6 +27,7 @@ public class BFS {
         LinkedList<Couple> fifo = new LinkedList<>();
         Couple s = this.source;
         predecesseurs.put(s, null);
+        System.out.println("test"+predecesseurs);
         parcours.add(s);
         fifo.add(s);
 
@@ -39,7 +40,7 @@ public class BFS {
                 //while(!estDedans(this.objectif, parcours)) {
                 //System.out.println("test");
                 //(g.getPosition(t.getX(), t.getY()) == 148)
-                if ( !estDedans(this.objectif, parcours)){
+                if (!estDedans(this.objectif, parcours)){
                     if (!parcours.contains(t)) {
                         predecesseurs.put(t, s);
                         parcours.add(t);
@@ -77,7 +78,6 @@ public class BFS {
         chemin.add(this.source);
         Couple courant = predecesseurs.get(this.objectif);
 
-        //System.out.println(courant);
         chemin.add(courant);
         while(!courant.equals(source)){
             courant = predecesseurs.get(courant);

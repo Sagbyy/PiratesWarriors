@@ -29,8 +29,11 @@ public class DefenseActor {
     private int degat;
     private MediaPlayer shootSound;
     private ImageView bullet;
+    private long lastExecutionTime;
+
 
     public DefenseActor(int pv, int prix, int degats, ImageView image, Pane pane) {
+        this.lastExecutionTime = 0L;
         this.pane = pane;
         this.pv = new SimpleIntegerProperty(pv);
         this.prix = prix;
@@ -94,18 +97,21 @@ public class DefenseActor {
 
     public void rotateImage(double posX, double posY) {
         double angle = Math.toDegrees(Math.atan2(this.image.getY() - posY, this.image.getX() - posX));
-        this.image.setRotate(angle);
+        this.image.setRotate(angle - 90);
     }
 
     public void attaque(Ennemis ennemi) {
 
-        // Sound shoot
-        this.shootSound.stop();
-        this.shootSound.play();
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastExecutionTime >= 2000) { // Vérifier si deux secondes se sont écoulées
 
-        ennemi.enleverPv(this.degat);
-        System.out.println(ennemi.getPts_vie());
-        System.out.println("Methode ");
+            // Sound shoot
+            this.shootSound.stop();
+            this.shootSound.play();
 
+            ennemi.enleverPv(this.degat);
+
+            lastExecutionTime = currentTime; // Mettre à jour le dernier instant d'exécution
+        }
     }
 }

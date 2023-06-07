@@ -1,6 +1,11 @@
 package com.pirateswarriors.model.ennemies;
 
+
+import com.pirateswarriors.model.Tresor;
 import com.pirateswarriors.model.Environnement;
+import com.pirateswarriors.model.ennemies.CarteModele;
+import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
+import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
 import com.pirateswarriors.model.map.BFS;
 import com.pirateswarriors.model.map.Couple;
 import javafx.beans.property.DoubleProperty;
@@ -8,6 +13,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 
@@ -28,9 +34,13 @@ public class Ennemis {
     public static int compteur=0;
 
 
+    private Tresor tresor;
+    private Ennemis ennemis;
+    private ImageView imgTresor;
+
     ArrayList chemin;
-    CarteModele g = new CarteModele("newMap1.csv");
-    com.pirateswarriors.model.map.BFS BFS = new BFS(g);
+    CarteModele g = new CarteModele("newMap2.csv");
+    com.pirateswarriors.model.map.BFS BFS ;
 
     public Ennemis(int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, Image image) { // Constructeur de la class mère Ennemis
         this.pts_vie = new SimpleIntegerProperty(pts_vie);
@@ -38,24 +48,49 @@ public class Ennemis {
         this.pts_score = pts_score;
         this.pts_pièces = pts_pièces;
         this.pts_attaque = pts_attaque;
-        this.positionX = new SimpleDoubleProperty(1280);
-        this.positionY = new SimpleDoubleProperty(64);
+        this.positionX = new SimpleDoubleProperty(1536);
+        this.positionY = new SimpleDoubleProperty(192);
         this.vitesse = vitesse;
         this.env = env;
-        this.chemin = BFS.cheminVersSource();
         this.dir = "";
         this.pos = 0;
         this.id = "E"+compteur;
         compteur++;
+        this.chemin = BFS.cheminVersSource();
+        this.BFS = new BFS(g,apparition() );
     }
 
 
     public Ennemis() { // Constructeur de la class mère Ennemis
-        this.positionX = new SimpleDoubleProperty(1216);
-        this.positionY = new SimpleDoubleProperty(64);
+
+        this.pts_vie = pts_vie;
+        this.image = image;
+        this.pts_score = pts_score;
+        this.pts_pièces = pts_pièces;
+        this.pts_attaque = pts_attaque;
+        this.positionX = new SimpleDoubleProperty(1536);
+        this.positionY = new SimpleDoubleProperty(192);
+        this.vitesse = vitesse;
+        this.env = env;
+        this.BFS = new BFS(g,apparition() );
         this.chemin = BFS.cheminVersSource();
         this.dir = "";
         this.pos = 0;
+    }
+
+
+    public Couple apparition(){
+        Couple c = null;
+        int rand = (int) (Math.random() * 2) + 1;
+        if (rand == 1) {
+             c = new Couple(3, 24);
+        }
+        if (rand == 2) {
+             c = new Couple(12, 22);
+             setPositionY(256);
+        }
+
+        return c;
     }
 
 
@@ -143,7 +178,32 @@ public class Ennemis {
             if(dir.equals("h")){
                 setPositionY(getPositionY()+this.vitesse);
             }
-
         }
+
     }
+    public void attaque (Tresor tresor){
+        //while (tresor.estPasDetruit()){
+        System.out.println("attaque du trésor");
+        tresor.damage(pts_attaque);
+        //}
+    }
+
+//    public boolean ennemiProche(){
+//        double distanceX = Math.abs(ennemis.getPositionX() - imgTresor.getX());
+//        System.out.println("distanceX: " + distanceX);
+//        double distanceY = Math.abs(ennemis.getPositionY() - imgTresor.getY());
+//
+//        // Calcul de la distance entre l'ennemi et le trésor
+//        double distance = Math.sqrt(distanceX * distanceX - distanceY * distanceY);
+//        System.out.println("distance: " + distance);
+//        double maxDistance = 5;
+//
+//        if (distance <= maxDistance) {
+//            System.out.println("distance proche");
+//            return true;
+//        }
+//        else{
+//            return false;
+//        }
+//    }
 }

@@ -23,7 +23,7 @@ public abstract class Carte {
     public final int ROWS_MAP = 12;
 
     // Nombre de colonne de la map
-    public final int COLUMNS_MAP = 20;
+    public final int COLUMNS_MAP = 25;
 
     public Carte(TilePane tilePane, String fileCsvName) {
         this.tilePane = tilePane;
