@@ -2,6 +2,7 @@ package com.pirateswarriors.model.defense;
 
 import com.pirateswarriors.model.ennemies.Ennemis;
 import javafx.animation.TranslateTransition;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -37,17 +38,17 @@ public class DefenseActor {
         this.pane = pane;
         this.pv = new SimpleIntegerProperty(pv);
         this.prix = prix;
+        this.image = image;
         this.positionX = new SimpleDoubleProperty(0);
         this.positionY = new SimpleDoubleProperty(0);
-        this.image = image;
         this.degat = degats;
         this.labelPv = new Label();
         this.bullet = new ImageView(new Image(getClass().getResource("/com/pirateswarriors/images/defense/cannonBall.png").toString()));
         this.shootSound = new MediaPlayer(new Media(getClass().getResource("/com/pirateswarriors/sounds/shoot/ShootShip.mp3").toString()));
         labelPv.setText("Vie : " + this.getPv());
         // Bind des positions de l'acteur avec l'image
-        this.image.xProperty().bind(this.positionXProperty());
-        this.image.yProperty().bind(this.positionYProperty());
+        this.image.xProperty().bind(Bindings.subtract(positionXProperty(), this.image.getBoundsInLocal().getWidth() / 2));
+        this.image.yProperty().bind(Bindings.subtract(positionYProperty(), this.image.getBoundsInLocal().getHeight() / 2));
         this.pane.getChildren().addAll(this.image, this.labelPv);
     }
 
@@ -74,7 +75,7 @@ public class DefenseActor {
     }
 
     public double getPositionX() {
-        return this.positionX.getValue();
+        return this.positionXProperty().getValue();
     }
 
     public void setPositionX(double newPos) {
@@ -86,7 +87,7 @@ public class DefenseActor {
     }
 
     public double getPositionY() {
-        return this.positionY.getValue();
+        return this.positionYProperty().getValue();
     }
 
     public void setPositionY(double newPos) {
@@ -103,7 +104,25 @@ public class DefenseActor {
     public void attaque(Ennemis ennemi) {
 
         long currentTime = System.currentTimeMillis();
-        if (currentTime - lastExecutionTime >= 2000) { // Vérifier si deux secondes se sont écoulées
+        if (currentTime - lastExecutionTime >= 3500) { // Vérifier si deux secondes se sont écoulées
+
+            // Création de l'animation de déplacement de la balle
+            pane.getChildren().add(bullet);
+            TranslateTransition transition = new TranslateTransition(Duration.seconds(1), this.bullet);
+            transition.setDuration(Duration.seconds(0.5));
+            transition.setFromX(this.positionXProperty().getValue());
+            transition.setFromY(this.positionYProperty().getValue());
+            transition.setToX(ennemi.getPositionX());
+            transition.setToY(ennemi.getPositionY());
+
+            // Configuration de l'animation
+            transition.setOnFinished(event -> {
+                pane.getChildren().remove(bullet);
+            });
+
+            // Lancement de l'animation
+            transition.play();
+
 
             // Sound shoot
             this.shootSound.stop();
