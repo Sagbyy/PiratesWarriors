@@ -13,11 +13,16 @@ public class EnnemiVue {
     private Image image;
     private Label labelPv;
     private Pane paneCentrale;
+    //private String id;
+
 
     public EnnemiVue(Ennemis ennemi) {
         this.image = ennemi.getImage() ;
+        this.imageEnnemi = new ImageView(image);
+        this.imageEnnemi.setId(ennemi.getId());
+
         //imageBateau.setImage(image);
-        imageEnnemi = new ImageView(image);
+
         this.labelPv = new Label("PV : " + ennemi.getPts_vie());
         ennemi.getPts_vieProperty().addListener((obs, old, nouv) -> {
             this.labelPv.setText("PV : " + nouv);
@@ -37,4 +42,6 @@ public class EnnemiVue {
     public Pane getPaneCentrale() {
         return paneCentrale;
     }
+
+
 }
