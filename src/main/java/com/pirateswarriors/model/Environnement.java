@@ -100,8 +100,6 @@ public class Environnement {
 
         // Attaque des défense
 
-        double portéeDégats = 150;
-
         Iterator<Ennemis> iterator = ennemisList.iterator();
         while (iterator.hasNext()) {
             Ennemis ennemies = iterator.next();
@@ -110,7 +108,7 @@ public class Environnement {
                 iterator.remove();
             } else {
                 for (DefenseActor defense : defenseList) {
-                    if ((defense.getPositionX() + portéeDégats >= ennemies.getMiddlePostionX() && defense.getPositionX() - portéeDégats <= ennemies.getMiddlePostionX()) && (defense.getPositionY() + portéeDégats >= ennemies.getMiddlePostionY() && defense.getPositionY() - portéeDégats <= ennemies.getMiddlePostionY())) {
+                    if ((defense.getPositionX() + defense.getPorteeDegats() >= ennemies.getMiddlePostionX() && defense.getPositionX() - defense.getPorteeDegats() <= ennemies.getMiddlePostionX()) && (defense.getPositionY() + defense.getPorteeDegats() >= ennemies.getMiddlePostionY() && defense.getPositionY() - defense.getPorteeDegats() <= ennemies.getMiddlePostionY())) {
                         defense.attaque(ennemies);
                     }
                 }

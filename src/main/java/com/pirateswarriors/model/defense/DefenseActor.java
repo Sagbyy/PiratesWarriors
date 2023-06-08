@@ -31,9 +31,16 @@ public class DefenseActor {
     private MediaPlayer shootSound;
     private ImageView bullet;
     private long lastExecutionTime;
+    private String pathSound;
+    private Boolean ifHasBullet;
+    private double porteeDegats;
+    private int delayMS;
 
-
-    public DefenseActor(int pv, int prix, int degats, ImageView image, Pane pane) {
+    public DefenseActor(int pv, int prix, int degats, ImageView image, Pane pane, String pathSound, Boolean ifHasBullet, double porteeDegats, int delayMS) {
+        this.delayMS = delayMS;
+        this.porteeDegats = porteeDegats;
+        this.ifHasBullet = ifHasBullet;
+        this.pathSound = pathSound;
         this.lastExecutionTime = 0L;
         this.pane = pane;
         this.pv = new SimpleIntegerProperty(pv);
@@ -44,7 +51,7 @@ public class DefenseActor {
         this.degat = degats;
         this.labelPv = new Label();
         this.bullet = new ImageView(new Image(getClass().getResource("/com/pirateswarriors/images/defense/cannonBall.png").toString()));
-        this.shootSound = new MediaPlayer(new Media(getClass().getResource("/com/pirateswarriors/sounds/shoot/ShootShip.mp3").toString()));
+        this.shootSound = new MediaPlayer(new Media(getClass().getResource(this.pathSound).toString()));
         labelPv.setText("Vie : " + this.getPv());
         // Bind des positions de l'acteur avec l'image
         this.image.xProperty().bind(Bindings.subtract(positionXProperty(), this.image.getBoundsInLocal().getWidth() / 2));
@@ -53,6 +60,10 @@ public class DefenseActor {
     }
 
     // Getter & Setter
+
+    public double getPorteeDegats() {
+        return this.porteeDegats;
+    }
 
     public Label labelProperty() {
         return this.labelPv;
@@ -114,28 +125,26 @@ public class DefenseActor {
         rotateImage(ennemi.getPositionX(), ennemi.getPositionY());
 
         long currentTime = System.currentTimeMillis();
-        if (currentTime - lastExecutionTime >= 3500) { // Vérifier si deux secondes se sont écoulées
-            // Création de l'animation de déplacement de la balle
-            pane.getChildren().add(bullet);
-            TranslateTransition transition = new TranslateTransition(Duration.seconds(1), this.bullet);
-            transition.setDuration(Duration.seconds(0.5));
-            transition.setFromX(this.positionXProperty().getValue());
-            transition.setFromY(this.positionYProperty().getValue());
-            // Vers le centre de l'image
-            transition.setToX(ennemi.getMiddlePostionX());
-            transition.setToY(ennemi.getMiddlePostionY());
+        if (currentTime - lastExecutionTime >= this.delayMS) { // Vérifier si deux secondes se sont écoulées
+            if (ifHasBullet) {
+                // Création de l'animation de déplacement de la balle
+                pane.getChildren().add(bullet);
+                TranslateTransition transition = new TranslateTransition(Duration.seconds(1), this.bullet);
+                transition.setDuration(Duration.seconds(0.5));
+                transition.setFromX(this.positionXProperty().getValue());
+                transition.setFromY(this.positionYProperty().getValue());
+                // Vers le centre de l'image
+                transition.setToX(ennemi.getMiddlePostionX());
+                transition.setToY(ennemi.getMiddlePostionY());
 
-            // Configuration de l'animation
-            transition.setOnFinished(event -> {
-                pane.getChildren().remove(bullet);
+                // Configuration de l'animation
+                transition.setOnFinished(event -> {
+                    pane.getChildren().remove(bullet);
+                });
 
-                // Suppression de l'ennemi du pane
-                pane.getChildren().remove(pane.lookup("#" + ennemi.getId()));
-            });
-
-            // Lancement de l'animation
-            transition.play();
-
+                // Lancement de l'animation
+                transition.play();
+            }
 
             // Sound shoot
             this.shootSound.stop();
