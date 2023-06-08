@@ -25,11 +25,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 
-import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -180,15 +178,12 @@ public class Controller implements Initializable {
 
     public boolean ennemiProche(Ennemis ennemis){
         double distanceX = Math.abs(ennemis.getPositionX() - imgTresor.getX());
-        System.out.println("distanceX: " + distanceX);
         double distanceY = Math.abs(ennemis.getPositionY() - imgTresor.getY());
 
         // Calcul de la distance entre l'ennemi et le trésor
         double distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-        System.out.println("distance: " + distance);
         double maxDistance = 266;
         if (distance <= maxDistance) {
-            System.out.println("distance proche");
             return true;
         } else {
             return false;
@@ -209,7 +204,7 @@ public class Controller implements Initializable {
         ajoutDefense.bindImage(mouseX, mouseY);
 
         // Lorsque qu'on clique sur la map on laisse la position au clique
-        ControleurAjoutDefense controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getDefense(), porteMonnaie, jeu);
+        ControleurAjoutDefense controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getDefense(), porteMonnaie, jeu, paneCentral);
         paneCentral.addEventHandler(MouseEvent.MOUSE_CLICKED, controleurAjoutDefense);
     }
 

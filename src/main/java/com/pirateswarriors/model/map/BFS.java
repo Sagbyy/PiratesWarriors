@@ -76,7 +76,6 @@ public class BFS {
     public ArrayList<Couple> cheminVersSource() {
         ArrayList<Couple> chemin = new ArrayList<>();
         chemin.add(this.source);
-        System.out.println(predecesseurs);
         Couple courant = predecesseurs.get(this.objectif);
 
         chemin.add(courant);
