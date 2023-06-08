@@ -28,8 +28,6 @@ public class EnnemiVue {
         ennemi.positionYProperty().addListener((obs, old, nouv) -> {
             this.labelPv.setLayoutY((Double) nouv);
         });
-//        this.paneCentrale = paneCentrale;
-//        this.paneCentrale.getChildren().addAll(this.imageEnnemi, this.labelPv);
     }
 
     public ImageView getImageBateau() {

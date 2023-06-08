@@ -8,6 +8,7 @@ import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
 import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
 import com.pirateswarriors.model.map.BFS;
 import com.pirateswarriors.model.map.Couple;
+import com.pirateswarriors.view.EnnemiVue;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -37,13 +38,15 @@ public class Ennemis {
     private Tresor tresor;
     private Ennemis ennemis;
     private ImageView imgTresor;
+    private EnnemiVue ennemiVue;
 
     ArrayList chemin;
     CarteModele g = new CarteModele("newMap2.csv");
     com.pirateswarriors.model.map.BFS BFS ;
 
-    public Ennemis(int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, Image image) { // Constructeur de la class mère Ennemis
+    public Ennemis(int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, Image image, EnnemiVue ennemiVue) { // Constructeur de la class mère Ennemis
         this.pts_vie = new SimpleIntegerProperty(pts_vie);
+        this.ennemiVue = ennemiVue;
         this.image = image;
         this.pts_score = pts_score;
         this.pts_pièces = pts_pièces;
@@ -151,6 +154,7 @@ public class Ennemis {
     public void seDeplace(){
 
     }
+
 
     public void avance(){
         if(pos<getChemin().size()-1){

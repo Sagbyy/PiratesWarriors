@@ -101,15 +101,10 @@ public class Environnement {
 
             if (ennemies.estMort()) {
                 iterator.remove();
-                System.out.println("mort de : " + ennemies);
             } else {
                 for (DefenseActor defense : defenseList) {
-                    if ((defense.getPositionX() + portéeDégats >= ennemies.getPositionX() && defense.getPositionX() - portéeDégats <= ennemies.getPositionX())
-                            &&
-                            (defense.getPositionY() + portéeDégats >= ennemies.getPositionY() && defense.getPositionY() - portéeDégats <= ennemies.getPositionY())) {
-                        ennemies.enleverPv(1);
-                        System.out.println(ennemies.getPts_vie());
-                        defense.rotateImage(ennemies.getPositionX(), ennemies.getPositionY());
+                    if ((defense.getPositionX() + portéeDégats >= ennemies.getPositionX() && defense.getPositionX() - portéeDégats <= ennemies.getPositionX()) && (defense.getPositionY() + portéeDégats >= ennemies.getPositionY() && defense.getPositionY() - portéeDégats <= ennemies.getPositionY())) {
+                        defense.attaque(ennemies);
                     }
                 }
             }
