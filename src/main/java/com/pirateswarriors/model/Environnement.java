@@ -24,8 +24,11 @@ public class Environnement {
     private IntegerProperty nbArgent;
     private int nbEnnemis;
     private Pane paneCentral;
+    private PorteMonnaie porteMonnaie;
 
-    public Environnement(Pane paneCentral) {
+    public Environnement(Pane paneCentral, PorteMonnaie porteMonnaie) {
+        this.porteMonnaie = porteMonnaie;
+        this.porteMonnaie.setNb(9000);
         this.paneCentral = paneCentral;
         this.nbVague = new SimpleIntegerProperty(1);
         this.nbScore = new SimpleIntegerProperty(0);
@@ -50,6 +53,7 @@ public class Environnement {
 
     public void ajouterDefense(DefenseActor defense) {
         this.defenseList.add(defense);
+        System.out.println("Ajouttttttttttt");
     }
 
 
@@ -126,6 +130,7 @@ public class Environnement {
             if (a.estMort()) {
                 System.out.println("mort de : " + a.getId());
                 getEnnemisList().remove(i);
+                this.porteMonnaie.ajoutMonnaie(50);
             }
         }
     }

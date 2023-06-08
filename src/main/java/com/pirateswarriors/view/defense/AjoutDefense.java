@@ -64,6 +64,8 @@ public class AjoutDefense {
                     System.out.println("Erreur : defense n'existe pas");
                 }
             }
+            this.porteMonnaie.enleverMonnaie(500);
+
         }
     }
 

@@ -77,13 +77,12 @@ public class Controller implements Initializable {
         this.tresorVue = new TresorVue(tresor);
 
         this.porteMonnaie = new PorteMonnaie();
-        porteMonnaie.setNb(9000);
         this.porteMonnaieVue = new PorteMonnaieVue(porteMonnaie);
 
         nbPieces.textProperty().bind(porteMonnaie.nbProperty().asString());
         labelVieTresor.setText("vie: " + String.valueOf(tresor.getPv()));
 
-        this.jeu = new Environnement(paneCentral);
+        this.jeu = new Environnement(paneCentral, porteMonnaie);
         // Mouse Property
         this.mouseY = new SimpleDoubleProperty(0);
         this.mouseX = new SimpleDoubleProperty(0);

@@ -129,6 +129,7 @@ public class DefenseActor {
             transition.setOnFinished(event -> {
                 pane.getChildren().remove(bullet);
 
+                // Suppression de l'ennemi du pane
                 pane.getChildren().remove(pane.lookup("#" + ennemi.getId()));
             });
 
