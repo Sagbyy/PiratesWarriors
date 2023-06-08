@@ -11,8 +11,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+//import javafx.scene.media.Media;
+//import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 import java.util.Timer;
@@ -28,7 +28,7 @@ public class DefenseActor {
     private Pane pane;
     private Label labelPv;
     private int degat;
-    private MediaPlayer shootSound;
+    //private MediaPlayer shootSound;
     private ImageView bullet;
     private long lastExecutionTime;
 
@@ -44,7 +44,7 @@ public class DefenseActor {
         this.degat = degats;
         this.labelPv = new Label();
         this.bullet = new ImageView(new Image(getClass().getResource("/com/pirateswarriors/images/defense/cannonBall.png").toString()));
-        this.shootSound = new MediaPlayer(new Media(getClass().getResource("/com/pirateswarriors/sounds/shoot/ShootShip.mp3").toString()));
+        //this.shootSound = new MediaPlayer(new Media(getClass().getResource("/com/pirateswarriors/sounds/shoot/ShootShip.mp3").toString()));
         labelPv.setText("Vie : " + this.getPv());
         // Bind des positions de l'acteur avec l'image
         this.image.xProperty().bind(Bindings.subtract(positionXProperty(), this.image.getBoundsInLocal().getWidth() / 2));
@@ -126,8 +126,8 @@ public class DefenseActor {
 
 
             // Sound shoot
-            this.shootSound.stop();
-            this.shootSound.play();
+            //this.shootSound.stop();
+            //this.shootSound.play();
 
             ennemi.enleverPv(this.degat);
 
