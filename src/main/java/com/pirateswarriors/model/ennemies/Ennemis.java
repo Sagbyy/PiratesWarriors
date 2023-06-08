@@ -77,23 +77,29 @@ public class Ennemis {
         this.env = env;
         this.BFS = new BFS(g,apparition() );
         this.chemin = BFS.cheminVersSource();
+        this.id = "E"+compteur;
         this.dir = "";
         this.pos = 0;
+        compteur++;
     }
 
+    public String getId() {
+        return id;
+    }
 
     public Couple apparition(){
         Couple c = null;
+
         int rand = (int) (Math.random() * 2) + 1;
         if (rand == 1) {
              c = new Couple(3, 24);
         }
         if (rand == 2) {
-             c = new Couple(12, 22);
-             setPositionY(256);
+             c = new Couple(11, 22);
+            setPositionX(getPositionX()-128);
+            setPositionY(getPositionY()+512);
         }
-
-        return c;
+       return c;
     }
 
 
