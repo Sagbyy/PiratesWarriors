@@ -4,6 +4,7 @@ import com.pirateswarriors.model.Environnement;
 import com.pirateswarriors.model.ennemies.Ennemis;
 import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.Tresor;
+import com.pirateswarriors.model.ennemies.ObservateurEnnemis;
 import com.pirateswarriors.view.EnnemiVue;
 import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
 import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
@@ -69,17 +70,12 @@ public class Controller implements Initializable {
 
 
 
-//        this.ennemis = new PirateFusil();
-//        this.ennemis2 = new BarqueCanon();
-//        this.personnageVue = new EnnemiVue(this.ennemis);
-//        this.personnageVue2 = new EnnemiVue(this.ennemis2);
+
         this.carte_1 = new Carte_1(tilePane);
 
         this.tresor = new Tresor(2000);
         this.tresorVue = new TresorVue(tresor);
-//        this.paneCentral.getChildren().add(tresorVue.getImgTresor());
-//        this.tresorVue.getImgTresor().setX(0);
-//        this.tresorVue.getImgTresor().setY(335);
+
         this.porteMonnaie = new PorteMonnaie();
         porteMonnaie.setNb(9000);
         this.porteMonnaieVue = new PorteMonnaieVue(porteMonnaie);
@@ -91,6 +87,9 @@ public class Controller implements Initializable {
         // Mouse Property
         this.mouseY = new SimpleDoubleProperty(0);
         this.mouseX = new SimpleDoubleProperty(0);
+
+        // ecoute de la liste des acteurs pour prendre en compte les morts et les vivants
+        this.jeu.getEnnemisList().addListener(new ObservateurEnnemis(this.paneCentral));
 
         // Get mouse position
         paneCentral.setOnMouseMoved(new EventHandler<MouseEvent>() {
@@ -136,12 +135,6 @@ public class Controller implements Initializable {
 //                        System.out.println("nouvelle valeur du porte monnaie: " + porteMonnaie.getNb());
 //                    }
                     for (int i = 0; i < jeu.getEnnemisList().size(); i++) {
-                        Ennemis e = jeu.getEnnemisList().get(i);
-                        EnnemiVue v = new EnnemiVue(jeu.getEnnemisList().get(i));
-                        this.paneCentral.getChildren().add(v.getImageBateau());
-                        v.getImageBateau().xProperty().bind(e.positionXProperty());
-                        v.getImageBateau().yProperty().bind(e.positionYProperty());
-
                         if (tresor.estPasDetruit()){
                             // Infliger des dégâts au trésor
                             if (ennemiProche(jeu.getEnnemisList().get(i))){
@@ -154,16 +147,7 @@ public class Controller implements Initializable {
                         }
                     }
 
-//                    for (int i=0; i < jeu.getEnnemis().size(); i++){
-//
-//
-//                    }
 
-                        //remplacement de l'image trésor
-//                        else{
-//                            int i = paneCentral.getChildren().indexOf(imgTresor);
-//                            paneCentral.getChildren().set(i, tresorVue.imgTresorDetruit());
-//                        }
                     jeu.untour();
                     temps++;
 

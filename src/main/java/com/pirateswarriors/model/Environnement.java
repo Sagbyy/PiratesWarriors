@@ -6,6 +6,8 @@ import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
 import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
@@ -13,9 +15,10 @@ import java.util.Iterator;
 
 public class Environnement {
 
-    private ArrayList<Ennemis> ennemisList;
+    //private ArrayList<Ennemis> ennemisList;
     private ArrayList<DefenseActor> defenseList;
     private ArrayList<Ennemis> ennemisBack;
+    private ObservableList<Ennemis> ennemisList;
     private IntegerProperty nbVague;
     private IntegerProperty nbScore;
     private IntegerProperty nbArgent;
@@ -27,7 +30,7 @@ public class Environnement {
         this.nbVague = new SimpleIntegerProperty(1);
         this.nbScore = new SimpleIntegerProperty(0);
         this.nbArgent = new SimpleIntegerProperty(0);
-        this.ennemisList = new ArrayList<>();
+        this.ennemisList =  FXCollections.observableArrayList();
         this.defenseList = new ArrayList<>();
         this.ennemisBack = new ArrayList<>();
         this.nbEnnemis = 0;
@@ -37,7 +40,7 @@ public class Environnement {
         return this.paneCentral;
     }
 
-    public ArrayList<Ennemis> getEnnemisList() {
+    public ObservableList<Ennemis> getEnnemisList() {
         return ennemisList;
     }
 
@@ -121,7 +124,7 @@ public class Environnement {
         for (int i = getEnnemisList().size() - 1; i >= 0; i--) {
             Ennemis a = getEnnemisList().get(i);
             if (a.estMort()) {
-                System.out.println("mort de : " + a);
+                System.out.println("mort de : " + a.getId());
                 getEnnemisList().remove(i);
             }
         }

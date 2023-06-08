@@ -65,7 +65,6 @@ public class Ennemis {
 
 
     public Ennemis() { // Constructeur de la class mère Ennemis
-
         this.pts_vie = pts_vie;
         this.image = image;
         this.pts_score = pts_score;
@@ -77,10 +76,15 @@ public class Ennemis {
         this.env = env;
         this.BFS = new BFS(g,apparition() );
         this.chemin = BFS.cheminVersSource();
+        this.id = "E"+compteur;
         this.dir = "";
         this.pos = 0;
+        compteur++;
     }
 
+    public String getId() {
+        return id;
+    }
 
     public Couple apparition(){
         Couple c = null;
