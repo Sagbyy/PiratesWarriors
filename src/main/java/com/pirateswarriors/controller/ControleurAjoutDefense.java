@@ -32,17 +32,13 @@ public class ControleurAjoutDefense implements EventHandler<MouseEvent> {
                 this.defenseActor.positionXProperty().unbind();
                 this.defenseActor.positionYProperty().unbind();
 
-//                paneCentral.getChildren().add(new Circle(this.defenseActor.getPositionX(), this.defenseActor.getPositionY(), 150, Color.RED));
+                //paneCentral.getChildren().add(new Circle(this.defenseActor.getPositionX(), this.defenseActor.getPositionY(), 150, Color.RED));
 
                 this.defenseActor.labelProperty().setLayoutX(this.defenseActor.getImageProperty().getX() + 10);
                 this.defenseActor.labelProperty().setLayoutY(this.defenseActor.getImageProperty().getY() - 25);
 
-
-
                 this.env.ajouterDefense(defenseActor);
-                // retrait du cout de la defense
 
-                porteMonnaie.ajoutMonnaie(-500);
             }
             else
                 //nbPieces.;0

@@ -54,27 +54,27 @@
          <children>
             <HBox fx:id="hbox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="defense1" mnemonicParsing="false" onAction="#ajoutDefense" styleClass="buttonDefense">
+                  <Button fx:id="defense1" mnemonicParsing="false" onAction="#ajoutDefense" styleClass="buttonDefense" minHeight="230" minWidth="120">
                      <graphic>
                         <ImageView>
-                           <Image url="@images/defense/ship (1).png" />
+                           <Image url="@images/defense/manBlue_gun.png" />
                         </ImageView>
                      </graphic>
                      <HBox.margin>
                         <Insets right="25.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="defense2" mnemonicParsing="false" onAction="#ajoutDefense" styleClass="buttonDefense">
+                  <Button fx:id="defense2" mnemonicParsing="false" onAction="#ajoutDefense" styleClass="buttonDefense" minHeight="230" minWidth="120">
                      <graphic>
                         <ImageView>
-                           <Image url="@images/defense/ship (2).png" />
+                           <Image url="@images/defense/tank_blue.png" />
                         </ImageView>
                      </graphic>
                      <HBox.margin>
                         <Insets right="25.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="defense3" mnemonicParsing="false" onAction="#ajoutDefense" styleClass="buttonDefense">
+                  <Button fx:id="defense3" mnemonicParsing="false" onAction="#ajoutDefense" styleClass="buttonDefense" minHeight="230" minWidth="120">
                      <graphic>
                         <ImageView>
                            <Image url="@images/defense/ship (3).png" />
@@ -84,30 +84,30 @@
                         <Insets right="25.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="defense4" mnemonicParsing="false" onAction="#ajoutDefense" styleClass="buttonDefense">
+                  <Button fx:id="defense4" mnemonicParsing="false" onAction="#ajoutDefense" styleClass="buttonDefense" minHeight="230" minWidth="120">
                      <graphic>
                         <ImageView>
-                           <Image url="@images/defense/ship (4).png" />
+                           <Image url="@images/defense/cannon.png" />
                         </ImageView>
                      </graphic>
                      <HBox.margin>
                         <Insets right="25.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="defense5" mnemonicParsing="false" onAction="#ajoutDefense" styleClass="buttonDefense">
+                  <Button fx:id="defense5" mnemonicParsing="false" onAction="#ajoutDefense" styleClass="buttonDefense" minHeight="230" minWidth="120" >
                      <graphic>
                         <ImageView>
-                           <Image url="@images/defense/ship (5).png" />
+                           <Image url="@images/defense/soldierKnife.png" />
                         </ImageView>
                      </graphic>
                      <HBox.margin>
                         <Insets right="25.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="defense6" mnemonicParsing="false" onAction="#ajoutDefense" styleClass="buttonDefense">
+                  <Button fx:id="defense6" mnemonicParsing="false" onAction="#ajoutDefense" styleClass="buttonDefense" minHeight="230" minWidth="120">
                      <graphic>
                         <ImageView>
-                           <Image url="@images/defense/ship (6).png" />
+                           <Image url="@images/defense/bomb.png" />
                         </ImageView>
                      </graphic>
                      <HBox.margin>

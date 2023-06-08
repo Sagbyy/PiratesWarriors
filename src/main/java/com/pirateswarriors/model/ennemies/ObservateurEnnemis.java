@@ -33,7 +33,6 @@ public class ObservateurEnnemis implements ListChangeListener<Ennemis> {
             for (Ennemis nouveau : change.getAddedSubList()) {
                 ajoutEnnemis(nouveau);
             }
-
             for (Ennemis mort : change.getRemoved()) {
                 enleverEnnemis(mort);
             }

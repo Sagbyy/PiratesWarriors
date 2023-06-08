@@ -5,8 +5,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-//import javafx.scene.media.Media;
-//import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -14,14 +14,14 @@ import java.util.Objects;
 
 public class Main extends Application {
 
-    //private MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer;
 
     @Override
     public void start(Stage primaryStage) {
         try {
             BorderPane root = FXMLLoader.load(getClass().getResource("view.fxml"));
             Scene scene = new Scene(root);
-/**
+
             // Chargement du fichier audio
             Media mediaMusic = new Media(getClass().getResource("/com/pirateswarriors/sounds/PiratesWarriorsMusic.mp3").toString());
             // Creation du lecteur media
@@ -37,7 +37,7 @@ public class Main extends Application {
                     mediaPlayer.seek(Duration.ZERO);
                 }
             });
- **/
+
             primaryStage.setScene(scene);
             primaryStage.setFullScreen(true);
             primaryStage.show();
@@ -49,7 +49,7 @@ public class Main extends Application {
     @Override
     public void stop() {
         // Arrêt du lecteur média lorsque l'application se ferme
-        //mediaPlayer.stop();
+        mediaPlayer.stop();
     }
 
     public static void main(String[] args) {

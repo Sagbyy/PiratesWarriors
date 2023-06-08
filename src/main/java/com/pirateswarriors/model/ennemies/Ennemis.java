@@ -65,6 +65,7 @@ public class Ennemis {
 
 
     public Ennemis() { // Constructeur de la class mère Ennemis
+
         this.pts_vie = pts_vie;
         this.image = image;
         this.pts_score = pts_score;
@@ -102,6 +103,13 @@ public class Ennemis {
     }
 
 
+    public double getMiddlePostionX() {
+        return this.getPositionX() + this.getImage().getWidth() / 2;
+    }
+
+    public double getMiddlePostionY() {
+        return this.getPositionY() + this.getImage().getHeight() / 2;
+    }
 
     public boolean estMort(){ // Fonction pour verfier si l'ennemi est mort ou non
         return this.pts_vie.getValue() <= 0;
