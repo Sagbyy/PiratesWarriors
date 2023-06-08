@@ -87,11 +87,11 @@ public class Ennemis {
              c = new Couple(3, 24);
         }
         if (rand == 2) {
-             c = new Couple(12, 22);
-             setPositionY(256);
+             c = new Couple(11, 22);
+            setPositionX(getPositionX()-128);
+            setPositionY(getPositionY()+512);
         }
-
-        return c;
+       return c;
     }
 
 

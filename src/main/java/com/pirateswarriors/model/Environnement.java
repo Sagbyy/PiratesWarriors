@@ -141,6 +141,7 @@ public class Environnement {
                 int rand = (int) (Math.random() * 2) + 1;
                 if (rand == 1) {
                     getEnnemisList().add(new BarqueCanon());
+
                 }
                 if (rand == 2) {
                     getEnnemisList().add(new PirateFusil());
