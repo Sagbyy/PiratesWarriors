@@ -11,8 +11,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-//import javafx.scene.media.Media;
-//import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 import java.util.Timer;
@@ -28,7 +28,7 @@ public class DefenseActor {
     private Pane pane;
     private Label labelPv;
     private int degat;
-    //private MediaPlayer shootSound;
+    private MediaPlayer shootSound;
     private ImageView bullet;
     private long lastExecutionTime;
 
@@ -44,7 +44,7 @@ public class DefenseActor {
         this.degat = degats;
         this.labelPv = new Label();
         this.bullet = new ImageView(new Image(getClass().getResource("/com/pirateswarriors/images/defense/cannonBall.png").toString()));
-        //this.shootSound = new MediaPlayer(new Media(getClass().getResource("/com/pirateswarriors/sounds/shoot/ShootShip.mp3").toString()));
+        this.shootSound = new MediaPlayer(new Media(getClass().getResource("/com/pirateswarriors/sounds/shoot/ShootShip.mp3").toString()));
         labelPv.setText("Vie : " + this.getPv());
         // Bind des positions de l'acteur avec l'image
         this.image.xProperty().bind(Bindings.subtract(positionXProperty(), this.image.getBoundsInLocal().getWidth() / 2));
@@ -96,6 +96,14 @@ public class DefenseActor {
 
     // Methods
 
+    public double getMiddlePostionX() {
+        return this.getImageProperty().getBoundsInLocal().getMinX() + this.getImageProperty().getBoundsInLocal().getWidth() / 2;
+    }
+
+    public double getMiddlePostionY() {
+        return this.getImageProperty().getBoundsInLocal().getMinY() + this.getImageProperty().getBoundsInLocal().getHeight() / 2;
+    }
+
     public void rotateImage(double posX, double posY) {
         double angle = Math.toDegrees(Math.atan2(this.image.getY() - posY, this.image.getX() - posX));
         this.image.setRotate(angle - 90);
@@ -113,12 +121,15 @@ public class DefenseActor {
             transition.setDuration(Duration.seconds(0.5));
             transition.setFromX(this.positionXProperty().getValue());
             transition.setFromY(this.positionYProperty().getValue());
-            transition.setToX(ennemi.getPositionX());
-            transition.setToY(ennemi.getPositionY());
+            // Vers le centre de l'image
+            transition.setToX(ennemi.getMiddlePostionX());
+            transition.setToY(ennemi.getMiddlePostionY());
 
             // Configuration de l'animation
             transition.setOnFinished(event -> {
                 pane.getChildren().remove(bullet);
+
+                pane.getChildren().remove(pane.lookup("#" + ennemi.getId()));
             });
 
             // Lancement de l'animation
@@ -126,8 +137,8 @@ public class DefenseActor {
 
 
             // Sound shoot
-            //this.shootSound.stop();
-            //this.shootSound.play();
+            this.shootSound.stop();
+            this.shootSound.play();
 
             ennemi.enleverPv(this.degat);
 

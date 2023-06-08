@@ -19,7 +19,6 @@ public class AjoutDefense {
     private ImageView imageShip;
     private DefenseActor defense;
     private String buttonId;
-    private Label labelPv;
     private PorteMonnaie porteMonnaie;
     private Environnement env;
 

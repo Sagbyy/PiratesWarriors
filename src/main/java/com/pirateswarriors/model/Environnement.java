@@ -106,7 +106,7 @@ public class Environnement {
                 iterator.remove();
             } else {
                 for (DefenseActor defense : defenseList) {
-                    if ((defense.getPositionX() + portéeDégats >= ennemies.getPositionX() && defense.getPositionX() - portéeDégats <= ennemies.getPositionX()) && (defense.getPositionY() + portéeDégats >= ennemies.getPositionY() && defense.getPositionY() - portéeDégats <= ennemies.getPositionY())) {
+                    if ((defense.getPositionX() + portéeDégats >= ennemies.getMiddlePostionX() && defense.getPositionX() - portéeDégats <= ennemies.getMiddlePostionX()) && (defense.getPositionY() + portéeDégats >= ennemies.getMiddlePostionY() && defense.getPositionY() - portéeDégats <= ennemies.getMiddlePostionY())) {
                         defense.attaque(ennemies);
                     }
                 }
