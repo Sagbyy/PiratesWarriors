@@ -19,8 +19,8 @@
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="buttonMap1" mnemonicParsing="false" text="Map1" onAction="#afficherView3"/>
-            <Button mnemonicParsing="false" text="Map2" />
-            <Button mnemonicParsing="false" text="Map3" />
+            <Button fx:id="buttonMap2" mnemonicParsing="false" text="Map2" onAction="#afficherView3"/>
+            <Button fx:id="buttonMap3" mnemonicParsing="false" text="Map3" onAction="#afficherView3"/>
          </children>
       </VBox>
    </center>
