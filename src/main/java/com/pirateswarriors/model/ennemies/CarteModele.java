@@ -18,11 +18,6 @@ public class CarteModele {
     private int route2 = 131;
 
     public static void main(String[] args) {
-        CarteModele c = new CarteModele("newMap2.csv");
-        c.getTabCarte();
-        BFS test = new BFS(c, new Couple(11, 22));
-        System.out.println(test.cheminVersSource());
-
     }
 
     // Nombre de ligne de la map

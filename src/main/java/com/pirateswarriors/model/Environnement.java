@@ -17,8 +17,9 @@ public class Environnement {
 
     //private ArrayList<Ennemis> ennemisList;
     private ArrayList<DefenseActor> defenseList;
-    private ArrayList<Ennemis> ennemisBack;
     private ObservableList<Ennemis> ennemisList;
+    private ArrayList<Ennemis> ennemisBack;
+
     private IntegerProperty nbVague;
     private IntegerProperty nbScore;
     private IntegerProperty nbArgent;
@@ -30,7 +31,7 @@ public class Environnement {
         this.porteMonnaie = porteMonnaie;
         this.porteMonnaie.setNb(9000);
         this.paneCentral = paneCentral;
-        this.nbVague = new SimpleIntegerProperty(1);
+        this.nbVague = new SimpleIntegerProperty(0);
         this.nbScore = new SimpleIntegerProperty(0);
         this.nbArgent = new SimpleIntegerProperty(0);
         this.ennemisList =  FXCollections.observableArrayList();
@@ -55,11 +56,11 @@ public class Environnement {
         this.defenseList.add(defense);
         System.out.println("Ajouttttttttttt");
     }
-
-
-    public ArrayList<Ennemis> getEnnemisBack() {
-        return ennemisBack;
+    public IntegerProperty getNbVaguesProperty(){
+        return this.nbVague;
     }
+
+
 
     public int getNbEnnemis() {
         return nbEnnemis;
@@ -74,32 +75,23 @@ public class Environnement {
     }
 
 
-    public void créerVagues() {
-        for (int i = 0; i <= this.nbEnnemis; i++) {
-            int rand = (int) (Math.random() * 2) + 1;
-            if (rand == 1) {
-                this.ennemisList.add(new BarqueCanon());
-            }
-            if (rand == 2) {
-                this.ennemisList.add(new PirateFusil());
-            }
-        }
-    }
-
-
+    boolean go = true;
     public void untour() {
-        if (ennemisList.size() == 0) {
+        if(ennemisList.size() == 0 && go == true){
             this.nbEnnemis += 10;
             vague();
-
+            this.nbVague.set(getNbVague()+1);
         }
+        else if (go == false) {
 
-        vague();
-        tousAvancent();
+            vague();
+        }
         sontMorts();
+        tousAvancent();
 
-        // Attaque des défense
+        System.out.println(this.nbVague);
 
+        // Attaque des défenses
         Iterator<Ennemis> iterator = ennemisList.iterator();
         while (iterator.hasNext()) {
             Ennemis ennemies = iterator.next();
@@ -123,36 +115,45 @@ public class Environnement {
     }
 
     public void sontMorts() {
-        for (int i = getEnnemisList().size() - 1; i >= 0; i--) {
-            Ennemis a = getEnnemisList().get(i);
-            if (a.estMort()) {
-                System.out.println("mort de : " + a.getId());
-                getEnnemisList().remove(i);
-                this.porteMonnaie.ajoutMonnaie(50);
+            for (int i = getEnnemisList().size() - 1; i >= 0; i--) {
+                Ennemis a = getEnnemisList().get(i);
+                if (a.estMort()) {
+                    System.out.println("mort de : " + a.getId());
+                    getEnnemisList().remove(i);
+                    this.porteMonnaie.ajoutMonnaie(50);
+                }
             }
-        }
     }
 
 
     int nbenn, lop;
+    int vag = 2;
 
     public void vague() {
-        if (!(nbenn == getNbEnnemis())) {
+        if (!(nbenn == this.nbEnnemis)) {
             if (lop % 75 == 0) {
-                int rand = (int) (Math.random() * 2) + 1;
+                int rand = (int) (Math.random() * vag) + 1;
                 if (rand == 1) {
                     getEnnemisList().add(new BarqueCanon());
-
                 }
                 if (rand == 2) {
                     getEnnemisList().add(new PirateFusil());
                 }
                 nbenn++;
             }
-
+            go = false;
         }
-        lop = lop + (int) (Math.random() * 3) + 1;
 
+        else{
+            go = true;
+            nbenn = 0;
+        }
+
+        lop = lop + (int) (Math.random() * 3) + 1;
     }
+
+
+
+
 
 }
