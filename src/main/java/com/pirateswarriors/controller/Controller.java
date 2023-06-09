@@ -67,10 +67,6 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-
-
-
         this.carte_1 = new Carte_1(tilePane);
 
         this.tresor = new Tresor(2000);

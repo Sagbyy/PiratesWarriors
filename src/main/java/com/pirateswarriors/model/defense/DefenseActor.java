@@ -1,5 +1,6 @@
 package com.pirateswarriors.model.defense;
 
+import com.pirateswarriors.model.Environnement;
 import com.pirateswarriors.model.ennemies.Ennemis;
 import javafx.animation.TranslateTransition;
 import javafx.beans.binding.Bindings;
@@ -15,9 +16,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class DefenseActor {
 
     private IntegerProperty pv;
@@ -31,17 +29,23 @@ public class DefenseActor {
     private MediaPlayer shootSound;
     private ImageView bullet;
     private long lastExecutionTime;
+    private long lastExecutionTimeForPv;
     private String pathSound;
     private Boolean ifHasBullet;
     private double porteeDegats;
     private int delayMS;
+    private int degatPv;
+    private Environnement env;
 
-    public DefenseActor(int pv, int prix, int degats, ImageView image, Pane pane, String pathSound, Boolean ifHasBullet, double porteeDegats, int delayMS) {
+    public DefenseActor(int pv, int prix, int degats, int degatPv, ImageView image, Pane pane, String pathSound, Boolean ifHasBullet, double porteeDegats, int delayMS, Environnement env) {
+        this.env = env;
+        this.degatPv = degatPv;
         this.delayMS = delayMS;
         this.porteeDegats = porteeDegats;
         this.ifHasBullet = ifHasBullet;
         this.pathSound = pathSound;
         this.lastExecutionTime = 0L;
+        this.lastExecutionTimeForPv = 0L;
         this.pane = pane;
         this.pv = new SimpleIntegerProperty(pv);
         this.prix = prix;
@@ -56,6 +60,15 @@ public class DefenseActor {
         // Bind des positions de l'acteur avec l'image
         this.image.xProperty().bind(Bindings.subtract(positionXProperty(), this.image.getBoundsInLocal().getWidth() / 2));
         this.image.yProperty().bind(Bindings.subtract(positionYProperty(), this.image.getBoundsInLocal().getHeight() / 2));
+        this.getPvProperty().addListener((obs, old, nouv) -> {
+            // Pour le texte
+            labelPv.setText("Vie : " + nouv);
+
+            // Si il est mort
+            if ((int) nouv <= 0) {
+                this.pane.getChildren().removeAll(this.image, this.labelPv, this.bullet);
+            }
+        });
         this.pane.getChildren().addAll(this.image, this.labelPv);
     }
 
@@ -79,6 +92,10 @@ public class DefenseActor {
 
     public int getPv() {
         return this.pv.getValue();
+    }
+
+    public void enleverPv(int pv) {
+        this.getPvProperty().setValue(this.getPv() - pv);
     }
 
     public DoubleProperty positionXProperty() {
@@ -120,8 +137,16 @@ public class DefenseActor {
         this.image.setRotate(angle - 90);
     }
 
-    public void attaque(Ennemis ennemi) {
+    public void eachTimeDoSomething() {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastExecutionTimeForPv >= 5000) { // Vérifier si deux secondes se sont écoulées
+            this.enleverPv(5);
+            this.env.getPorteMonnaie().ajoutMonnaie(100);
+            lastExecutionTimeForPv = currentTime; // Mettre à jour le dernier instant d'exécution
+        }
+    }
 
+    public void attaque(Ennemis ennemi) {
         rotateImage(ennemi.getPositionX(), ennemi.getPositionY());
 
         long currentTime = System.currentTimeMillis();
@@ -150,6 +175,7 @@ public class DefenseActor {
             this.shootSound.stop();
             this.shootSound.play();
 
+            this.enleverPv(this.degatPv);
             ennemi.enleverPv(this.degat);
 
             lastExecutionTime = currentTime; // Mettre à jour le dernier instant d'exécution
