@@ -4,6 +4,7 @@ import com.pirateswarriors.model.Environnement;
 import com.pirateswarriors.model.ennemies.Ennemis;
 import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.Tresor;
+import com.pirateswarriors.model.ennemies.ObservateurEnnemis;
 import com.pirateswarriors.view.EnnemiVue;
 import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
 import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
@@ -25,11 +26,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 
-import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -68,25 +67,24 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-
         this.carte_1 = new Carte_1(tilePane);
+
         this.tresor = new Tresor(2000);
         this.tresorVue = new TresorVue(tresor);
-//        this.paneCentral.getChildren().add(tresorVue.getImgTresor());
-//        this.tresorVue.getImgTresor().setX(0);
-//        this.tresorVue.getImgTresor().setY(335);
+
         this.porteMonnaie = new PorteMonnaie();
-        porteMonnaie.setNb(9000);
         this.porteMonnaieVue = new PorteMonnaieVue(porteMonnaie);
 
         nbPieces.textProperty().bind(porteMonnaie.nbProperty().asString());
         labelVieTresor.setText("vie: " + String.valueOf(tresor.getPv()));
 
-        this.jeu = new Environnement(paneCentral);
+        this.jeu = new Environnement(paneCentral, porteMonnaie);
         // Mouse Property
         this.mouseY = new SimpleDoubleProperty(0);
         this.mouseX = new SimpleDoubleProperty(0);
+
+        // ecoute de la liste des acteurs pour prendre en compte les morts et les vivants
+        this.jeu.getEnnemisList().addListener(new ObservateurEnnemis(this.paneCentral));
 
         // Get mouse position
         paneCentral.setOnMouseMoved(new EventHandler<MouseEvent>() {
@@ -132,12 +130,6 @@ public class Controller implements Initializable {
 //                        System.out.println("nouvelle valeur du porte monnaie: " + porteMonnaie.getNb());
 //                    }
                     for (int i = 0; i < jeu.getEnnemisList().size(); i++) {
-                        Ennemis e = jeu.getEnnemisList().get(i);
-                        EnnemiVue v = new EnnemiVue(jeu.getEnnemisList().get(i));
-                        this.paneCentral.getChildren().add(v.getImageBateau());
-                        v.getImageBateau().xProperty().bind(e.positionXProperty());
-                        v.getImageBateau().yProperty().bind(e.positionYProperty());
-
                         if (tresor.estPasDetruit()){
                             // Infliger des dégâts au trésor
                             if (ennemiProche(jeu.getEnnemisList().get(i))){
@@ -150,16 +142,7 @@ public class Controller implements Initializable {
                         }
                     }
 
-//                    for (int i=0; i < jeu.getEnnemis().size(); i++){
-//
-//
-//                    }
 
-                        //remplacement de l'image trésor
-//                        else{
-//                            int i = paneCentral.getChildren().indexOf(imgTresor);
-//                            paneCentral.getChildren().set(i, tresorVue.imgTresorDetruit());
-//                        }
                     jeu.untour();
                     temps++;
 
@@ -174,15 +157,12 @@ public class Controller implements Initializable {
 
     public boolean ennemiProche(Ennemis ennemis){
         double distanceX = Math.abs(ennemis.getPositionX() - imgTresor.getX());
-        System.out.println("distanceX: " + distanceX);
         double distanceY = Math.abs(ennemis.getPositionY() - imgTresor.getY());
 
         // Calcul de la distance entre l'ennemi et le trésor
         double distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-        System.out.println("distance: " + distance);
         double maxDistance = 266;
         if (distance <= maxDistance) {
-            System.out.println("distance proche");
             return true;
         } else {
             return false;
@@ -203,7 +183,7 @@ public class Controller implements Initializable {
         ajoutDefense.bindImage(mouseX, mouseY);
 
         // Lorsque qu'on clique sur la map on laisse la position au clique
-        ControleurAjoutDefense controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getDefense(), porteMonnaie, jeu);
+        ControleurAjoutDefense controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getDefense(), porteMonnaie, jeu, paneCentral);
         paneCentral.addEventHandler(MouseEvent.MOUSE_CLICKED, controleurAjoutDefense);
     }
 

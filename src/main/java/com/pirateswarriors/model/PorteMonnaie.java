@@ -7,10 +7,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class PorteMonnaie {
     private IntegerProperty nb;
 
-
-
     public PorteMonnaie(){
-
         this.nb = new SimpleIntegerProperty(0);
     }
 
@@ -21,11 +18,15 @@ public class PorteMonnaie {
         return nb.get();
     }
     public void setNb(int nb){
-        this.nb.set(nb);
+        this.nbProperty().set(nb);
     }
 
     public void ajoutMonnaie(int s){
-        this.nbProperty().set(nbProperty().get() + s);
+        this.nbProperty().setValue(nbProperty().getValue() + s);
+    }
+
+    public void enleverMonnaie(int s){
+        this.nbProperty().setValue(nbProperty().getValue() - s);
     }
 
     public boolean argentVide(){
@@ -35,7 +36,5 @@ public class PorteMonnaie {
         else
             return false;
     }
-
-
 }
 

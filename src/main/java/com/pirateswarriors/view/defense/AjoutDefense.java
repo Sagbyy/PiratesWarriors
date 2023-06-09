@@ -3,9 +3,8 @@ package com.pirateswarriors.view.defense;
 import com.pirateswarriors.model.Environnement;
 import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.defense.DefenseActor;
+import com.pirateswarriors.model.defense.packDefense.*;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -19,7 +18,6 @@ public class AjoutDefense {
     private ImageView imageShip;
     private DefenseActor defense;
     private String buttonId;
-    private Label labelPv;
     private PorteMonnaie porteMonnaie;
     private Environnement env;
 
@@ -37,34 +35,36 @@ public class AjoutDefense {
             switch (this.buttonId) {
                 case "defense1" -> {
                     // Récupère l'image de la défense
-                    imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (1).png"))));
+                    imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/manBlue_gun.png"))));
                     // Nouvelle instance de la défense
-                    this.defense = new DefenseActor(50, 15, imageShip, paneCentral);
+                    this.defense = new ManGunDefense(50, 15, 10000, imageShip, paneCentral, env);
                 }
                 case "defense2" -> {
-                    imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (2).png"))));
-                    this.defense = new DefenseActor(50, 15, imageShip, paneCentral);
+                    imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/tank_blue.png"))));
+                    this.defense = new TankDefense(50, 15, 10000, imageShip, paneCentral, env);
                 }
                 case "defense3" -> {
                     imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (3).png"))));
-                    this.defense = new DefenseActor(50, 15, imageShip, paneCentral);
+                    this.defense = new ShipDefense(50, 15, 10000, imageShip, paneCentral, env);
                 }
                 case "defense4" -> {
-                    imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (4).png"))));
-                    this.defense = new DefenseActor(50, 15, imageShip, paneCentral);
+                    imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/cannon.png"))));
+                    this.defense = new CannonDefense(50, 15, 10000,imageShip, paneCentral, env);
                 }
                 case "defense5" -> {
-                    imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (5).png"))));
-                    this.defense = new DefenseActor(50, 15, imageShip, paneCentral);
+                    imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/soldierKnife.png"))));
+                    this.defense = new SoldierKnifeDefense(50, 50, 10000, imageShip, paneCentral, env);
                 }
                 case "defense6" -> {
-                    imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (6).png"))));
-                    this.defense = new DefenseActor(50, 15, imageShip, paneCentral);
+                    imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/bomb.png"))));
+                    this.defense = new BombDefense(50, 15, 10000, imageShip, paneCentral, env);
                 }
                 default -> {
                     System.out.println("Erreur : defense n'existe pas");
                 }
             }
+            this.porteMonnaie.enleverMonnaie(500);
+
         }
     }
 
@@ -73,7 +73,6 @@ public class AjoutDefense {
             // Bindings des positions de la défense avec celle de la souris
             defense.positionXProperty().bind(mouseX);
             defense.positionYProperty().bind(mouseY);
-            System.out.println(imageShip.getX());
         }
     }
 

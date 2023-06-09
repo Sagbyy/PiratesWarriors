@@ -7,33 +7,43 @@ import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
 import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.ListIterator;
 
 public class Environnement {
 
-    private ArrayList<Ennemis> ennemisList;
+    //private ArrayList<Ennemis> ennemisList;
     private ArrayList<DefenseActor> defenseList;
     private ArrayList<Ennemis> ennemisBack;
+    private ObservableList<Ennemis> ennemisList;
     private IntegerProperty nbVague;
     private IntegerProperty nbScore;
     private IntegerProperty nbArgent;
     private int nbEnnemis;
     private Pane paneCentral;
-    private CarteModele carte;
+    private PorteMonnaie porteMonnaie;
 
-    public Environnement(Pane paneCentral) {
+    public Environnement(Pane paneCentral, PorteMonnaie porteMonnaie) {
+        this.porteMonnaie = porteMonnaie;
+        this.porteMonnaie.setNb(9000);
         this.paneCentral = paneCentral;
         this.nbVague = new SimpleIntegerProperty(1);
         this.nbScore = new SimpleIntegerProperty(0);
         this.nbArgent = new SimpleIntegerProperty(0);
-        this.ennemisList = new ArrayList<>();
+        this.ennemisList =  FXCollections.observableArrayList();
         this.defenseList = new ArrayList<>();
         this.ennemisBack = new ArrayList<>();
         this.nbEnnemis = 0;
         this.carte = new CarteModele("map1.csv");
+    }
+
+    public PorteMonnaie getPorteMonnaie() {
+        return this.porteMonnaie;
     }
 
     public CarteModele getCarte(){
@@ -43,7 +53,7 @@ public class Environnement {
         return this.paneCentral;
     }
 
-    public ArrayList<Ennemis> getEnnemisList() {
+    public ObservableList<Ennemis> getEnnemisList() {
         return ennemisList;
     }
 
@@ -55,6 +65,13 @@ public class Environnement {
         this.defenseList.add(defense);
     }
 
+    public void removeDefense(DefenseActor defense) {
+        this.defenseList.remove(defense);
+    }
+
+    public ArrayList<DefenseActor> getDefenseList() {
+        return this.defenseList;
+    }
 
     public ArrayList<Ennemis> getEnnemisBack() {
         return ennemisBack;
@@ -99,27 +116,30 @@ public class Environnement {
 
         // Attaque des défense
 
-        double portéeDégats = 150;
-
-        Iterator<Ennemis> iterator = ennemisList.iterator();
-        while (iterator.hasNext()) {
-            Ennemis ennemies = iterator.next();
+        Iterator<Ennemis> ennemisIterator = ennemisList.iterator();
+        while (ennemisIterator.hasNext()) {
+            Ennemis ennemies = ennemisIterator.next();
 
             if (ennemies.estMort()) {
-                iterator.remove();
-                System.out.println("mort de : " + ennemies);
+                ennemisIterator.remove();
             } else {
-                for (DefenseActor defense : defenseList) {
-                    if ((defense.getPositionX() + portéeDégats >= ennemies.getPositionX() && defense.getPositionX() - portéeDégats <= ennemies.getPositionX())
-                            &&
-                            (defense.getPositionY() + portéeDégats >= ennemies.getPositionY() && defense.getPositionY() - portéeDégats <= ennemies.getPositionY())) {
-                        ennemies.enleverPv(1);
-                        System.out.println(ennemies.getPts_vie());
-                        defense.rotateImage(ennemies.getPositionX(), ennemies.getPositionY());
+                ListIterator<DefenseActor> defenseIterator = defenseList.listIterator();
+                while (defenseIterator.hasNext()) {
+                    DefenseActor defense = defenseIterator.next();
+
+                    defense.eachTimeDoSomething();
+
+                    if ((defense.getPositionX() + defense.getPorteeDegats() >= ennemies.getMiddlePostionX() && defense.getPositionX() - defense.getPorteeDegats() <= ennemies.getMiddlePostionX()) && (defense.getPositionY() + defense.getPorteeDegats() >= ennemies.getMiddlePostionY() && defense.getPositionY() - defense.getPorteeDegats() <= ennemies.getMiddlePostionY())) {
+                        defense.attaque(ennemies);
+                    }
+
+                    if (defense.getPv() <= 0) {
+                        defenseIterator.remove();
                     }
                 }
             }
         }
+
     }
 
     public void tousAvancent() {
@@ -132,8 +152,9 @@ public class Environnement {
         for (int i = getEnnemisList().size() - 1; i >= 0; i--) {
             Ennemis a = getEnnemisList().get(i);
             if (a.estMort()) {
-                System.out.println("mort de : " + a);
+                System.out.println("mort de : " + a.getId());
                 getEnnemisList().remove(i);
+                this.porteMonnaie.ajoutMonnaie(50);
             }
         }
     }
@@ -146,7 +167,8 @@ public class Environnement {
             if (lop % 75 == 0) {
                 int rand = (int) (Math.random() * 2) + 1;
                 if (rand == 1) {
-                    getEnnemisList().add(new BarqueCanon(this));
+                    getEnnemisList().add(new BarqueCanon());
+
                 }
                 if (rand == 2) {
                     getEnnemisList().add(new PirateFusil(this));

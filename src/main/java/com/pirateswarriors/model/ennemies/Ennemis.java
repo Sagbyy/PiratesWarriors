@@ -8,6 +8,7 @@ import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
 import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
 import com.pirateswarriors.model.map.BFS;
 import com.pirateswarriors.model.map.Couple;
+import com.pirateswarriors.view.EnnemiVue;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -37,6 +38,7 @@ public class Ennemis {
     private Tresor tresor;
     private Ennemis ennemis;
     private ImageView imgTresor;
+    private EnnemiVue ennemiVue;
     private CarteModele carteModele;
 
 
@@ -44,8 +46,9 @@ public class Ennemis {
     //CarteModele g = new CarteModele("newMap2.csv");
     com.pirateswarriors.model.map.BFS BFS ;
 
-    public Ennemis(int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, Image image) { // Constructeur de la class mère Ennemis
+    public Ennemis(int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, Image image, EnnemiVue ennemiVue) { // Constructeur de la class mère Ennemis
         this.pts_vie = new SimpleIntegerProperty(pts_vie);
+        this.ennemiVue = ennemiVue;
         this.image = image;
         this.pts_score = pts_score;
         this.pts_pièces = pts_pièces;
@@ -75,28 +78,41 @@ public class Ennemis {
         this.carteModele = env.getCarte() ;
         this.BFS = new BFS(carteModele,apparition() );
         this.chemin = BFS.cheminVersSource();
+        this.id = "E"+compteur;
         this.dir = "";
         this.pos = 0;
-    }*/
+        compteur++;
+    }
 
+    public String getId() {
+        return id;
+    }
 
 
 
     public Couple apparition(){
         Couple c = null;
+
         int rand = (int) (Math.random() * 2) + 1;
         if (rand == 1) {
              c = new Couple(3, 24);
         }
         if (rand == 2) {
-             c = new Couple(12, 22);
-             setPositionY(256);
+             c = new Couple(11, 22);
+            setPositionX(getPositionX()-128);
+            setPositionY(getPositionY()+512);
         }
-
-        return c;
+       return c;
     }
 
 
+    public double getMiddlePostionX() {
+        return this.getPositionX() + this.getImage().getWidth() / 2;
+    }
+
+    public double getMiddlePostionY() {
+        return this.getPositionY() + this.getImage().getHeight() / 2;
+    }
 
     public boolean estMort(){ // Fonction pour verfier si l'ennemi est mort ou non
         return this.pts_vie.getValue() <= 0;
@@ -153,6 +169,7 @@ public class Ennemis {
     public void seDeplace(){
 
     }
+
 
     public void avance(){
         if(pos<getChemin().size()-1){

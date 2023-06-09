@@ -1,12 +1,20 @@
 package com.pirateswarriors.model.defense;
 
+import com.pirateswarriors.model.Environnement;
+import com.pirateswarriors.model.ennemies.Ennemis;
+import javafx.animation.TranslateTransition;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 public class DefenseActor {
 
@@ -17,23 +25,58 @@ public class DefenseActor {
     private ImageView image;
     private Pane pane;
     private Label labelPv;
+    private int degat;
+    private MediaPlayer shootSound;
+    private ImageView bullet;
+    private long lastExecutionTime;
+    private long lastExecutionTimeForPv;
+    private String pathSound;
+    private Boolean ifHasBullet;
+    private double porteeDegats;
+    private int delayMS;
+    private int degatPv;
+    private Environnement env;
 
-    public DefenseActor(int pv, int prix, ImageView image, Pane pane) {
+    public DefenseActor(int pv, int prix, int degats, int degatPv, ImageView image, Pane pane, String pathSound, Boolean ifHasBullet, double porteeDegats, int delayMS, Environnement env) {
+        this.env = env;
+        this.degatPv = degatPv;
+        this.delayMS = delayMS;
+        this.porteeDegats = porteeDegats;
+        this.ifHasBullet = ifHasBullet;
+        this.pathSound = pathSound;
+        this.lastExecutionTime = 0L;
+        this.lastExecutionTimeForPv = 0L;
         this.pane = pane;
         this.pv = new SimpleIntegerProperty(pv);
         this.prix = prix;
+        this.image = image;
         this.positionX = new SimpleDoubleProperty(0);
         this.positionY = new SimpleDoubleProperty(0);
-        this.image = image;
+        this.degat = degats;
         this.labelPv = new Label();
+        this.bullet = new ImageView(new Image(getClass().getResource("/com/pirateswarriors/images/defense/cannonBall.png").toString()));
+        this.shootSound = new MediaPlayer(new Media(getClass().getResource(this.pathSound).toString()));
         labelPv.setText("Vie : " + this.getPv());
         // Bind des positions de l'acteur avec l'image
-        this.image.xProperty().bind(this.positionXProperty());
-        this.image.yProperty().bind(this.positionYProperty());
+        this.image.xProperty().bind(Bindings.subtract(positionXProperty(), this.image.getBoundsInLocal().getWidth() / 2));
+        this.image.yProperty().bind(Bindings.subtract(positionYProperty(), this.image.getBoundsInLocal().getHeight() / 2));
+        this.getPvProperty().addListener((obs, old, nouv) -> {
+            // Pour le texte
+            labelPv.setText("Vie : " + nouv);
+
+            // Si il est mort
+            if ((int) nouv <= 0) {
+                this.pane.getChildren().removeAll(this.image, this.labelPv, this.bullet);
+            }
+        });
         this.pane.getChildren().addAll(this.image, this.labelPv);
     }
 
     // Getter & Setter
+
+    public double getPorteeDegats() {
+        return this.porteeDegats;
+    }
 
     public Label labelProperty() {
         return this.labelPv;
@@ -51,12 +94,16 @@ public class DefenseActor {
         return this.pv.getValue();
     }
 
+    public void enleverPv(int pv) {
+        this.getPvProperty().setValue(this.getPv() - pv);
+    }
+
     public DoubleProperty positionXProperty() {
         return this.positionX;
     }
 
     public double getPositionX() {
-        return this.positionX.getValue();
+        return this.positionXProperty().getValue();
     }
 
     public void setPositionX(double newPos) {
@@ -68,7 +115,7 @@ public class DefenseActor {
     }
 
     public double getPositionY() {
-        return this.positionY.getValue();
+        return this.positionYProperty().getValue();
     }
 
     public void setPositionY(double newPos) {
@@ -77,8 +124,61 @@ public class DefenseActor {
 
     // Methods
 
+    public double getMiddlePostionX() {
+        return this.getImageProperty().getBoundsInLocal().getMinX() + this.getImageProperty().getBoundsInLocal().getWidth() / 2;
+    }
+
+    public double getMiddlePostionY() {
+        return this.getImageProperty().getBoundsInLocal().getMinY() + this.getImageProperty().getBoundsInLocal().getHeight() / 2;
+    }
+
     public void rotateImage(double posX, double posY) {
         double angle = Math.toDegrees(Math.atan2(this.image.getY() - posY, this.image.getX() - posX));
-        this.image.setRotate(angle);
+        this.image.setRotate(angle - 90);
+    }
+
+    public void eachTimeDoSomething() {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastExecutionTimeForPv >= 5000) { // Vérifier si deux secondes se sont écoulées
+            this.enleverPv(5);
+            this.env.getPorteMonnaie().ajoutMonnaie(100);
+            lastExecutionTimeForPv = currentTime; // Mettre à jour le dernier instant d'exécution
+        }
+    }
+
+    public void attaque(Ennemis ennemi) {
+        rotateImage(ennemi.getPositionX(), ennemi.getPositionY());
+
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastExecutionTime >= this.delayMS) { // Vérifier si deux secondes se sont écoulées
+            if (ifHasBullet) {
+                // Création de l'animation de déplacement de la balle
+                pane.getChildren().add(bullet);
+                TranslateTransition transition = new TranslateTransition(Duration.seconds(1), this.bullet);
+                transition.setDuration(Duration.seconds(0.5));
+                transition.setFromX(this.positionXProperty().getValue());
+                transition.setFromY(this.positionYProperty().getValue());
+                // Vers le centre de l'image
+                transition.setToX(ennemi.getMiddlePostionX());
+                transition.setToY(ennemi.getMiddlePostionY());
+
+                // Configuration de l'animation
+                transition.setOnFinished(event -> {
+                    pane.getChildren().remove(bullet);
+                });
+
+                // Lancement de l'animation
+                transition.play();
+            }
+
+            // Sound shoot
+            this.shootSound.stop();
+            this.shootSound.play();
+
+            this.enleverPv(this.degatPv);
+            ennemi.enleverPv(this.degat);
+
+            lastExecutionTime = currentTime; // Mettre à jour le dernier instant d'exécution
+        }
     }
 }

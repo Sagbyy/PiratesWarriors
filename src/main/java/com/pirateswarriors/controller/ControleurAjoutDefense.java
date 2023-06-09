@@ -18,10 +18,11 @@ public class ControleurAjoutDefense implements EventHandler<MouseEvent> {
         private DefenseActor defenseActor;
         Environnement env;
 
-        public ControleurAjoutDefense(DefenseActor defenseActor, PorteMonnaie porteMonnaie, Environnement env) {
+        public ControleurAjoutDefense(DefenseActor defenseActor, PorteMonnaie porteMonnaie, Environnement env, Pane paneCentral) {
             this.defenseActor = defenseActor;
             this.porteMonnaie = porteMonnaie;
             this.env = env;
+            this.paneCentral = paneCentral;
         }
         
     // Lorsque qu'on clique sur la map on laisse la position au clique
@@ -31,15 +32,13 @@ public class ControleurAjoutDefense implements EventHandler<MouseEvent> {
                 this.defenseActor.positionXProperty().unbind();
                 this.defenseActor.positionYProperty().unbind();
 
+                //paneCentral.getChildren().add(new Circle(this.defenseActor.getPositionX(), this.defenseActor.getPositionY(), 150, Color.RED));
+
                 this.defenseActor.labelProperty().setLayoutX(this.defenseActor.getImageProperty().getX() + 10);
                 this.defenseActor.labelProperty().setLayoutY(this.defenseActor.getImageProperty().getY() - 25);
 
-
-
                 this.env.ajouterDefense(defenseActor);
-                // retrait du cout de la defense
 
-                porteMonnaie.ajoutMonnaie(-500);
             }
             else
                 //nbPieces.;0
