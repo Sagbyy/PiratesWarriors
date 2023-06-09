@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.ListIterator;
 
 public class Environnement {
 
@@ -53,9 +54,15 @@ public class Environnement {
 
     public void ajouterDefense(DefenseActor defense) {
         this.defenseList.add(defense);
-        System.out.println("Ajouttttttttttt");
     }
 
+    public void removeDefense(DefenseActor defense) {
+        this.defenseList.remove(defense);
+    }
+
+    public ArrayList<DefenseActor> getDefenseList() {
+        return this.defenseList;
+    }
 
     public ArrayList<Ennemis> getEnnemisBack() {
         return ennemisBack;
@@ -100,20 +107,30 @@ public class Environnement {
 
         // Attaque des défense
 
-        Iterator<Ennemis> iterator = ennemisList.iterator();
-        while (iterator.hasNext()) {
-            Ennemis ennemies = iterator.next();
+        Iterator<Ennemis> ennemisIterator = ennemisList.iterator();
+        while (ennemisIterator.hasNext()) {
+            Ennemis ennemies = ennemisIterator.next();
 
             if (ennemies.estMort()) {
-                iterator.remove();
+                ennemisIterator.remove();
             } else {
-                for (DefenseActor defense : defenseList) {
+                ListIterator<DefenseActor> defenseIterator = defenseList.listIterator();
+                while (defenseIterator.hasNext()) {
+                    DefenseActor defense = defenseIterator.next();
+
+                    defense.removePvInGame();
+
                     if ((defense.getPositionX() + defense.getPorteeDegats() >= ennemies.getMiddlePostionX() && defense.getPositionX() - defense.getPorteeDegats() <= ennemies.getMiddlePostionX()) && (defense.getPositionY() + defense.getPorteeDegats() >= ennemies.getMiddlePostionY() && defense.getPositionY() - defense.getPorteeDegats() <= ennemies.getMiddlePostionY())) {
                         defense.attaque(ennemies);
+                    }
+
+                    if (defense.getPv() <= 0) {
+                        defenseIterator.remove();
                     }
                 }
             }
         }
+
     }
 
     public void tousAvancent() {
