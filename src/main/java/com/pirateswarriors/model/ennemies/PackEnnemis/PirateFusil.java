@@ -8,20 +8,14 @@ import javafx.scene.image.Image;
 
 public class PirateFusil extends Ennemis {
 
-    private DoubleProperty positionX;
-    private DoubleProperty positionY;
 
-    public PirateFusil() {
+
+    public PirateFusil(Environnement env) {
+        super(2,env,1500,7,10,10, new Image("testanim.gif"));
         setPositionX(getPositionX()-64);
         setPositionY(getPositionY()-64);
-        this.image = new Image("testanim.gif");
-        this.positionX = positionX;
-        this.positionY = positionY;
-        this.pts_vie = new SimpleIntegerProperty(1500);
-        this.pts_score = 7;
-        this.pts_pièces = 10;
-        this.pts_attaque = 10;
-        this.vitesse = 2;
+
+
     }
 
     //    public PirateFusil( ) {
