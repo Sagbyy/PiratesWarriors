@@ -33,7 +33,7 @@ public class Environnement {
         this.defenseList = new ArrayList<>();
         this.ennemisBack = new ArrayList<>();
         this.nbEnnemis = 0;
-        this.carte = new CarteModele("newMap2.csv");
+        this.carte = new CarteModele("map1.csv");
     }
 
     public CarteModele getCarte(){
