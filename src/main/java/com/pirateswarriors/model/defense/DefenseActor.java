@@ -16,10 +16,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class DefenseActor {
 
     private IntegerProperty pv;
@@ -70,7 +66,7 @@ public class DefenseActor {
 
             // Si il est mort
             if ((int) nouv <= 0) {
-                this.pane.getChildren().removeAll(this.image, this.labelPv);
+                this.pane.getChildren().removeAll(this.image, this.labelPv, this.bullet);
             }
         });
         this.pane.getChildren().addAll(this.image, this.labelPv);
@@ -141,10 +137,11 @@ public class DefenseActor {
         this.image.setRotate(angle - 90);
     }
 
-    public void removePvInGame() {
+    public void eachTimeDoSomething() {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastExecutionTimeForPv >= 5000) { // Vérifier si deux secondes se sont écoulées
             this.enleverPv(5);
+            this.env.getPorteMonnaie().ajoutMonnaie(100);
             lastExecutionTimeForPv = currentTime; // Mettre à jour le dernier instant d'exécution
         }
     }

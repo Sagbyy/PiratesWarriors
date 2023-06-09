@@ -40,6 +40,10 @@ public class Environnement {
         this.nbEnnemis = 0;
     }
 
+    public PorteMonnaie getPorteMonnaie() {
+        return this.porteMonnaie;
+    }
+
     public Pane getPaneCentral() {
         return this.paneCentral;
     }
@@ -118,7 +122,7 @@ public class Environnement {
                 while (defenseIterator.hasNext()) {
                     DefenseActor defense = defenseIterator.next();
 
-                    defense.removePvInGame();
+                    defense.eachTimeDoSomething();
 
                     if ((defense.getPositionX() + defense.getPorteeDegats() >= ennemies.getMiddlePostionX() && defense.getPositionX() - defense.getPorteeDegats() <= ennemies.getMiddlePostionX()) && (defense.getPositionY() + defense.getPorteeDegats() >= ennemies.getMiddlePostionY() && defense.getPositionY() - defense.getPorteeDegats() <= ennemies.getMiddlePostionY())) {
                         defense.attaque(ennemies);
