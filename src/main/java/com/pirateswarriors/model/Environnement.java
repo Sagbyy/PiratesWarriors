@@ -19,8 +19,9 @@ public class Environnement {
 
     //private ArrayList<Ennemis> ennemisList;
     private ArrayList<DefenseActor> defenseList;
-    private ArrayList<Ennemis> ennemisBack;
     private ObservableList<Ennemis> ennemisList;
+    private ArrayList<Ennemis> ennemisBack;
+
     private IntegerProperty nbVague;
     private IntegerProperty nbScore;
     private IntegerProperty nbArgent;
@@ -32,7 +33,7 @@ public class Environnement {
         this.porteMonnaie = porteMonnaie;
         this.porteMonnaie.setNb(9000);
         this.paneCentral = paneCentral;
-        this.nbVague = new SimpleIntegerProperty(1);
+        this.nbVague = new SimpleIntegerProperty(0);
         this.nbScore = new SimpleIntegerProperty(0);
         this.nbArgent = new SimpleIntegerProperty(0);
         this.ennemisList =  FXCollections.observableArrayList();
@@ -64,6 +65,9 @@ public class Environnement {
     public void ajouterDefense(DefenseActor defense) {
         this.defenseList.add(defense);
     }
+    public IntegerProperty getNbVaguesProperty(){
+        return this.nbVague;
+    }
 
     public void removeDefense(DefenseActor defense) {
         this.defenseList.remove(defense);
@@ -73,9 +77,6 @@ public class Environnement {
         return this.defenseList;
     }
 
-    public ArrayList<Ennemis> getEnnemisBack() {
-        return ennemisBack;
-    }
 
     public int getNbEnnemis() {
         return nbEnnemis;
@@ -90,95 +91,90 @@ public class Environnement {
     }
 
 
-    public void créerVagues() {
-        for (int i = 0; i <= this.nbEnnemis; i++) {
-            int rand = (int) (Math.random() * 2) + 1;
-            if (rand == 1) {
-                this.ennemisList.add(new BarqueCanon(this));
-            }
-            if (rand == 2) {
-                this.ennemisList.add(new PirateFusil(this));
-            }
-        }
-    }
-
-
+    boolean go = true;
     public void untour() {
-        if (ennemisList.size() == 0) {
+        if (ennemisList.size() == 0 && go == true) {
             this.nbEnnemis += 10;
             vague();
+            this.nbVague.set(getNbVague() + 1);
+        } else if (go == false) {
 
+            vague();
         }
-
-        vague();
-        tousAvancent();
         sontMorts();
+        tousAvancent();
 
-        // Attaque des défense
+        System.out.println(this.nbVague);
 
-        Iterator<Ennemis> ennemisIterator = ennemisList.iterator();
-        while (ennemisIterator.hasNext()) {
-            Ennemis ennemies = ennemisIterator.next();
 
-            if (ennemies.estMort()) {
-                ennemisIterator.remove();
+            Iterator<Ennemis> ennemisIterator = ennemisList.iterator();
+            while (ennemisIterator.hasNext()) {
+                Ennemis ennemies = ennemisIterator.next();
+
+
+                if (ennemies.estMort()) {
+                    ennemisIterator.remove();
+                } else {
+                    ListIterator<DefenseActor> defenseIterator = defenseList.listIterator();
+                    while (defenseIterator.hasNext()) {
+                        DefenseActor defense = defenseIterator.next();
+
+                        defense.eachTimeDoSomething();
+
+                        if ((defense.getPositionX() + defense.getPorteeDegats() >= ennemies.getMiddlePostionX() && defense.getPositionX() - defense.getPorteeDegats() <= ennemies.getMiddlePostionX()) && (defense.getPositionY() + defense.getPorteeDegats() >= ennemies.getMiddlePostionY() && defense.getPositionY() - defense.getPorteeDegats() <= ennemies.getMiddlePostionY())) {
+                            defense.attaque(ennemies);
+                        }
+
+                        if (defense.getPv() <= 0) {
+                            defenseIterator.remove();
+                        }
+                    }
+                }
+            }
+
+        }
+
+        public void tousAvancent() {
+            for (int i = 0; i < getEnnemisList().size(); i++) {
+                getEnnemisList().get(i).avance();
+            }
+        }
+
+        public void sontMorts() {
+            for (int i = getEnnemisList().size() - 1; i >= 0; i--) {
+                Ennemis a = getEnnemisList().get(i);
+                if (a.estMort()) {
+                    System.out.println("mort de : " + a.getId());
+                    getEnnemisList().remove(i);
+                    this.porteMonnaie.ajoutMonnaie(50);
+                }
+            }
+        }
+
+
+        int nbenn, lop;
+        int vag = 2;
+
+        public void vague() {
+            if (!(nbenn == this.nbEnnemis)) {
+                if (lop % 75 == 0) {
+                    int rand = (int) (Math.random() * vag) + 1;
+                    if (rand == 1) {
+                        getEnnemisList().add(new BarqueCanon());
+                    }
+                    if (rand == 2) {
+                        getEnnemisList().add(new PirateFusil());
+                    }
+                    nbenn++;
+                }
+                go = false;
             } else {
-                ListIterator<DefenseActor> defenseIterator = defenseList.listIterator();
-                while (defenseIterator.hasNext()) {
-                    DefenseActor defense = defenseIterator.next();
-
-                    defense.eachTimeDoSomething();
-
-                    if ((defense.getPositionX() + defense.getPorteeDegats() >= ennemies.getMiddlePostionX() && defense.getPositionX() - defense.getPorteeDegats() <= ennemies.getMiddlePostionX()) && (defense.getPositionY() + defense.getPorteeDegats() >= ennemies.getMiddlePostionY() && defense.getPositionY() - defense.getPorteeDegats() <= ennemies.getMiddlePostionY())) {
-                        defense.attaque(ennemies);
-                    }
-
-                    if (defense.getPv() <= 0) {
-                        defenseIterator.remove();
-                    }
-                }
-            }
-        }
-
-    }
-
-    public void tousAvancent() {
-        for (int i = 0; i < getEnnemisList().size(); i++) {
-            getEnnemisList().get(i).avance();
-        }
-    }
-
-    public void sontMorts() {
-        for (int i = getEnnemisList().size() - 1; i >= 0; i--) {
-            Ennemis a = getEnnemisList().get(i);
-            if (a.estMort()) {
-                System.out.println("mort de : " + a.getId());
-                getEnnemisList().remove(i);
-                this.porteMonnaie.ajoutMonnaie(50);
-            }
-        }
-    }
-
-
-    int nbenn, lop;
-
-    public void vague() {
-        if (!(nbenn == getNbEnnemis())) {
-            if (lop % 75 == 0) {
-                int rand = (int) (Math.random() * 2) + 1;
-                if (rand == 1) {
-                    getEnnemisList().add(new BarqueCanon());
-
-                }
-                if (rand == 2) {
-                    getEnnemisList().add(new PirateFusil(this));
-                }
-                nbenn++;
+                go = true;
+                nbenn = 0;
             }
 
+            lop = lop + (int) (Math.random() * 3) + 1;
         }
-        lop = lop + (int) (Math.random() * 3) + 1;
-
     }
 
-}
+
