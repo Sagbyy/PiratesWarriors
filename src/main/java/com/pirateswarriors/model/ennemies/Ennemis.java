@@ -68,9 +68,7 @@ public class Ennemis {
     }
 
 
- /*   public Ennemis(Environnement env) { // Constructeur de la class mère Ennemis
-        this()
-
+      public Ennemis(Environnement env) { // Constructeur de la class mère Ennemis
         this.positionX = new SimpleDoubleProperty(1536);
         this.positionY = new SimpleDoubleProperty(192);
         this.vitesse = vitesse;
