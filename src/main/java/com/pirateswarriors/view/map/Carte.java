@@ -1,9 +1,12 @@
 package com.pirateswarriors.view.map;
 
 import javafx.geometry.Rectangle2D;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -87,5 +90,15 @@ public abstract class Carte {
         int y = Integer.parseInt(value) - 32 * x;
 
         tile.setViewport(new Rectangle2D(y * TILE_SIZE, x * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+
+        ColorAdjust filter = new ColorAdjust();
+        filter.setSaturation(-1);
+
+        tile.setOnMouseEntered(event -> tile.setEffect(filter));
+
+        ColorAdjust originalFilter = new ColorAdjust();
+        originalFilter.setSaturation(0);
+
+        tile.setOnMouseExited(event -> tile.setEffect(originalFilter));
     }
 }

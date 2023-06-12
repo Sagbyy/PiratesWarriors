@@ -64,6 +64,7 @@ public class Controller implements Initializable {
     private Label nbVagues;
     @FXML
     private ImageView imgTresor;
+    private ControleurAjoutDefense controleurAjoutDefense;
 
 
 
@@ -158,18 +159,24 @@ public class Controller implements Initializable {
 
     @FXML
     public void ajoutDefense(ActionEvent event) {
-        System.out.println("Bouton cliqué !");
+        if (!porteMonnaie.argentVide()) {
+            if (controleurAjoutDefense != null) {
+                paneCentral.removeEventHandler(MouseEvent.MOUSE_CLICKED, controleurAjoutDefense);
+            }
 
-        String buttonId = ((Button) event.getSource()).getId();
+            System.out.println("Bouton cliqué !");
 
-        // Ajout de la vue
-        AjoutDefense ajoutDefense = new AjoutDefense(paneCentral, buttonId, porteMonnaie, jeu);
-        ajoutDefense.ajoutDefense();
-        ajoutDefense.bindImage(mouseX, mouseY);
+            String buttonId = ((Button) event.getSource()).getId();
 
-        // Lorsque qu'on clique sur la map on laisse la position au clique
-        ControleurAjoutDefense controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getDefense(), porteMonnaie, jeu, paneCentral);
-        paneCentral.addEventHandler(MouseEvent.MOUSE_CLICKED, controleurAjoutDefense);
+            // Ajout de la vue
+            AjoutDefense ajoutDefense = new AjoutDefense(paneCentral, buttonId, porteMonnaie, jeu);
+            ajoutDefense.ajoutDefense();
+            ajoutDefense.bindImage(mouseX, mouseY);
+
+            // Lorsque qu'on clique sur la map on laisse la position au clique
+            controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getDefense(), porteMonnaie, jeu, paneCentral);
+            paneCentral.addEventHandler(MouseEvent.MOUSE_CLICKED, controleurAjoutDefense);
+        }
     }
 
     @FXML

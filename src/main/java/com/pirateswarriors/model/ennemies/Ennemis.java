@@ -39,14 +39,15 @@ public class Ennemis {
     private Ennemis ennemis;
     private ImageView imgTresor;
     private EnnemiVue ennemiVue;
+    private CarteModele carteModele;
+
 
     ArrayList chemin;
-    CarteModele g = new CarteModele("newMap2.csv");
+    //CarteModele g = new CarteModele("newMap2.csv");
     com.pirateswarriors.model.map.BFS BFS ;
 
-    public Ennemis(int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, Image image, EnnemiVue ennemiVue) { // Constructeur de la class mère Ennemis
+    public Ennemis(int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, Image image) { // Constructeur de la class mère Ennemis
         this.pts_vie = new SimpleIntegerProperty(pts_vie);
-        this.ennemiVue = ennemiVue;
         this.image = image;
         this.pts_score = pts_score;
         this.pts_pièces = pts_pièces;
@@ -59,33 +60,33 @@ public class Ennemis {
         this.pos = 0;
         this.id = "E"+compteur;
         compteur++;
+        this.carteModele = env.getCarte() ;
+        this.BFS = new BFS(carteModele,apparition() );
         this.chemin = BFS.cheminVersSource();
-        this.BFS = new BFS(g,apparition() );
+
     }
 
 
-    public Ennemis() { // Constructeur de la class mère Ennemis
-
-        this.pts_vie = pts_vie;
-        this.image = image;
-        this.pts_score = pts_score;
-        this.pts_pièces = pts_pièces;
-        this.pts_attaque = pts_attaque;
+      public Ennemis(Environnement env) { // Constructeur de la class mère Ennemis
         this.positionX = new SimpleDoubleProperty(1536);
         this.positionY = new SimpleDoubleProperty(192);
         this.vitesse = vitesse;
         this.env = env;
-        this.BFS = new BFS(g,apparition() );
+        this.carteModele = env.getCarte() ;
+        this.BFS = new BFS(carteModele,apparition() );
         this.chemin = BFS.cheminVersSource();
         this.id = "E"+compteur;
         this.dir = "";
         this.pos = 0;
         compteur++;
     }
+
 
     public String getId() {
         return id;
     }
+
+
 
     public Couple apparition(){
         Couple c = null;

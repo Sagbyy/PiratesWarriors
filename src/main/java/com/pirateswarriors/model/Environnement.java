@@ -1,6 +1,7 @@
 package com.pirateswarriors.model;
 
 import com.pirateswarriors.model.defense.DefenseActor;
+import com.pirateswarriors.model.ennemies.CarteModele;
 import com.pirateswarriors.model.ennemies.Ennemis;
 import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
 import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
@@ -21,6 +22,7 @@ public class Environnement {
     private ObservableList<Ennemis> ennemisList;
     private ArrayList<Ennemis> ennemisBack;
 
+    CarteModele carte;
     private IntegerProperty nbVague;
     private IntegerProperty nbScore;
     private IntegerProperty nbArgent;
@@ -39,12 +41,16 @@ public class Environnement {
         this.defenseList = new ArrayList<>();
         this.ennemisBack = new ArrayList<>();
         this.nbEnnemis = 0;
+        this.carte = new CarteModele("map1.csv");
     }
 
     public PorteMonnaie getPorteMonnaie() {
         return this.porteMonnaie;
     }
 
+//    public CarteModele getCarte(){
+//        return this.carte;
+//    }
     public Pane getPaneCentral() {
         return this.paneCentral;
     }
@@ -129,7 +135,11 @@ public class Environnement {
 
         }
 
-        public void tousAvancent() {
+    public CarteModele getCarte() {
+        return carte;
+    }
+
+    public void tousAvancent() {
             for (int i = 0; i < getEnnemisList().size(); i++) {
                 getEnnemisList().get(i).avance();
             }
@@ -155,10 +165,10 @@ public class Environnement {
                 if (lop % 75 == 0) {
                     int rand = (int) (Math.random() * vag) + 1;
                     if (rand == 1) {
-                        getEnnemisList().add(new BarqueCanon());
+                        getEnnemisList().add(new BarqueCanon(this));
                     }
                     if (rand == 2) {
-                        getEnnemisList().add(new PirateFusil());
+                        getEnnemisList().add(new PirateFusil(this));
                     }
                     nbenn++;
                 }
