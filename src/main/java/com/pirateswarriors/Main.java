@@ -24,7 +24,7 @@ public class Main extends Application {
             Scene scene = new Scene(root);
 
             // Chargement du fichier audio
-            Media mediaMusic = new Media(getClass().getResource("/com/pirateswarriors/sounds/PiratesWarriorsMusic.mp3").toString());
+            Media mediaMusic = new Media(getClass().getResource("sounds/PiratesWarriorsMusic.mp3").toString());
             // Creation du lecteur media
             mediaPlayer = new MediaPlayer(mediaMusic);
 
