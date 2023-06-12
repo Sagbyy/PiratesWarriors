@@ -11,7 +11,7 @@ public class BarqueCanon extends Ennemis {
 
 
     public BarqueCanon( Environnement env) {
-        super(1,  env, 200, 7, 10, 10, new Image("ship.png"));
+        super(1, env, 200, 7, 10, 10, new Image("ship.png"));
 //        this.image = ;
 //        this.positionX = new SimpleDoubleProperty(1216);
 //        this.positionY = new SimpleDoubleProperty(64);

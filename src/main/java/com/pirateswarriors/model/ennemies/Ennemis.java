@@ -46,9 +46,8 @@ public class Ennemis {
     //CarteModele g = new CarteModele("newMap2.csv");
     com.pirateswarriors.model.map.BFS BFS ;
 
-    public Ennemis(int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, Image image, EnnemiVue ennemiVue) { // Constructeur de la class mère Ennemis
+    public Ennemis(int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, Image image) { // Constructeur de la class mère Ennemis
         this.pts_vie = new SimpleIntegerProperty(pts_vie);
-        this.ennemiVue = ennemiVue;
         this.image = image;
         this.pts_score = pts_score;
         this.pts_pièces = pts_pièces;
@@ -61,7 +60,7 @@ public class Ennemis {
         this.pos = 0;
         this.id = "E"+compteur;
         compteur++;
-        this.carteModele = env.getCarte() ;
+        //this.carteModele = env.getCarte() ;
         this.BFS = new BFS(carteModele,apparition() );
         this.chemin = BFS.cheminVersSource();
 
@@ -73,7 +72,7 @@ public class Ennemis {
         this.positionY = new SimpleDoubleProperty(192);
         this.vitesse = vitesse;
         this.env = env;
-        this.carteModele = env.getCarte() ;
+        //this.carteModele = env.getCarte() ;
         this.BFS = new BFS(carteModele,apparition() );
         this.chemin = BFS.cheminVersSource();
         this.id = "E"+compteur;
@@ -81,6 +80,7 @@ public class Ennemis {
         this.pos = 0;
         compteur++;
     }
+
 
     public String getId() {
         return id;

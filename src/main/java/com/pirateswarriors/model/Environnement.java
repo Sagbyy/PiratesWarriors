@@ -40,16 +40,16 @@ public class Environnement {
         this.defenseList = new ArrayList<>();
         this.ennemisBack = new ArrayList<>();
         this.nbEnnemis = 0;
-        this.carte = new CarteModele("map1.csv");
+        //this.carte = new CarteModele("map1.csv");
     }
 
     public PorteMonnaie getPorteMonnaie() {
         return this.porteMonnaie;
     }
 
-    public CarteModele getCarte(){
-        return this.carte;
-    }
+//    public CarteModele getCarte(){
+//        return this.carte;
+//    }
     public Pane getPaneCentral() {
         return this.paneCentral;
     }
@@ -160,10 +160,10 @@ public class Environnement {
                 if (lop % 75 == 0) {
                     int rand = (int) (Math.random() * vag) + 1;
                     if (rand == 1) {
-                        getEnnemisList().add(new BarqueCanon());
+                        getEnnemisList().add(new BarqueCanon(this));
                     }
                     if (rand == 2) {
-                        getEnnemisList().add(new PirateFusil());
+                        getEnnemisList().add(new PirateFusil(this));
                     }
                     nbenn++;
                 }

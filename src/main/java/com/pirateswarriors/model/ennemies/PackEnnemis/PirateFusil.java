@@ -11,7 +11,7 @@ public class PirateFusil extends Ennemis {
 
 
     public PirateFusil(Environnement env) {
-        super(2,env,1500,7,10,10, new Image("testanim.gif"));
+        super(2,env,1500,7,10, 10, new Image("testanim.gif"));
         setPositionX(getPositionX()-64);
         setPositionY(getPositionY()-64);
 
