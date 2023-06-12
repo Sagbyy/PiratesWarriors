@@ -6,9 +6,7 @@ import com.pirateswarriors.model.map.Couple;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class CarteModele {
 
@@ -25,12 +23,14 @@ public class CarteModele {
 
     // Nombre de colonne de la map
     public final int COLUMNS_MAP = 12;
+    public final int TILE_SIZE = 64;
+    private int[] greenZone;
 
     int[][] tabCarte = new int[COLUMNS_MAP][ROWS_MAP];
 
     public CarteModele(String fileCsv){
         this.genererMap(fileCsv);
-
+        this.greenZone = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 128, 129, 130, 131, 132, 133, 160, 161, 162, 163, 164, 165};
     }
 
     public int[][] getTabCarte() {
@@ -72,6 +72,19 @@ public class CarteModele {
 
     public int getPosition(int i, int j){
         return tabCarte[i][j];
+    }
+
+    public boolean isRedZone(double x, double y) {
+        int tabRow = (int) y / TILE_SIZE;
+        int tabCol = (int) x / TILE_SIZE;
+
+        for (int i = 0 ; i < greenZone.length; i++) {
+            if(greenZone[i] == tabCarte[tabRow][tabCol]) {
+                return true;
+            }
+        }
+        return false;
+
     }
 
     public void genererMap(String fileCsvName) {

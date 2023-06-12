@@ -141,7 +141,6 @@ public class DefenseActor {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastExecutionTimeForPv >= 5000) { // Vérifier si deux secondes se sont écoulées
             this.enleverPv(5);
-            this.env.getPorteMonnaie().ajoutMonnaie(100);
             lastExecutionTimeForPv = currentTime; // Mettre à jour le dernier instant d'exécution
         }
     }
