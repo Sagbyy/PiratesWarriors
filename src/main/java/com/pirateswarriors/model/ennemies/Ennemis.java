@@ -60,7 +60,7 @@ public class Ennemis {
         this.pos = 0;
         this.id = "E"+compteur;
         compteur++;
-        //this.carteModele = env.getCarte() ;
+        this.carteModele = env.getCarte() ;
         this.BFS = new BFS(carteModele,apparition() );
         this.chemin = BFS.cheminVersSource();
 
@@ -72,7 +72,7 @@ public class Ennemis {
         this.positionY = new SimpleDoubleProperty(192);
         this.vitesse = vitesse;
         this.env = env;
-        //this.carteModele = env.getCarte() ;
+        this.carteModele = env.getCarte() ;
         this.BFS = new BFS(carteModele,apparition() );
         this.chemin = BFS.cheminVersSource();
         this.id = "E"+compteur;
