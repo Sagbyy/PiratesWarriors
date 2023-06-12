@@ -55,7 +55,7 @@ public class DefenseActor {
         this.degat = degats;
         this.labelPv = new Label();
         this.bullet = new ImageView(new Image(getClass().getResource("/com/pirateswarriors/images/defense/cannonBall.png").toString()));
-        this.shootSound = new MediaPlayer(new Media(getClass().getResource(this.pathSound).toString()));
+        //this.shootSound = new MediaPlayer(new Media(getClass().getResource(this.pathSound).toString()));
         labelPv.setText("Vie : " + this.getPv());
         // Bind des positions de l'acteur avec l'image
         this.image.xProperty().bind(Bindings.subtract(positionXProperty(), this.image.getBoundsInLocal().getWidth() / 2));

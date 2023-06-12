@@ -22,6 +22,7 @@ public class Environnement {
     private ObservableList<Ennemis> ennemisList;
     private ArrayList<Ennemis> ennemisBack;
 
+    CarteModele carte;
     private IntegerProperty nbVague;
     private IntegerProperty nbScore;
     private IntegerProperty nbArgent;
@@ -40,7 +41,7 @@ public class Environnement {
         this.defenseList = new ArrayList<>();
         this.ennemisBack = new ArrayList<>();
         this.nbEnnemis = 0;
-        //this.carte = new CarteModele("map1.csv");
+        this.carte = new CarteModele("map1.csv");
     }
 
     public PorteMonnaie getPorteMonnaie() {
@@ -134,7 +135,11 @@ public class Environnement {
 
         }
 
-        public void tousAvancent() {
+    public CarteModele getCarte() {
+        return carte;
+    }
+
+    public void tousAvancent() {
             for (int i = 0; i < getEnnemisList().size(); i++) {
                 getEnnemisList().get(i).avance();
             }
