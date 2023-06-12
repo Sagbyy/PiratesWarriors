@@ -55,7 +55,7 @@ public class DefenseActor {
         this.degat = degats;
         this.labelPv = new Label();
         this.bullet = new ImageView(new Image(getClass().getResource("/com/pirateswarriors/images/defense/cannonBall.png").toString()));
-        //this.shootSound = new MediaPlayer(new Media(getClass().getResource(this.pathSound).toString()));
+        this.shootSound = new MediaPlayer(new Media(getClass().getResource(this.pathSound).toString()));
         labelPv.setText("Vie : " + this.getPv());
         // Bind des positions de l'acteur avec l'image
         this.image.xProperty().bind(Bindings.subtract(positionXProperty(), this.image.getBoundsInLocal().getWidth() / 2));
@@ -141,7 +141,6 @@ public class DefenseActor {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastExecutionTimeForPv >= 5000) { // Vérifier si deux secondes se sont écoulées
             this.enleverPv(5);
-            this.env.getPorteMonnaie().ajoutMonnaie(100);
             lastExecutionTimeForPv = currentTime; // Mettre à jour le dernier instant d'exécution
         }
     }

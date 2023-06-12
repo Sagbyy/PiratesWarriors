@@ -19,3 +19,11 @@
     -fx-border-width: 4px;
 }
 
+.tile {
+    -fx-background-color: #ccc;
+    -fx-padding: 10px;
+}
+
+.hovered {
+    -fx-background-color: #f00;
+}
