@@ -16,9 +16,10 @@ public class EnnemiVue {
     private Image image;
     private Label labelPv;
     private Pane paneCentrale;
-
+    private Ennemis ennemis;
 
     public EnnemiVue(Ennemis ennemi) {
+        this.ennemis = ennemi;
         if(ennemi.getImage() == 1){
             this.image = new Image("piratefusil.png") ;
         }
@@ -59,8 +60,13 @@ public class EnnemiVue {
         return imageEnnemi;
     }
 
+    public double getMiddlePostionX() {
+        return this.ennemis.getPositionX() + this.image.getWidth() / 2;
+    }
 
-
+    public double getMiddlePostionY() {
+        return this.ennemis.getPositionY() + this.image.getHeight() / 2;
+    }
 
 
 }
