@@ -2,6 +2,7 @@ package com.pirateswarriors.model.defense;
 
 import com.pirateswarriors.model.Environnement;
 import com.pirateswarriors.model.ennemies.Ennemis;
+import com.pirateswarriors.view.EnnemiVue;
 import javafx.animation.TranslateTransition;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
@@ -145,8 +146,8 @@ public class DefenseActor {
         }
     }
 
-    public void attaque(Ennemis ennemi) {
-        rotateImage(ennemi.getPositionX(), ennemi.getPositionY());
+    public void attaque(Ennemis ennemi, EnnemiVue ennemiVue) {
+        rotateImage(ennemiVue.getMiddlePostionX(), ennemiVue.getMiddlePostionY());
 
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastExecutionTime >= this.delayMS) { // Vérifier si deux secondes se sont écoulées
@@ -158,12 +159,16 @@ public class DefenseActor {
                 transition.setFromX(this.positionXProperty().getValue());
                 transition.setFromY(this.positionYProperty().getValue());
                 // Vers le centre de l'image
-                transition.setToX(ennemi.getMiddlePostionX());
-                transition.setToY(ennemi.getMiddlePostionY());
+                transition.setToX(ennemiVue.getMiddlePostionX());
+                transition.setToY(ennemiVue.getMiddlePostionY());
 
                 // Configuration de l'animation
                 transition.setOnFinished(event -> {
                     pane.getChildren().remove(bullet);
+
+                    if (ennemi.estMort()) {
+                        this.pane.getChildren().remove(this.pane.lookup("#"+ennemi.getId()));
+                    }
                 });
 
                 // Lancement de l'animation

@@ -125,8 +125,8 @@ public class Environnement {
 
                         defense.eachTimeDoSomething();
 
-                        if ((defense.getPositionX() + defense.getPorteeDegats() >= ennemies.getMiddlePostionX() && defense.getPositionX() - defense.getPorteeDegats() <= ennemies.getMiddlePostionX()) && (defense.getPositionY() + defense.getPorteeDegats() >= ennemies.getMiddlePostionY() && defense.getPositionY() - defense.getPorteeDegats() <= ennemies.getMiddlePostionY())) {
-                            defense.attaque(ennemies);
+                        if ((defense.getPositionX() + defense.getPorteeDegats() >= ennemiVue.getMiddlePostionX() && defense.getPositionX() - defense.getPorteeDegats() <= ennemiVue.getMiddlePostionX()) && (defense.getPositionY() + defense.getPorteeDegats() >= ennemiVue.getMiddlePostionY() && defense.getPositionY() - defense.getPorteeDegats() <= ennemiVue.getMiddlePostionY())) {
+                            defense.attaque(ennemies, ennemiVue);
                         }
 
                         if (defense.getPv() <= 0) {
