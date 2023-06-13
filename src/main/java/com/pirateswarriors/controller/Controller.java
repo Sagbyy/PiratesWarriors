@@ -1,6 +1,7 @@
 package com.pirateswarriors.controller;
 
 import com.pirateswarriors.model.Environnement;
+import com.pirateswarriors.model.defense.DefenseActor;
 import com.pirateswarriors.model.ennemies.Ennemis;
 import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.Tresor;
@@ -23,13 +24,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -38,6 +43,8 @@ public class Controller implements Initializable {
     private TilePane tilePane;
     @FXML
     private Pane paneCentral;
+    @FXML
+    private ToggleButton showScopeDefenses;
     @FXML
     private Button buttonAddDefense;
     private DoubleProperty mouseX;
@@ -65,7 +72,7 @@ public class Controller implements Initializable {
     @FXML
     private ImageView imgTresor;
     private ControleurAjoutDefense controleurAjoutDefense;
-
+    private ArrayList<Circle> circleScopeList;
 
 
     @Override
@@ -101,6 +108,8 @@ public class Controller implements Initializable {
                 mouseY.setValue(mouseEvent.getY());
             }
         });
+        this.circleScopeList = new ArrayList<>();
+
     }
 
     private void initAnimation() {
@@ -176,6 +185,23 @@ public class Controller implements Initializable {
             // Lorsque qu'on clique sur la map on laisse la position au clique
             controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getDefense(), porteMonnaie, jeu, paneCentral);
             paneCentral.addEventHandler(MouseEvent.MOUSE_CLICKED, controleurAjoutDefense);
+        }
+    }
+
+    @FXML
+    public void showScopeDefenses() {
+        if (showScopeDefenses.isSelected()) {
+            // Le bouton est activé
+            for (DefenseActor defense : this.jeu.getDefenseList()) {
+                Circle portee = new Circle(defense.getMiddlePostionX(), defense.getMiddlePostionY(), defense.getPorteeDegats(), Color.rgb(0, 0, 0, 0.5));
+                this.paneCentral.getChildren().add(2, portee);
+                circleScopeList.add(portee);
+            }
+        } else {
+            // Le bouton est désactivé
+            for(Circle circle : this.circleScopeList) {
+                this.paneCentral.getChildren().remove(circle);
+            }
         }
     }
 
