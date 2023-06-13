@@ -69,9 +69,7 @@ public class AjoutDefense {
             }
             this.porteMonnaie.enleverMonnaie(500);
 
-            IntegerProperty combinedProperty = new SimpleIntegerProperty();
-            combinedProperty.bind(Bindings.add(this.defense.positionXProperty(), this.defense.positionYProperty()));
-            combinedProperty.addListener((obs, old, nouv) -> {
+            this.defense.positionYProperty().addListener((obs, old, nouv) -> {
                 if(!env.getCarte().isRedZone(this.defense.getPositionX(), this.defense.getPositionY())) {
                     ColorAdjust filter = new ColorAdjust();
                     filter.setSaturation(-1);
@@ -82,7 +80,6 @@ public class AjoutDefense {
                     filter.setHue(0);
                     this.defense.getImageProperty().setEffect(filter);
                 }
-
             });
 
         }

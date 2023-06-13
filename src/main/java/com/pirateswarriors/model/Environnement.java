@@ -105,9 +105,6 @@ public class Environnement {
         sontMorts();
         tousAvancent();
 
-        System.out.println(this.nbVague);
-
-
             Iterator<Ennemis> ennemisIterator = ennemisList.iterator();
             while (ennemisIterator.hasNext()) {
                 Ennemis ennemies = ennemisIterator.next();
@@ -151,7 +148,7 @@ public class Environnement {
                 if (a.estMort()) {
                     System.out.println("mort de : " + a.getId());
                     getEnnemisList().remove(i);
-                    this.porteMonnaie.ajoutMonnaie(50);
+                    this.porteMonnaie.ajoutMonnaie(100);
                 }
             }
         }
