@@ -15,8 +15,8 @@ public class CarteModele {
     private int route = 54;
     private int route2 = 131;
 
-    public static void main(String[] args) {
-    }
+//    public static void main(String[] args) {
+//    }
 
     // Nombre de ligne de la map
     public final int ROWS_MAP = 25;

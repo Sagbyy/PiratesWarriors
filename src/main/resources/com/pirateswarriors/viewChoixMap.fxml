@@ -5,6 +5,8 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
 
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: green;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pirateswarriors.controller.ControllerViewChoixMap"   >
@@ -18,9 +20,14 @@
    <center>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="buttonMap1" mnemonicParsing="false" text="Map1" onAction="#afficherView3"/>
-            <Button fx:id="buttonMap2" mnemonicParsing="false" text="Map2" onAction="#afficherView3"/>
-            <Button fx:id="buttonMap3" mnemonicParsing="false" text="Map3" onAction="#afficherView3"/>
+            <Button prefHeight="50.0" prefWidth="90.0" mnemonicParsing="false" onAction="#jouer" text="jouer"/>
+         <RadioButton fx:id="buttonMap1" mnemonicParsing="false" text="Map1">
+            <toggleGroup>
+               <ToggleGroup fx:id="gestionMaps"/>
+            </toggleGroup>
+         </RadioButton>
+            <RadioButton toggleGroup="$gestionMaps" fx:id="buttonMap2" mnemonicParsing="false" text="Map2" />
+            <RadioButton toggleGroup="$gestionMaps" fx:id="buttonMap3" mnemonicParsing="false" text="Map3" />
          </children>
       </VBox>
    </center>

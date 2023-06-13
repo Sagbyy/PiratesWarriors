@@ -1,6 +1,7 @@
 package com.pirateswarriors.controller;
 
 import com.pirateswarriors.model.Environnement;
+import com.pirateswarriors.model.ennemies.CarteModele;
 import com.pirateswarriors.model.ennemies.Ennemis;
 import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.Tresor;
@@ -13,6 +14,8 @@ import com.pirateswarriors.view.TresorVue;
 import com.pirateswarriors.view.defense.AjoutDefense;
 import com.pirateswarriors.view.map.Carte;
 import com.pirateswarriors.view.map.Carte_1;
+import com.pirateswarriors.view.map.Carte_2;
+import com.pirateswarriors.view.map.Carte_3;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.DoubleProperty;
@@ -55,6 +58,7 @@ public class Controller implements Initializable {
     private PorteMonnaie porteMonnaie;
     private PorteMonnaieVue porteMonnaieVue;
     private int lcn;
+
     private Environnement jeu;
     @FXML
     private Label labelVieTresor;
@@ -73,6 +77,8 @@ public class Controller implements Initializable {
 
         this.carte_1 = new Carte_1(tilePane);
 
+        //creationMap();
+
         this.tresor = new Tresor(2000);
         this.tresorVue = new TresorVue(tresor);
 
@@ -84,7 +90,7 @@ public class Controller implements Initializable {
         nbPieces.textProperty().bind(porteMonnaie.nbProperty().asString());
         labelVieTresor.setText("vie: " + String.valueOf(tresor.getPv()));
 
-        this.jeu = new Environnement(paneCentral, porteMonnaie);
+        //this.jeu = new Environnement(carte, paneCentral, porteMonnaie);
         nbVagues.textProperty().bind(jeu.getNbVaguesProperty().asString());
         // Mouse Property
         this.mouseY = new SimpleDoubleProperty(0);
@@ -155,7 +161,23 @@ public class Controller implements Initializable {
         }
     }
 
-
+//    public void creerMap(){
+//        int carte = ControllerViewChoixMap.getMap();
+//        if (carte == 1){
+//            this.carte = new CarteModele("map1.csv");
+//        }
+//        else if (carte == 2){
+//            this.carte = new CarteModele("map2.csv");
+//        }
+//        else if (carte == 3){
+//            this.carte = new CarteModele("map3.csv");
+//        }
+//    }
+//
+//    public void creationMap(){
+//        creerMap();
+//        this.jeu = new Environnement(carte, paneCentral, porteMonnaie);
+//    }
 
     @FXML
     public void ajoutDefense(ActionEvent event) {
