@@ -59,7 +59,6 @@ public class DefenseActor {
         this.progressHealth.setPrefWidth(50);
         this.getPvProperty().addListener((obs, old, nouv) -> {
             this.progressHealth.setProgress((double) this.getPv() / 50);
-            System.out.println((double) this.getPv() / 50);
         });
 
 
@@ -89,6 +88,10 @@ public class DefenseActor {
     }
 
     // Getter & Setter
+
+    public boolean ifHasBullet() {
+        return this.ifHasBullet;
+    }
 
     public double getPorteeDegats() {
         return this.porteeDegats;

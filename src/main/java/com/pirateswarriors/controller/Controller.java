@@ -9,6 +9,7 @@ import com.pirateswarriors.model.ennemies.ObservateurEnnemis;
 import com.pirateswarriors.view.EnnemiVue;
 import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
 import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
+import com.pirateswarriors.view.LoosePane;
 import com.pirateswarriors.view.PorteMonnaieVue;
 import com.pirateswarriors.view.TresorVue;
 import com.pirateswarriors.view.defense.AjoutDefense;
@@ -27,7 +28,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -39,6 +42,8 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
 
+    @FXML
+    private BorderPane borderPane;
     @FXML
     private TilePane tilePane;
     @FXML
@@ -77,10 +82,9 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         this.carte_1 = new Carte_1(tilePane);
 
-        this.tresor = new Tresor(2000);
+        this.tresor = new Tresor(10) ;
         this.tresorVue = new TresorVue(tresor);
 
         this.porteMonnaie = new PorteMonnaie();
@@ -117,37 +121,40 @@ public class Controller implements Initializable {
         temps = 0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
-        KeyFrame kf = new KeyFrame(
-                // on définit le FPS (nbre de frame par seconde)
-                Duration.seconds(0.017),
-                // on définit ce qui se passe à chaque frame
-                // c'est un eventHandler d'ou le lambda
-                (ev ->{
+        LoosePane loosePane = new LoosePane();
+        BorderPane borderPane = this.borderPane; // Copie de référence pour utilisation dans le KeyFrame
 
-                    for (int i = 0; i < jeu.getEnnemisList().size(); i++) {
-                        if (tresor.estPasDetruit()){
-                            // Infliger des dégâts au trésor
-                            if (ennemiProche(jeu.getEnnemisList().get(i))){
-                                if ((temps%20)==0){
-                                    System.out.println("temps:" + temps);
-                                    jeu.getEnnemisList().get(i).attaque(this.tresor);
-                                    labelVieTresor.setText("vie: " + String.valueOf(this.tresor.getPv()));
-                                }
+
+        KeyFrame kf = new KeyFrame(
+            // on définit le FPS (nbre de frame par seconde)
+            Duration.seconds(0.017),
+            // on définit ce qui se passe à chaque frame
+            // c'est un eventHandler d'ou le lambda
+            (ev ->{
+
+                for (int i = 0; i < jeu.getEnnemisList().size(); i++) {
+                    if (tresor.estPasDetruit()){
+                        // Infliger des dégâts au trésor
+                        if (ennemiProche(jeu.getEnnemisList().get(i))){
+                            if ((temps%20)==0){
+                                System.out.println("temps:" + temps);
+                                jeu.getEnnemisList().get(i).attaque(this.tresor);
+                                labelVieTresor.setText("vie: " + String.valueOf(this.tresor.getPv()));
                             }
                         }
                     }
+                }
 
-
+                if (tresor.estPasDetruit()) {
                     jeu.untour();
                     temps++;
+                } else {
+                    borderPane.setTop(loosePane.getLoosePane());
+                }
 
-                    })
-            );
-            gameLoop.getKeyFrames().add(kf);
-
-        //}
-
-
+            })
+        );
+        gameLoop.getKeyFrames().add(kf);
     }
 
     public boolean ennemiProche(Ennemis ennemis){
@@ -172,8 +179,6 @@ public class Controller implements Initializable {
             if (controleurAjoutDefense != null) {
                 paneCentral.removeEventHandler(MouseEvent.MOUSE_CLICKED, controleurAjoutDefense);
             }
-
-            System.out.println("Bouton cliqué !");
 
             String buttonId = ((Button) event.getSource()).getId();
 

@@ -125,6 +125,13 @@ public class Environnement {
 
                         if ((defense.getPositionX() + defense.getPorteeDegats() >= ennemiVue.getMiddlePostionX() && defense.getPositionX() - defense.getPorteeDegats() <= ennemiVue.getMiddlePostionX()) && (defense.getPositionY() + defense.getPorteeDegats() >= ennemiVue.getMiddlePostionY() && defense.getPositionY() - defense.getPorteeDegats() <= ennemiVue.getMiddlePostionY())) {
                             defense.attaque(ennemies, ennemiVue);
+
+                            // Si il ne tire pas
+                            if (!defense.ifHasBullet()) {
+                                if (ennemies.estMort()) {
+                                    this.paneCentral.getChildren().remove(this.paneCentral.lookup("#"+ennemies.getId()));
+                                }
+                            }
                         }
 
                         if (defense.getPv() <= 0) {
