@@ -1,5 +1,6 @@
 package com.pirateswarriors.model;
 
+import com.pirateswarriors.controller.ControllerViewChoixMap;
 import com.pirateswarriors.model.defense.DefenseActor;
 import com.pirateswarriors.model.ennemies.CarteModele;
 import com.pirateswarriors.model.ennemies.Ennemis;
@@ -29,6 +30,7 @@ public class Environnement {
     private int nbEnnemis;
     private Pane paneCentral;
     private PorteMonnaie porteMonnaie;
+    private ControllerViewChoixMap controllerViewChoixMap;
 
     public Environnement(Pane paneCentral, PorteMonnaie porteMonnaie) {
         this.porteMonnaie = porteMonnaie;
@@ -42,6 +44,7 @@ public class Environnement {
         this.ennemisBack = new ArrayList<>();
         this.nbEnnemis = 0;
         this.carte = new CarteModele("map1.csv");
+        //this.carte = new CarteModele(controllerViewChoixMap.getNomMap());
     }
 
     public PorteMonnaie getPorteMonnaie() {
