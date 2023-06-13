@@ -14,6 +14,8 @@ public class BarqueCanon extends Ennemis {
     public BarqueCanon( Environnement env) {
         super(1, env, 200, 7, 10, 10,3);// Super de toute les données d'Ennemis
                                                                                        // avec ses points de vie, son image, etc...
+        setPositionY(getPositionY()-64); // Calibrage par rapport au chemin sur la map
+        setPositionX(getPositionX()-64); // pour la position X et Y
     }
 
 }

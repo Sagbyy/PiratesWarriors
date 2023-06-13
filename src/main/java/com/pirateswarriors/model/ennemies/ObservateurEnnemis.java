@@ -18,6 +18,7 @@ public class ObservateurEnnemis implements ListChangeListener<Ennemis> {
         this.panneauJeu.getChildren().add(v.getImageBateau());
         v.getImageBateau().xProperty().bind(ennemi.positionXProperty());
         v.getImageBateau().yProperty().bind(ennemi.positionYProperty());
+        ennemi.getDirProperty().addListener(new PositionListener(v));
     }
 
     private void enleverEnnemis(Ennemis mort) {
@@ -33,6 +34,11 @@ public class ObservateurEnnemis implements ListChangeListener<Ennemis> {
             // gestion des nouveaux n ́es
             for (Ennemis nouveau : change.getAddedSubList()) {
                 ajoutEnnemis(nouveau);
+
+            }
+
+            for (Ennemis nouveau : change.getRemoved()){
+                enleverEnnemis(nouveau);
             }
         }
     }
