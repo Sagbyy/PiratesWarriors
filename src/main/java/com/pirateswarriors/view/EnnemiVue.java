@@ -7,17 +7,38 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
 public class EnnemiVue {
 
     private ImageView imageEnnemi;
     private Image image;
     private Label labelPv;
     private Pane paneCentrale;
-    //private String id;
-
+    private Ennemis ennemis;
 
     public EnnemiVue(Ennemis ennemi) {
-        this.image = ennemi.getImage() ;
+        this.ennemis = ennemi;
+        if(ennemi.getImage() == 1){
+            this.image = new Image("piratefusil.png") ;
+        }
+        else if(ennemi.getImage() == 2){
+            this.image = new Image("Embarcationfortune.png") ;
+        }
+        else if(ennemi.getImage() == 3){
+            this.image = new Image("barquecanon.png") ;
+        }
+        else if(ennemi.getImage() == 4){
+            this.image = new Image("grospirate.png") ;
+        }
+        else if(ennemi.getImage() == 5){
+            this.image = new Image("Voleur.png") ;
+        }
+        else if(ennemi.getImage() == 6){
+            this.image = new Image("grosnavire.png") ;
+        }
+
         this.imageEnnemi = new ImageView(image);
         this.imageEnnemi.setId(ennemi.getId());
 
@@ -39,8 +60,12 @@ public class EnnemiVue {
         return imageEnnemi;
     }
 
-    public Pane getPaneCentrale() {
-        return paneCentrale;
+    public double getMiddlePostionX() {
+        return this.ennemis.getPositionX() + this.image.getWidth() / 2;
+    }
+
+    public double getMiddlePostionY() {
+        return this.ennemis.getPositionY() + this.image.getHeight() / 2;
     }
 
 

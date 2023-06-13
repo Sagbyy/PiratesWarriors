@@ -9,27 +9,11 @@ import javafx.scene.image.Image;
 public class PirateFusil extends Ennemis {
 
 
-
+    //Sous class d'Ennemis, PirateFusil
     public PirateFusil(Environnement env) {
-        super(2,env,1500,7,10, 10, new Image("testanim.gif"));
-        setPositionX(getPositionX()-64);
-        setPositionY(getPositionY()-64);
-
-
+        super(2,env,1500,7,10, 10,1);// Super de toutes les données d'Ennemis
+                                                                                    // avec ses points de vie, son image, etc...
     }
 
-    //    public PirateFusil( ) {
-//        super(10, 125, 15, 7, 20);
-//        this.imagepirate = imagepirate;
-//        this.env = jeu;
-//        this.positionX = new SimpleDoubleProperty(1216);
-//        this.positionY = new SimpleDoubleProperty(64);
-//
-//    }
 
-
-    @Override
-    public Image getImage() {
-        return super.getImage();
-    }
 }
