@@ -23,6 +23,7 @@ public class Tresor {
 
     public void damage (int damage){
         this.pv -= damage;
+        System.out.println("le tresor à subit " + damage + " dégats !");
         if (pv <= 0){
             pv =0;
         }

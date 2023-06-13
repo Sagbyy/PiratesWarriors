@@ -2,14 +2,13 @@ package com.pirateswarriors.model.defense;
 
 import com.pirateswarriors.model.Environnement;
 import com.pirateswarriors.model.ennemies.Ennemis;
-import com.pirateswarriors.view.EnnemiVue;
 import javafx.animation.TranslateTransition;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -25,6 +24,7 @@ public class DefenseActor {
     private DoubleProperty positionY;
     private ImageView image;
     private Pane pane;
+    private Label labelPv;
     private int degat;
     private MediaPlayer shootSound;
     private ImageView bullet;
@@ -36,7 +36,6 @@ public class DefenseActor {
     private int delayMS;
     private int degatPv;
     private Environnement env;
-    private ProgressBar progressHealth;
 
     public DefenseActor(int pv, int prix, int degats, int degatPv, ImageView image, Pane pane, String pathSound, Boolean ifHasBullet, double porteeDegats, int delayMS, Environnement env) {
         this.env = env;
@@ -54,44 +53,33 @@ public class DefenseActor {
         this.positionX = new SimpleDoubleProperty(0);
         this.positionY = new SimpleDoubleProperty(0);
         this.degat = degats;
-        // Progress Health
-        this.progressHealth = new ProgressBar();
-        this.progressHealth.setPrefWidth(50);
-        this.getPvProperty().addListener((obs, old, nouv) -> {
-            this.progressHealth.setProgress((double) this.getPv() / 50);
-            System.out.println((double) this.getPv() / 50);
-        });
-
-
-
-        this.positionXProperty().addListener((obs, old, nouv) -> {
-            this.progressHealth.setLayoutX(this.getMiddlePostionX() - 20);
-            this.progressHealth.setLayoutY(this.getMiddlePostionY() - 70);
-        });
-
-        this.positionYProperty().addListener((obs, old, nouv) -> {
-            this.progressHealth.setLayoutX(this.getMiddlePostionX() - 20);
-            this.progressHealth.setLayoutY(this.getMiddlePostionY() - 70);
-        });
-
+        this.labelPv = new Label();
         this.bullet = new ImageView(new Image(getClass().getResource("/com/pirateswarriors/images/defense/cannonBall.png").toString()));
         this.shootSound = new MediaPlayer(new Media(getClass().getResource(this.pathSound).toString()));
+        labelPv.setText("Vie : " + this.getPv());
         // Bind des positions de l'acteur avec l'image
         this.image.xProperty().bind(Bindings.subtract(positionXProperty(), this.image.getBoundsInLocal().getWidth() / 2));
         this.image.yProperty().bind(Bindings.subtract(positionYProperty(), this.image.getBoundsInLocal().getHeight() / 2));
         this.getPvProperty().addListener((obs, old, nouv) -> {
+            // Pour le texte
+            labelPv.setText("Vie : " + nouv);
+
             // Si il est mort
             if ((int) nouv <= 0) {
-                this.pane.getChildren().removeAll(this.image, this.progressHealth, this.bullet);
+                this.pane.getChildren().removeAll(this.image, this.labelPv, this.bullet);
             }
         });
-        this.pane.getChildren().addAll(this.image, this.progressHealth);
+        this.pane.getChildren().addAll(this.image, this.labelPv);
     }
 
     // Getter & Setter
 
     public double getPorteeDegats() {
         return this.porteeDegats;
+    }
+
+    public Label labelProperty() {
+        return this.labelPv;
     }
 
     public ImageView getImageProperty() {
@@ -157,8 +145,8 @@ public class DefenseActor {
         }
     }
 
-    public void attaque(Ennemis ennemi, EnnemiVue ennemiVue) {
-        rotateImage(ennemiVue.getMiddlePostionX(), ennemiVue.getMiddlePostionY());
+    public void attaque(Ennemis ennemi) {
+        rotateImage(ennemi.getPositionX(), ennemi.getPositionY());
 
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastExecutionTime >= this.delayMS) { // Vérifier si deux secondes se sont écoulées
@@ -170,16 +158,12 @@ public class DefenseActor {
                 transition.setFromX(this.positionXProperty().getValue());
                 transition.setFromY(this.positionYProperty().getValue());
                 // Vers le centre de l'image
-                transition.setToX(ennemiVue.getMiddlePostionX());
-                transition.setToY(ennemiVue.getMiddlePostionY());
+                transition.setToX(ennemi.getMiddlePostionX());
+                transition.setToY(ennemi.getMiddlePostionY());
 
                 // Configuration de l'animation
                 transition.setOnFinished(event -> {
                     pane.getChildren().remove(bullet);
-
-                    if (ennemi.estMort()) {
-                        this.pane.getChildren().remove(this.pane.lookup("#"+ennemi.getId()));
-                    }
                 });
 
                 // Lancement de l'animation

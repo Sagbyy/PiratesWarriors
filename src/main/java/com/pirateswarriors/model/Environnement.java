@@ -3,8 +3,8 @@ package com.pirateswarriors.model;
 import com.pirateswarriors.model.defense.DefenseActor;
 import com.pirateswarriors.model.ennemies.CarteModele;
 import com.pirateswarriors.model.ennemies.Ennemis;
-import com.pirateswarriors.model.ennemies.PackEnnemis.*;
-import com.pirateswarriors.view.EnnemiVue;
+import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
+import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
@@ -105,10 +105,12 @@ public class Environnement {
         sontMorts();
         tousAvancent();
 
+        System.out.println(this.nbVague);
+
+
             Iterator<Ennemis> ennemisIterator = ennemisList.iterator();
             while (ennemisIterator.hasNext()) {
                 Ennemis ennemies = ennemisIterator.next();
-                EnnemiVue ennemiVue = new EnnemiVue(ennemies);
 
 
                 if (ennemies.estMort()) {
@@ -120,8 +122,8 @@ public class Environnement {
 
                         defense.eachTimeDoSomething();
 
-                        if ((defense.getPositionX() + defense.getPorteeDegats() >= ennemiVue.getMiddlePostionX() && defense.getPositionX() - defense.getPorteeDegats() <= ennemiVue.getMiddlePostionX()) && (defense.getPositionY() + defense.getPorteeDegats() >= ennemiVue.getMiddlePostionY() && defense.getPositionY() - defense.getPorteeDegats() <= ennemiVue.getMiddlePostionY())) {
-                            defense.attaque(ennemies, ennemiVue);
+                        if ((defense.getPositionX() + defense.getPorteeDegats() >= ennemies.getMiddlePostionX() && defense.getPositionX() - defense.getPorteeDegats() <= ennemies.getMiddlePostionX()) && (defense.getPositionY() + defense.getPorteeDegats() >= ennemies.getMiddlePostionY() && defense.getPositionY() - defense.getPorteeDegats() <= ennemies.getMiddlePostionY())) {
+                            defense.attaque(ennemies);
                         }
 
                         if (defense.getPv() <= 0) {
@@ -149,39 +151,24 @@ public class Environnement {
                 if (a.estMort()) {
                     System.out.println("mort de : " + a.getId());
                     getEnnemisList().remove(i);
-                    this.porteMonnaie.ajoutMonnaie(100);
+                    this.porteMonnaie.ajoutMonnaie(50);
                 }
             }
         }
 
 
         int nbenn, lop;
-        int vag = 5;
+        int vag = 2;
 
         public void vague() {
             if (!(nbenn == this.nbEnnemis)) {
                 if (lop % 75 == 0) {
                     int rand = (int) (Math.random() * vag) + 1;
                     if (rand == 1) {
-                        getEnnemisList().add(new PirateFusil(this));
-                    }
-                    else if (rand == 2) {
-                        getEnnemisList().add(new EmbarcationFortune(this));
-                    }
-                    else if (rand == 3) {
                         getEnnemisList().add(new BarqueCanon(this));
                     }
-                    else if (rand == 4) {
-                        getEnnemisList().add(new GrosPirate(this));
-                    }
-                    else if (rand == 5) {
-                        getEnnemisList().add(new Voleur(this));
-                    }
-                    else if (rand == 6) {
-                        if(getNbVague()%10==0){
-                            getEnnemisList().add(new GrosNavire(this));
-                        }
-
+                    if (rand == 2) {
+                        getEnnemisList().add(new PirateFusil(this));
                     }
                     nbenn++;
                 }
@@ -190,12 +177,8 @@ public class Environnement {
                 go = true;
                 nbenn = 0;
             }
+
             lop = lop + (int) (Math.random() * 3) + 1;
-
-
-            if(getNbVague()%2 == 0 && vag<5){
-                vag++;
-            }
         }
     }
 
