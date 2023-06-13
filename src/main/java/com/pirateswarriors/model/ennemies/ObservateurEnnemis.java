@@ -18,13 +18,14 @@ public class ObservateurEnnemis implements ListChangeListener<Ennemis> {
         this.panneauJeu.getChildren().add(v.getImageBateau());
         v.getImageBateau().xProperty().bind(ennemi.positionXProperty());
         v.getImageBateau().yProperty().bind(ennemi.positionYProperty());
-       // System.out.println(ennemi.getId());
     }
 
     private void enleverEnnemis(Ennemis mort) {
         System.out.println(this.panneauJeu.lookup("#"+mort.getId()));
         this.panneauJeu.getChildren().remove(this.panneauJeu.lookup("#"+mort.getId()));
     }
+
+
 
     @Override
     public void onChanged(Change<? extends Ennemis> change) {

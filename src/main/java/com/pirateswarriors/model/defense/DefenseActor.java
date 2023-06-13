@@ -158,8 +158,8 @@ public class DefenseActor {
                 transition.setFromX(this.positionXProperty().getValue());
                 transition.setFromY(this.positionYProperty().getValue());
                 // Vers le centre de l'image
-                transition.setToX(ennemi.getMiddlePostionX());
-                transition.setToY(ennemi.getMiddlePostionY());
+                //-----------------transition.setToX(ennemi.getMiddlePostionX());
+                //-----------------transition.setToY(ennemi.getMiddlePostionY());
 
                 // Configuration de l'animation
                 transition.setOnFinished(event -> {
