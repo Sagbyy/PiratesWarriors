@@ -164,9 +164,6 @@ public class Ennemis {
         return this.image;
     }
 
-    public void seDeplace(){
-
-    }
 
 
     public void avance(){

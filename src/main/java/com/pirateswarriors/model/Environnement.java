@@ -177,7 +177,6 @@ public class Environnement {
                 go = true;
                 nbenn = 0;
             }
-
             lop = lop + (int) (Math.random() * 3) + 1;
         }
     }
