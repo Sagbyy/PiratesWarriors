@@ -161,7 +161,7 @@ public class Environnement {
 
 
         int nbenn, lop;
-        int vag = 2;
+        int vag = 1;
 
         public void vague() {
             if (!(nbenn == this.nbEnnemis)) {
@@ -180,6 +180,7 @@ public class Environnement {
                 go = true;
                 nbenn = 0;
             }
+
             lop = lop + (int) (Math.random() * 3) + 1;
         }
     }
