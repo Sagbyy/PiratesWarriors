@@ -61,12 +61,16 @@ public class Controller implements Initializable {
     @FXML
     private Label nbPieces;
     @FXML
+    private Label nbVagues;
+    @FXML
     private ImageView imgTresor;
-    private int tre;
+    private ControleurAjoutDefense controleurAjoutDefense;
+
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         this.carte_1 = new Carte_1(tilePane);
 
         this.tresor = new Tresor(2000);
@@ -75,10 +79,13 @@ public class Controller implements Initializable {
         this.porteMonnaie = new PorteMonnaie();
         this.porteMonnaieVue = new PorteMonnaieVue(porteMonnaie);
 
+
+
         nbPieces.textProperty().bind(porteMonnaie.nbProperty().asString());
         labelVieTresor.setText("vie: " + String.valueOf(tresor.getPv()));
 
         this.jeu = new Environnement(paneCentral, porteMonnaie);
+        nbVagues.textProperty().bind(jeu.getNbVaguesProperty().asString());
         // Mouse Property
         this.mouseY = new SimpleDoubleProperty(0);
         this.mouseX = new SimpleDoubleProperty(0);
@@ -107,28 +114,7 @@ public class Controller implements Initializable {
                 // on définit ce qui se passe à chaque frame
                 // c'est un eventHandler d'ou le lambda
                 (ev ->{
-                       //this.personnage.setPositionX(this.personnage.getPositionX() + 10);
-                        // this.personnageVue.getImageBateau().setX(this.personnage.getPositionX());
 
-//                    if(temps==50){
-//                        System.out.println("fini");
-//                        gameLoop.stop();
-//                    }
-//
-//                    else if (temps%5==0) {
-//                        System.out.println("un tour");
-//                        this.personnage.setPositionX(this.personnage.getPositionX() - 1);
-//
-//
-//                        // this.personnageVue.getImageBateau().setX(this.personnage.getPositionX());
-//
-//                        //this.personnage.setPositionY(this.personnage.getPositionY());
-//                        this.personnageVue.getImageBateau().setY(this.personnage.getPositionY());
-//                        System.out.println(this.personnageVue.getImageBateau().getX());
-//                        // ajout de monnaie a chaque tour
-//                        porteMonnaie.ajoutMonnaie(500);
-//                        System.out.println("nouvelle valeur du porte monnaie: " + porteMonnaie.getNb());
-//                    }
                     for (int i = 0; i < jeu.getEnnemisList().size(); i++) {
                         if (tresor.estPasDetruit()){
                             // Infliger des dégâts au trésor
@@ -173,18 +159,24 @@ public class Controller implements Initializable {
 
     @FXML
     public void ajoutDefense(ActionEvent event) {
-        System.out.println("Bouton cliqué !");
+        if (!porteMonnaie.argentVide()) {
+            if (controleurAjoutDefense != null) {
+                paneCentral.removeEventHandler(MouseEvent.MOUSE_CLICKED, controleurAjoutDefense);
+            }
 
-        String buttonId = ((Button) event.getSource()).getId();
+            System.out.println("Bouton cliqué !");
 
-        // Ajout de la vue
-        AjoutDefense ajoutDefense = new AjoutDefense(paneCentral, buttonId, porteMonnaie, jeu);
-        ajoutDefense.ajoutDefense();
-        ajoutDefense.bindImage(mouseX, mouseY);
+            String buttonId = ((Button) event.getSource()).getId();
 
-        // Lorsque qu'on clique sur la map on laisse la position au clique
-        ControleurAjoutDefense controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getDefense(), porteMonnaie, jeu, paneCentral);
-        paneCentral.addEventHandler(MouseEvent.MOUSE_CLICKED, controleurAjoutDefense);
+            // Ajout de la vue
+            AjoutDefense ajoutDefense = new AjoutDefense(paneCentral, buttonId, porteMonnaie, jeu);
+            ajoutDefense.ajoutDefense();
+            ajoutDefense.bindImage(mouseX, mouseY);
+
+            // Lorsque qu'on clique sur la map on laisse la position au clique
+            controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getDefense(), porteMonnaie, jeu, paneCentral);
+            paneCentral.addEventHandler(MouseEvent.MOUSE_CLICKED, controleurAjoutDefense);
+        }
     }
 
     @FXML

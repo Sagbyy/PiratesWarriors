@@ -10,8 +10,8 @@ public class GrosNavire extends Ennemis {
 ////        super(x, y, 2, env, 400, 100, 80, 150, image);
 //    }
 
-    public GrosNavire(int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, Image image, EnnemiVue ennemiVue) {
-        super(vitesse, env, pts_vie, pts_score, pts_pièces, pts_attaque, image, ennemiVue);
+    public GrosNavire(int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, Image image) {
+        super(vitesse, env, pts_vie, pts_score, pts_pièces, pts_attaque, image);
     }
 
     public void tire(){
