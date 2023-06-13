@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.ToggleButton?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pirateswarriors.controller.Controller">
     <center>
 
@@ -32,11 +31,11 @@
    <right>
       <VBox alignment="CENTER" prefHeight="1084.0" prefWidth="320.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
-            <ToggleButton fx:id="showScopeDefenses" mnemonicParsing="false" onAction="#showScopeDefenses" text="Voir la portée des défenses" textOverrun="CLIP">
+            <Button fx:id="buttonAddDefense" mnemonicParsing="false" onAction="#ajoutDefense" text="Placer une défense" textOverrun="CLIP">
                <font>
                   <Font size="22.0" />
                </font>
-            </ToggleButton>
+            </Button>
             <Button fx:id="lancerJeu" mnemonicParsing="false" onAction="#lancerVagues" text="Lancer" textOverrun="CLIP">
                <font>
                   <Font size="22.0" />

@@ -9,7 +9,10 @@ import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
 import com.pirateswarriors.model.map.BFS;
 import com.pirateswarriors.model.map.Couple;
 import com.pirateswarriors.view.EnnemiVue;
-import javafx.beans.property.*;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -26,8 +29,8 @@ public class Ennemis {
     private String id;
     private DoubleProperty x,y; // Position
     protected Environnement env;
-    protected int image;
-    private StringProperty dir;
+    protected Image image;
+    private String dir;
     private int pos;
     public static int compteur=0;
 
@@ -37,10 +40,13 @@ public class Ennemis {
     private ImageView imgTresor;
     private EnnemiVue ennemiVue;
     private CarteModele carteModele;
+
+
     ArrayList chemin;
+    //CarteModele g = new CarteModele("newMap2.csv");
     com.pirateswarriors.model.map.BFS BFS ;
 
-    public Ennemis(int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, int image) { // Constructeur de la class mère Ennemis
+    public Ennemis(int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, Image image) { // Constructeur de la class mère Ennemis
         this.pts_vie = new SimpleIntegerProperty(pts_vie);
         this.image = image;
         this.pts_score = pts_score;
@@ -50,7 +56,7 @@ public class Ennemis {
         this.positionY = new SimpleDoubleProperty(192);
         this.vitesse = vitesse;
         this.env = env;
-        this.dir = new SimpleStringProperty("");
+        this.dir = "";
         this.pos = 0;
         this.id = "E"+compteur;
         compteur++;
@@ -70,14 +76,11 @@ public class Ennemis {
         this.BFS = new BFS(carteModele,apparition() );
         this.chemin = BFS.cheminVersSource();
         this.id = "E"+compteur;
-          this.dir = new SimpleStringProperty("");
+        this.dir = "";
         this.pos = 0;
         compteur++;
     }
 
-    public String getDir() {
-        return dir.getValue();
-    }
 
     public String getId() {
         return id;
@@ -100,6 +103,14 @@ public class Ennemis {
        return c;
     }
 
+
+    public double getMiddlePostionX() {
+        return this.getPositionX() + this.getImage().getWidth() / 2;
+    }
+
+    public double getMiddlePostionY() {
+        return this.getPositionY() + this.getImage().getHeight() / 2;
+    }
 
     public boolean estMort(){ // Fonction pour verfier si l'ennemi est mort ou non
         return this.pts_vie.getValue() <= 0;
@@ -149,10 +160,13 @@ public class Ennemis {
         this.pts_vie.setValue(this.pts_vie.getValue() + n);
     }
 
-    public int getImage(){
+    public Image getImage(){
         return this.image;
     }
 
+    public void seDeplace(){
+
+    }
 
 
     public void avance(){
@@ -162,24 +176,24 @@ public class Ennemis {
                 Couple case_apres = getChemin().get(pos + 1);
 
                 if (case_apres.equals(new Couple(case_chemin.getX() - 1, case_chemin.getY()))) {
-                    dir.setValue("b");
+                    dir = "b";
                 } else if (case_apres.equals(new Couple(case_chemin.getX(), case_chemin.getY() - 1))) {
-                    dir.setValue("g");
+                    dir = "g";
                 } else if (case_apres.equals(new Couple(case_chemin.getX() + 1, case_chemin.getY()))) {
-                    dir.setValue("h");
+                    dir = "h";
                 }
                 pos++;
             }
 
-            if(getDir().equals("b")){
+            if(dir.equals("b")){
                 setPositionY(getPositionY()-this.vitesse);
             }
 
-            if(getDir().equals("g")){
+            if(dir.equals("g")){
                 setPositionX(getPositionX()-this.vitesse);
             }
 
-            if(getDir().equals("h")){
+            if(dir.equals("h")){
                 setPositionY(getPositionY()+this.vitesse);
             }
         }
