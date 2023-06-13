@@ -27,7 +27,6 @@ public class BFS {
         LinkedList<Couple> fifo = new LinkedList<>();
         Couple s = this.source;
         predecesseurs.put(s, null);
-        System.out.println("test"+predecesseurs);
         parcours.add(s);
         fifo.add(s);
 

@@ -27,3 +27,7 @@
 .hovered {
     -fx-background-color: #f00;
 }
+
+.custom-progress-bar {
+    -fx-background-color: blue; /* Couleur de la barre de progression */
+}
