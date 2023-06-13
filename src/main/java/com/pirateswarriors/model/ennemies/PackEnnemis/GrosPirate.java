@@ -11,6 +11,8 @@ public class GrosPirate extends Ennemis {
     public GrosPirate(Environnement env) {
         super(1, env, 1500, 40, 40, 50, 4);// Super de toutes les données d'Ennemis
                                                                                           // avec ses points de vie, son image, etc...
+        setPositionY(getPositionY()-64); // Calibrage par rapport au chemin sur la map
+        setPositionX(getPositionX()-64); // pour la position X et Y
     }
 
 }

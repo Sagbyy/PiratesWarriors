@@ -90,8 +90,6 @@ public class Environnement {
     public void setNbVague(int nbVague) {
         this.nbVague.set(nbVague);
     }
-
-
     boolean go = true;
     public void untour() {
         if (ennemisList.size() == 0 && go == true) {
@@ -108,20 +106,20 @@ public class Environnement {
         sontMorts();
         tousAvancent();
 
-            Iterator<Ennemis> ennemisIterator = ennemisList.iterator();
-            while (ennemisIterator.hasNext()) {
-                Ennemis ennemies = ennemisIterator.next();
-                EnnemiVue ennemiVue = new EnnemiVue(ennemies);
+        Iterator<Ennemis> ennemisIterator = ennemisList.iterator();
+        while (ennemisIterator.hasNext()) {
+            Ennemis ennemies = ennemisIterator.next();
+            EnnemiVue ennemiVue = new EnnemiVue(ennemies);
 
 
-                if (ennemies.estMort()) {
-                    ennemisIterator.remove();
-                } else {
-                    ListIterator<DefenseActor> defenseIterator = defenseList.listIterator();
-                    while (defenseIterator.hasNext()) {
-                        DefenseActor defense = defenseIterator.next();
+            if (ennemies.estMort()) {
+                ennemisIterator.remove();
+            } else {
+                ListIterator<DefenseActor> defenseIterator = defenseList.listIterator();
+                while (defenseIterator.hasNext()) {
+                    DefenseActor defense = defenseIterator.next();
 
-                        defense.eachTimeDoSomething();
+                    defense.eachTimeDoSomething();
 
                         if ((defense.getPositionX() + defense.getPorteeDegats() >= ennemiVue.getMiddlePostionX() && defense.getPositionX() - defense.getPorteeDegats() <= ennemiVue.getMiddlePostionX()) && (defense.getPositionY() + defense.getPorteeDegats() >= ennemiVue.getMiddlePostionY() && defense.getPositionY() - defense.getPorteeDegats() <= ennemiVue.getMiddlePostionY())) {
                             defense.attaque(ennemies, ennemiVue);
@@ -134,14 +132,16 @@ public class Environnement {
                             }
                         }
 
-                        if (defense.getPv() <= 0) {
-                            defenseIterator.remove();
-                        }
+                    if (defense.getPv() <= 0) {
+                        defenseIterator.remove();
                     }
                 }
             }
-
         }
+
+    }
+
+
 
     public CarteModele getCarte() {
         return carte;

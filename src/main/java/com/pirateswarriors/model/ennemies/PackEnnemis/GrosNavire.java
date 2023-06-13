@@ -12,7 +12,8 @@ public class GrosNavire extends Ennemis {
     public GrosNavire(Environnement env) {
         super(1, env, 8000, 500, 500, 500, 6);// Super de toutes les données d'Ennemis
                                                                                              // avec ses points de vie, son image, etc...
-    }
+        setPositionX(getPositionX()-64); // Calibrage par rapport au chemin sur la map
 
+    }
 
 }
