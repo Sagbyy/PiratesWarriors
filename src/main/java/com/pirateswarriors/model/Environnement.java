@@ -98,7 +98,10 @@ public class Environnement {
             this.nbEnnemis += 10;
             vague();
             this.nbVague.set(getNbVague() + 1);
-        } else if (go == false) {
+            if(getNbVague()%2 == 0 && vag<5){
+                vag++;
+            }
+        } else if (!go) {
 
             vague();
         }
@@ -193,9 +196,7 @@ public class Environnement {
             lop = lop + (int) (Math.random() * 3) + 1;
 
 
-            if(getNbVague()%2 == 0 && vag<5){
-                vag++;
-            }
+
         }
     }
 
