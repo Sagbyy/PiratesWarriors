@@ -83,6 +83,9 @@ public class Ennemis {
         return id;
     }
 
+    public StringProperty getDirProperty(){
+        return dir;
+    }
 
 
     public Couple apparition(){
@@ -162,16 +165,16 @@ public class Ennemis {
                 Couple case_apres = getChemin().get(pos + 1);
 
                 if (case_apres.equals(new Couple(case_chemin.getX() - 1, case_chemin.getY()))) {
-                    dir.setValue("b");
+                    dir.setValue("h");
                 } else if (case_apres.equals(new Couple(case_chemin.getX(), case_chemin.getY() - 1))) {
                     dir.setValue("g");
                 } else if (case_apres.equals(new Couple(case_chemin.getX() + 1, case_chemin.getY()))) {
-                    dir.setValue("h");
+                    dir.setValue("b");
                 }
                 pos++;
             }
 
-            if(getDir().equals("b")){
+            if(getDir().equals("h")){
                 setPositionY(getPositionY()-this.vitesse);
             }
 
@@ -179,7 +182,7 @@ public class Ennemis {
                 setPositionX(getPositionX()-this.vitesse);
             }
 
-            if(getDir().equals("h")){
+            if(getDir().equals("b")){
                 setPositionY(getPositionY()+this.vitesse);
             }
         }

@@ -12,6 +12,8 @@ public class EmbarcationFortune extends Ennemis {
     public EmbarcationFortune(Environnement env) {
         super(2, env, 1500, 50, 50, 10, 2);// Super de toutes les données d'Ennemis
                                                                                           // avec ses points de vie, son image, etc...
+        setPositionY(getPositionY()-64); // Calibrage par rapport au chemin sur la map
+        setPositionX(getPositionX()-64); // pour la position X et Y
     }
 
 }
