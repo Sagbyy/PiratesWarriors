@@ -38,9 +38,6 @@ public class ControleurAjoutDefense implements EventHandler<MouseEvent> {
 
                 //paneCentral.getChildren().add(new Circle(this.defenseActor.getPositionX(), this.defenseActor.getPositionY(), 150, Color.RED));
 
-                this.defenseActor.labelProperty().setLayoutX(this.defenseActor.getImageProperty().getX() + 10);
-                this.defenseActor.labelProperty().setLayoutY(this.defenseActor.getImageProperty().getY() - 25);
-
                 this.env.ajouterDefense(defenseActor);
             } else {
                 System.out.println("Test");

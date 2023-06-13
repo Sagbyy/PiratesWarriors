@@ -98,15 +98,15 @@ public class Environnement {
             this.nbEnnemis += 10;
             vague();
             this.nbVague.set(getNbVague() + 1);
-        } else if (go == false) {
+            if(getNbVague()%2 == 0 && vag<5){
+                vag++;
+            }
+        } else if (!go) {
 
             vague();
         }
         sontMorts();
         tousAvancent();
-
-        System.out.println(this.nbVague);
-
 
             Iterator<Ennemis> ennemisIterator = ennemisList.iterator();
             while (ennemisIterator.hasNext()) {
@@ -152,14 +152,14 @@ public class Environnement {
                 if (a.estMort()) {
                     System.out.println("mort de : " + a.getId());
                     getEnnemisList().remove(i);
-                    this.porteMonnaie.ajoutMonnaie(50);
+                    this.porteMonnaie.ajoutMonnaie(100);
                 }
             }
         }
 
 
         int nbenn, lop;
-        int vag = 5;
+        int vag = 1;
 
         public void vague() {
             if (!(nbenn == this.nbEnnemis)) {
@@ -196,9 +196,7 @@ public class Environnement {
             lop = lop + (int) (Math.random() * 3) + 1;
 
 
-            if(getNbVague()%2 == 0 && vag<5){
-                vag++;
-            }
+
         }
     }
 

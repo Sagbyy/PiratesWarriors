@@ -9,7 +9,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -25,7 +25,6 @@ public class DefenseActor {
     private DoubleProperty positionY;
     private ImageView image;
     private Pane pane;
-    private Label labelPv;
     private int degat;
     private MediaPlayer shootSound;
     private ImageView bullet;
@@ -37,6 +36,7 @@ public class DefenseActor {
     private int delayMS;
     private int degatPv;
     private Environnement env;
+    private ProgressBar progressHealth;
 
     public DefenseActor(int pv, int prix, int degats, int degatPv, ImageView image, Pane pane, String pathSound, Boolean ifHasBullet, double porteeDegats, int delayMS, Environnement env) {
         this.env = env;
@@ -54,33 +54,44 @@ public class DefenseActor {
         this.positionX = new SimpleDoubleProperty(0);
         this.positionY = new SimpleDoubleProperty(0);
         this.degat = degats;
-        this.labelPv = new Label();
+        // Progress Health
+        this.progressHealth = new ProgressBar();
+        this.progressHealth.setPrefWidth(50);
+        this.getPvProperty().addListener((obs, old, nouv) -> {
+            this.progressHealth.setProgress((double) this.getPv() / 50);
+            System.out.println((double) this.getPv() / 50);
+        });
+
+
+
+        this.positionXProperty().addListener((obs, old, nouv) -> {
+            this.progressHealth.setLayoutX(this.getMiddlePostionX() - 20);
+            this.progressHealth.setLayoutY(this.getMiddlePostionY() - 70);
+        });
+
+        this.positionYProperty().addListener((obs, old, nouv) -> {
+            this.progressHealth.setLayoutX(this.getMiddlePostionX() - 20);
+            this.progressHealth.setLayoutY(this.getMiddlePostionY() - 70);
+        });
+
         this.bullet = new ImageView(new Image(getClass().getResource("/com/pirateswarriors/images/defense/cannonBall.png").toString()));
         this.shootSound = new MediaPlayer(new Media(getClass().getResource(this.pathSound).toString()));
-        labelPv.setText("Vie : " + this.getPv());
         // Bind des positions de l'acteur avec l'image
         this.image.xProperty().bind(Bindings.subtract(positionXProperty(), this.image.getBoundsInLocal().getWidth() / 2));
         this.image.yProperty().bind(Bindings.subtract(positionYProperty(), this.image.getBoundsInLocal().getHeight() / 2));
         this.getPvProperty().addListener((obs, old, nouv) -> {
-            // Pour le texte
-            labelPv.setText("Vie : " + nouv);
-
             // Si il est mort
             if ((int) nouv <= 0) {
-                this.pane.getChildren().removeAll(this.image, this.labelPv, this.bullet);
+                this.pane.getChildren().removeAll(this.image, this.progressHealth, this.bullet);
             }
         });
-        this.pane.getChildren().addAll(this.image, this.labelPv);
+        this.pane.getChildren().addAll(this.image, this.progressHealth);
     }
 
     // Getter & Setter
 
     public double getPorteeDegats() {
         return this.porteeDegats;
-    }
-
-    public Label labelProperty() {
-        return this.labelPv;
     }
 
     public ImageView getImageProperty() {
