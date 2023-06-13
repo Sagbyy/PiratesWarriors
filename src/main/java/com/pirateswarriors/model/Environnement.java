@@ -158,7 +158,7 @@ public class Environnement {
 
 
         int nbenn, lop;
-        int vag = 2;
+        int vag = 1;
 
         public void vague() {
             if (!(nbenn == this.nbEnnemis)) {
