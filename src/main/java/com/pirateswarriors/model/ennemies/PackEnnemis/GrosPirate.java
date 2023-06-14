@@ -6,10 +6,13 @@ import com.pirateswarriors.view.EnnemiVue;
 import javafx.scene.image.Image;
 
 public class GrosPirate extends Ennemis {
-    public GrosPirate(int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, Image image) {
-        super(vitesse, env, pts_vie, pts_score, pts_pièces, pts_attaque, image);
+
+    //Sous class d'Ennemis, GrosPirate
+    public GrosPirate(Environnement env) {
+        super(1, env, 1500, 40, 40, 50, 4);// Super de toutes les données d'Ennemis
+                                                                                          // avec ses points de vie, son image, etc...
+        setPositionY(getPositionY()-64); // Calibrage par rapport au chemin sur la map
+        setPositionX(getPositionX()-64); // pour la position X et Y
     }
-//    public GrosPirate(int x, int y, int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, Image image) {
-//        super(x, y, 8, env, 150, 40, 40, 50, image);
-//    }
+
 }

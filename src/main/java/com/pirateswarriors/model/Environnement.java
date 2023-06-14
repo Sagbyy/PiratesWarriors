@@ -10,6 +10,8 @@ import com.pirateswarriors.view.map.Carte;
 import com.pirateswarriors.view.map.Carte_1;
 import com.pirateswarriors.view.map.Carte_2;
 import com.pirateswarriors.view.map.Carte_3;
+import com.pirateswarriors.model.ennemies.PackEnnemis.*;
+import com.pirateswarriors.view.EnnemiVue;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
@@ -119,50 +121,58 @@ public class Environnement {
     public void setNbVague(int nbVague) {
         this.nbVague.set(nbVague);
     }
-
-
     boolean go = true;
     public void untour() {
         if (ennemisList.size() == 0 && go == true) {
             this.nbEnnemis += 10;
             vague();
             this.nbVague.set(getNbVague() + 1);
-        } else if (go == false) {
+            if(getNbVague()%2 == 0 && vag<5){
+                vag++;
+            }
+        } else if (!go) {
 
             vague();
         }
         sontMorts();
         tousAvancent();
 
-        System.out.println(this.nbVague);
+        Iterator<Ennemis> ennemisIterator = ennemisList.iterator();
+        while (ennemisIterator.hasNext()) {
+            Ennemis ennemies = ennemisIterator.next();
+            EnnemiVue ennemiVue = new EnnemiVue(ennemies);
 
 
-            Iterator<Ennemis> ennemisIterator = ennemisList.iterator();
-            while (ennemisIterator.hasNext()) {
-                Ennemis ennemies = ennemisIterator.next();
+            if (ennemies.estMort()) {
+                ennemisIterator.remove();
+            } else {
+                ListIterator<DefenseActor> defenseIterator = defenseList.listIterator();
+                while (defenseIterator.hasNext()) {
+                    DefenseActor defense = defenseIterator.next();
 
+                    defense.eachTimeDoSomething();
 
-                if (ennemies.estMort()) {
-                    ennemisIterator.remove();
-                } else {
-                    ListIterator<DefenseActor> defenseIterator = defenseList.listIterator();
-                    while (defenseIterator.hasNext()) {
-                        DefenseActor defense = defenseIterator.next();
+                        if ((defense.getPositionX() + defense.getPorteeDegats() >= ennemiVue.getMiddlePostionX() && defense.getPositionX() - defense.getPorteeDegats() <= ennemiVue.getMiddlePostionX()) && (defense.getPositionY() + defense.getPorteeDegats() >= ennemiVue.getMiddlePostionY() && defense.getPositionY() - defense.getPorteeDegats() <= ennemiVue.getMiddlePostionY())) {
+                            defense.attaque(ennemies, ennemiVue);
 
-                        defense.eachTimeDoSomething();
-
-                        if ((defense.getPositionX() + defense.getPorteeDegats() >= ennemies.getMiddlePostionX() && defense.getPositionX() - defense.getPorteeDegats() <= ennemies.getMiddlePostionX()) && (defense.getPositionY() + defense.getPorteeDegats() >= ennemies.getMiddlePostionY() && defense.getPositionY() - defense.getPorteeDegats() <= ennemies.getMiddlePostionY())) {
-                            defense.attaque(ennemies);
+                            // Si il ne tire pas
+                            if (!defense.ifHasBullet()) {
+                                if (ennemies.estMort()) {
+                                    this.paneCentral.getChildren().remove(this.paneCentral.lookup("#"+ennemies.getId()));
+                                }
+                            }
                         }
 
-                        if (defense.getPv() <= 0) {
-                            defenseIterator.remove();
-                        }
+                    if (defense.getPv() <= 0) {
+                        defenseIterator.remove();
                     }
                 }
             }
-
         }
+
+    }
+
+
 
     public CarteModele getCarte() {
         return carte;
@@ -180,7 +190,7 @@ public class Environnement {
                 if (a.estMort()) {
                     System.out.println("mort de : " + a.getId());
                     getEnnemisList().remove(i);
-                    this.porteMonnaie.ajoutMonnaie(50);
+                    this.porteMonnaie.ajoutMonnaie(100);
                 }
             }
         }
@@ -194,10 +204,25 @@ public class Environnement {
                 if (lop % 75 == 0) {
                     int rand = (int) (Math.random() * vag) + 1;
                     if (rand == 1) {
+                        getEnnemisList().add(new PirateFusil(this));
+                    }
+                    else if (rand == 2) {
+                        getEnnemisList().add(new EmbarcationFortune(this));
+                    }
+                    else if (rand == 3) {
                         getEnnemisList().add(new BarqueCanon(this));
                     }
-                    if (rand == 2) {
-                        getEnnemisList().add(new PirateFusil(this));
+                    else if (rand == 4) {
+                        getEnnemisList().add(new GrosPirate(this));
+                    }
+                    else if (rand == 5) {
+                        getEnnemisList().add(new Voleur(this));
+                    }
+                    else if (rand == 6) {
+                        if(getNbVague()%10==0){
+                            getEnnemisList().add(new GrosNavire(this));
+                        }
+
                     }
                     nbenn++;
                 }
@@ -206,8 +231,10 @@ public class Environnement {
                 go = true;
                 nbenn = 0;
             }
-
             lop = lop + (int) (Math.random() * 3) + 1;
+
+
+
         }
     }
 

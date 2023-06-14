@@ -2,6 +2,7 @@ package com.pirateswarriors.controller;
 
 import com.pirateswarriors.model.Environnement;
 import com.pirateswarriors.model.ennemies.CarteModele;
+import com.pirateswarriors.model.defense.DefenseActor;
 import com.pirateswarriors.model.ennemies.Ennemis;
 import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.Tresor;
@@ -9,6 +10,7 @@ import com.pirateswarriors.model.ennemies.ObservateurEnnemis;
 import com.pirateswarriors.view.EnnemiVue;
 import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
 import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
+import com.pirateswarriors.view.LoosePane;
 import com.pirateswarriors.view.PorteMonnaieVue;
 import com.pirateswarriors.view.TresorVue;
 import com.pirateswarriors.view.defense.AjoutDefense;
@@ -26,21 +28,31 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
 
     @FXML
+    private BorderPane borderPane;
+    @FXML
     private TilePane tilePane;
     @FXML
     private Pane paneCentral;
+    @FXML
+    private ToggleButton showScopeDefenses;
     @FXML
     private Button buttonAddDefense;
     private DoubleProperty mouseX;
@@ -69,13 +81,12 @@ public class Controller implements Initializable {
     @FXML
     private ImageView imgTresor;
     private ControleurAjoutDefense controleurAjoutDefense;
-
+    private ArrayList<Circle> circleScopeList;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        //this.carte = new Carte_1(tilePane);
 
         creationMap();
 
@@ -107,6 +118,8 @@ public class Controller implements Initializable {
                 mouseY.setValue(mouseEvent.getY());
             }
         });
+        this.circleScopeList = new ArrayList<>();
+
     }
 
     private void initAnimation() {
@@ -114,37 +127,40 @@ public class Controller implements Initializable {
         temps = 0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
-        KeyFrame kf = new KeyFrame(
-                // on définit le FPS (nbre de frame par seconde)
-                Duration.seconds(0.017),
-                // on définit ce qui se passe à chaque frame
-                // c'est un eventHandler d'ou le lambda
-                (ev ->{
+        LoosePane loosePane = new LoosePane();
+        BorderPane borderPane = this.borderPane; // Copie de référence pour utilisation dans le KeyFrame
 
-                    for (int i = 0; i < jeu.getEnnemisList().size(); i++) {
-                        if (tresor.estPasDetruit()){
-                            // Infliger des dégâts au trésor
-                            if (ennemiProche(jeu.getEnnemisList().get(i))){
-                                if ((temps%20)==0){
-                                    System.out.println("temps:" + temps);
-                                    jeu.getEnnemisList().get(i).attaque(this.tresor);
-                                    labelVieTresor.setText("vie: " + String.valueOf(this.tresor.getPv()));
-                                }
+
+        KeyFrame kf = new KeyFrame(
+            // on définit le FPS (nbre de frame par seconde)
+            Duration.seconds(0.017),
+            // on définit ce qui se passe à chaque frame
+            // c'est un eventHandler d'ou le lambda
+            (ev ->{
+
+                for (int i = 0; i < jeu.getEnnemisList().size(); i++) {
+                    if (tresor.estPasDetruit()){
+                        // Infliger des dégâts au trésor
+                        if (ennemiProche(jeu.getEnnemisList().get(i))){
+                            if ((temps%20)==0){
+                                System.out.println("temps:" + temps);
+                                jeu.getEnnemisList().get(i).attaque(this.tresor);
+                                labelVieTresor.setText("vie: " + String.valueOf(this.tresor.getPv()));
                             }
                         }
                     }
+                }
 
-
+                if (tresor.estPasDetruit()) {
                     jeu.untour();
                     temps++;
+                } else {
+                    borderPane.setTop(loosePane.getLoosePane());
+                }
 
-                    })
-            );
-            gameLoop.getKeyFrames().add(kf);
-
-        //}
-
-
+            })
+        );
+        gameLoop.getKeyFrames().add(kf);
     }
 
     public boolean ennemiProche(Ennemis ennemis){
@@ -186,8 +202,6 @@ public class Controller implements Initializable {
                 paneCentral.removeEventHandler(MouseEvent.MOUSE_CLICKED, controleurAjoutDefense);
             }
 
-            System.out.println("Bouton cliqué !");
-
             String buttonId = ((Button) event.getSource()).getId();
 
             // Ajout de la vue
@@ -198,6 +212,23 @@ public class Controller implements Initializable {
             // Lorsque qu'on clique sur la map on laisse la position au clique
             controleurAjoutDefense = new ControleurAjoutDefense(ajoutDefense.getDefense(), porteMonnaie, jeu, paneCentral);
             paneCentral.addEventHandler(MouseEvent.MOUSE_CLICKED, controleurAjoutDefense);
+        }
+    }
+
+    @FXML
+    public void showScopeDefenses() {
+        if (showScopeDefenses.isSelected()) {
+            // Le bouton est activé
+            for (DefenseActor defense : this.jeu.getDefenseList()) {
+                Circle portee = new Circle(defense.getMiddlePostionX(), defense.getMiddlePostionY(), defense.getPorteeDegats(), Color.rgb(0, 0, 0, 0.5));
+                this.paneCentral.getChildren().add(2, portee);
+                circleScopeList.add(portee);
+            }
+        } else {
+            // Le bouton est désactivé
+            for(Circle circle : this.circleScopeList) {
+                this.paneCentral.getChildren().remove(circle);
+            }
         }
     }
 

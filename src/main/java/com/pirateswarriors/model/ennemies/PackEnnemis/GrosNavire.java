@@ -6,15 +6,14 @@ import com.pirateswarriors.view.EnnemiVue;
 import javafx.scene.image.Image;
 
 public class GrosNavire extends Ennemis {
-//    public GrosNavire(int x, int y, int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, Image image) {
-////        super(x, y, 2, env, 400, 100, 80, 150, image);
-//    }
 
-    public GrosNavire(int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, Image image) {
-        super(vitesse, env, pts_vie, pts_score, pts_pièces, pts_attaque, image);
+
+    //Sous class d'Ennemis, GrosNavire
+    public GrosNavire(Environnement env) {
+        super(1, env, 8000, 500, 500, 500, 6);// Super de toutes les données d'Ennemis
+                                                                                             // avec ses points de vie, son image, etc...
+        setPositionX(getPositionX()-64); // Calibrage par rapport au chemin sur la map
+
     }
 
-    public void tire(){
-        //Si la barque se trouve à ... pixels de distance du trésor, elle s'arrète et lui tire dessus
-    }
 }
