@@ -6,6 +6,7 @@ import com.pirateswarriors.model.ennemies.CarteModele;
 import com.pirateswarriors.model.ennemies.Ennemis;
 import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
 import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
+import com.pirateswarriors.view.map.Carte;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
@@ -32,7 +33,7 @@ public class Environnement {
     private PorteMonnaie porteMonnaie;
     private ControllerViewChoixMap controllerViewChoixMap;
 
-    public Environnement(Pane paneCentral, PorteMonnaie porteMonnaie) {
+    public Environnement(Carte carte, Pane paneCentral, PorteMonnaie porteMonnaie) {
         this.porteMonnaie = porteMonnaie;
         this.porteMonnaie.setNb(9000);
         this.paneCentral = paneCentral;

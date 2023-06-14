@@ -52,7 +52,7 @@ public class Controller implements Initializable {
     private EnnemiVue personnageVue2;
     private Tresor tresor;
     private TresorVue tresorVue;
-    private Carte carte_1;
+    private Carte carte;
     private Timeline gameLoop;
     private int temps;
     private PorteMonnaie porteMonnaie;
@@ -161,23 +161,23 @@ public class Controller implements Initializable {
         }
     }
 
-//    public void creerMap(){
-//        int carte = ControllerViewChoixMap.getMap();
-//        if (carte == 1){
-//            this.carte = new CarteModele("map1.csv");
-//        }
-//        else if (carte == 2){
-//            this.carte = new CarteModele("map2.csv");
-//        }
-//        else if (carte == 3){
-//            this.carte = new CarteModele("map3.csv");
-//        }
-//    }
-//
-//    public void creationMap(){
-//        creerMap();
-//        this.jeu = new Environnement(carte, paneCentral, porteMonnaie);
-//    }
+    public void creerMap(){
+        int carte = ControllerViewChoixMap.getMap();
+        if (carte == 1){
+            this.carte = new Carte_1(tilePane);
+        }
+        else if (carte == 2){
+            this.carte = new Carte_2(tilePane);
+        }
+        else if (carte == 3){
+            this.carte = new Carte_3(tilePane);
+        }
+    }
+
+    public void creationMap(){
+        creerMap();
+        this.jeu = new Environnement(carte, paneCentral, porteMonnaie);
+    }
 
     @FXML
     public void ajoutDefense(ActionEvent event) {
