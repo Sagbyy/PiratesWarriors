@@ -8,6 +8,10 @@
     -fx-background-image: url("images/defenseMenu/woodWallpaper.jpg");
 }
 
+.rightMenu {
+    -fx-background-image: url("images/defenseMenu/wallpaperSheet.png");
+}
+
 .buttonDefense {
     -fx-background-image: url("images/defenseMenu/backgroundButton.jpg");
     -fx-background-size: 175px;
@@ -26,4 +30,40 @@
 
 .hovered {
     -fx-background-color: #f00;
+}
+
+.loosePane {
+    -fx-background-image: url("images/backgroundLoose.png"); /* Couleur de la barre de progression */
+}
+
+.button {
+    -fx-background-color: #362513;
+    -fx-background-radius: 8px;
+    -fx-border-color: transparent;
+    -fx-box-shadow: rgba(51, 32, 11, .15) 0 4px 9px;
+    -fx-text-fill: #fff;
+    -fx-start-margin: 15px;
+    -fx-cursor: hand;
+    -fx-font-family: "Inter", -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 16px;
+    -fx-font-weight: 600;
+    -fx-letter-spacing: normal;
+    -fx-line-spacing: 1.5;
+    -fx-padding: 13px 20px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-transition-duration: 0.3s;
+}
+
+.button:hover {
+    -fx-background-color: #211508;
+    -fx-opacity: 1;
+    -fx-translate-y: 0;
+    -fx-transition-duration: 0.35s;
+    -fx-box-shadow: rgba(33, 21, 8, .2) 0 6px 12px;
+}
+
+.button:pressed {
+    -fx-translate-y: 2px;
+    -fx-transition-duration: 0.35s;
 }
