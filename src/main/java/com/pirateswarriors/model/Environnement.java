@@ -7,6 +7,9 @@ import com.pirateswarriors.model.ennemies.Ennemis;
 import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
 import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
 import com.pirateswarriors.view.map.Carte;
+import com.pirateswarriors.view.map.Carte_1;
+import com.pirateswarriors.view.map.Carte_2;
+import com.pirateswarriors.view.map.Carte_3;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
@@ -24,7 +27,7 @@ public class Environnement {
     private ObservableList<Ennemis> ennemisList;
     private ArrayList<Ennemis> ennemisBack;
 
-    CarteModele carte;
+    private CarteModele carte;
     private IntegerProperty nbVague;
     private IntegerProperty nbScore;
     private IntegerProperty nbArgent;
@@ -32,10 +35,11 @@ public class Environnement {
     private Pane paneCentral;
     private PorteMonnaie porteMonnaie;
     private ControllerViewChoixMap controllerViewChoixMap;
+    private String map;
 
     public Environnement(Carte carte, Pane paneCentral, PorteMonnaie porteMonnaie) {
         this.porteMonnaie = porteMonnaie;
-        this.porteMonnaie.setNb(9000);
+        //this.porteMonnaie.setNb(9000);
         this.paneCentral = paneCentral;
         this.nbVague = new SimpleIntegerProperty(0);
         this.nbScore = new SimpleIntegerProperty(0);
@@ -44,8 +48,26 @@ public class Environnement {
         this.defenseList = new ArrayList<>();
         this.ennemisBack = new ArrayList<>();
         this.nbEnnemis = 0;
-        this.carte = new CarteModele("map1.csv");
-        //this.carte = new CarteModele(controllerViewChoixMap.getNomMap());
+        this.map = SelectionMap();;
+        this.carte = new CarteModele(map);
+
+    }
+
+
+
+
+    private String SelectionMap(){
+        int carte = ControllerViewChoixMap.getMap();
+        if (carte == 1){
+            map = "map1.csv";
+        }
+        else if (carte == 2){
+            map = "map2.csv";
+        }
+        else if (carte == 3){
+            map = "map3.csv";
+        }
+        return map;
     }
 
     public PorteMonnaie getPorteMonnaie() {
@@ -82,6 +104,9 @@ public class Environnement {
         return this.defenseList;
     }
 
+    public String getMap(){
+        return this.map;
+    }
 
     public int getNbEnnemis() {
         return nbEnnemis;

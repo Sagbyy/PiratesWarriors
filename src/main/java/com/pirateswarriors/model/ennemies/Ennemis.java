@@ -91,16 +91,39 @@ public class Ennemis {
     public Couple apparition(){
         Couple c = null;
 
-        int rand = (int) (Math.random() * 2) + 1;
-        if (rand == 1) {
-             c = new Couple(3, 24);
+
+        if(env.getMap().equals("map1.csv")){
+            int rand = (int) (Math.random() * 2) + 1;
+            if (rand == 1) {
+                c = new Couple(3, 24);
+            }
+            else if (rand == 2) {
+                c = new Couple(11, 22);
+                setPositionX(getPositionX()-128);
+                setPositionY(getPositionY()+512);
+            }
         }
-        if (rand == 2) {
-             c = new Couple(11, 22);
-            setPositionX(getPositionX()-128);
-            setPositionY(getPositionY()+512);
+
+        else if (env.getMap().equals("map2.csv")){
+            int rand = (int) (Math.random() * 3) + 1;
+            if (rand == 1) {
+                c = new Couple(4, 24);
+                setPositionY(getPositionY()+64);
+            }
+            else if (rand == 2) {
+                c = new Couple(11, 11);
+                setPositionX(getPositionX()-832);
+                setPositionY(getPositionY()+512);
+            }
+            else if (rand == 3) {
+                c = new Couple(11, 15);
+                setPositionX(getPositionX()-576);
+                setPositionY(getPositionY()+512);
+                System.out.println(getChemin()+"OOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+            }
         }
-       return c;
+
+        return c;
     }
 
 

@@ -75,9 +75,9 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        this.carte_1 = new Carte_1(tilePane);
+        //this.carte = new Carte_1(tilePane);
 
-        //creationMap();
+        creationMap();
 
         this.tresor = new Tresor(2000);
         this.tresorVue = new TresorVue(tresor);

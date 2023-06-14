@@ -51,12 +51,13 @@ public class ControllerViewChoixMap {
     }
     @FXML
     private void jouer(ActionEvent event){
-        this.map = choixMap();
         try {
+            this.map = choixMap();
             fxmlLoader = new FXMLLoader(Main.class.getResource("view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
+            Scene scene = new Scene(fxmlLoader.load());
             stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             stage.setScene(scene);
+
             stage.show();
 
         } catch (IOException e) {
