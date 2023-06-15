@@ -53,7 +53,7 @@ public class AjoutDefense {
                 }
                 case "defense4" -> {
                     imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/cannon.png"))));
-                    this.defense = new CannonDefense(50, 15, 10000,imageShip, paneCentral, env);
+                    this.defense = new CannonDefense(50, 15, 1,imageShip, paneCentral, env);
                 }
                 case "defense5" -> {
                     imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/soldierKnife.png"))));

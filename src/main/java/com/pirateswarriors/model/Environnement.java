@@ -122,35 +122,38 @@ public class Environnement {
         this.nbVague.set(nbVague);
     }
     boolean go = true;
+    int time = 0;
     public void untour() {
-        if (ennemisList.size() == 0 && go == true) {
-            this.nbEnnemis += 10;
-            vague();
-            this.nbVague.set(getNbVague() + 1);
-            if(getNbVague()%2 == 0 && vag<5){
-                vag++;
+        time++;
+        if(time%1==0) {
+            if (ennemisList.size() == 0 && go == true) {
+                this.nbEnnemis += 10;
+                vague();
+                this.nbVague.set(getNbVague() + 1);
+                if (getNbVague() % 2 == 0 && vag < 5) {
+                    vag++;
+                }
+            } else if (!go) {
+
+                vague();
             }
-        } else if (!go) {
+            sontMorts();
+            tousAvancent();
 
-            vague();
-        }
-        sontMorts();
-        tousAvancent();
-
-        Iterator<Ennemis> ennemisIterator = ennemisList.iterator();
-        while (ennemisIterator.hasNext()) {
-            Ennemis ennemies = ennemisIterator.next();
-            EnnemiVue ennemiVue = new EnnemiVue(ennemies);
+            Iterator<Ennemis> ennemisIterator = ennemisList.iterator();
+            while (ennemisIterator.hasNext()) {
+                Ennemis ennemies = ennemisIterator.next();
+                EnnemiVue ennemiVue = new EnnemiVue(ennemies);
 
 
-            if (ennemies.estMort()) {
-                ennemisIterator.remove();
-            } else {
-                ListIterator<DefenseActor> defenseIterator = defenseList.listIterator();
-                while (defenseIterator.hasNext()) {
-                    DefenseActor defense = defenseIterator.next();
+                if (ennemies.estMort()) {
+                    ennemisIterator.remove();
+                } else {
+                    ListIterator<DefenseActor> defenseIterator = defenseList.listIterator();
+                    while (defenseIterator.hasNext()) {
+                        DefenseActor defense = defenseIterator.next();
 
-                    defense.eachTimeDoSomething();
+                        defense.eachTimeDoSomething();
 
                         if ((defense.getPositionX() + defense.getPorteeDegats() >= ennemiVue.getMiddlePostionX() && defense.getPositionX() - defense.getPorteeDegats() <= ennemiVue.getMiddlePostionX()) && (defense.getPositionY() + defense.getPorteeDegats() >= ennemiVue.getMiddlePostionY() && defense.getPositionY() - defense.getPorteeDegats() <= ennemiVue.getMiddlePostionY())) {
                             defense.attaque(ennemies, ennemiVue);
@@ -158,17 +161,19 @@ public class Environnement {
                             // Si il ne tire pas
                             if (!defense.ifHasBullet()) {
                                 if (ennemies.estMort()) {
-                                    this.paneCentral.getChildren().remove(this.paneCentral.lookup("#"+ennemies.getId()));
+                                    this.paneCentral.getChildren().remove(this.paneCentral.lookup("#" + ennemies.getId()));
                                 }
                             }
                         }
 
-                    if (defense.getPv() <= 0) {
-                        defenseIterator.remove();
+                        if (defense.getPv() <= 0) {
+                            defenseIterator.remove();
+                        }
                     }
                 }
             }
         }
+
 
     }
 

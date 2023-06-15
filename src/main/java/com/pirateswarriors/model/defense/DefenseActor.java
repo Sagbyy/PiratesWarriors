@@ -167,7 +167,7 @@ public class DefenseActor {
         if (currentTime - lastExecutionTime >= this.delayMS) { // Vérifier si deux secondes se sont écoulées
             if (ifHasBullet) {
                 // Création de l'animation de déplacement de la balle
-                pane.getChildren().add(bullet);
+                //pane.getChildren().add(bullet);
                 TranslateTransition transition = new TranslateTransition(Duration.seconds(1), this.bullet);
                 transition.setDuration(Duration.seconds(0.5));
                 transition.setFromX(this.positionXProperty().getValue());
