@@ -28,9 +28,8 @@ public abstract class Carte {
     // Nombre de colonne de la map
     public final int COLUMNS_MAP = 25;
 
-    public Carte(TilePane tilePane, String fileCsvName) {
+    public Carte(TilePane tilePane) {
         this.tilePane = tilePane;
-        this.genererMap(fileCsvName);
     }
 
     public void genererMap(String fileCsvName) {

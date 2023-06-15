@@ -6,33 +6,27 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: green;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pirateswarriors.controller.ControllerViewAcceuil">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pirateswarriors.controller.ControllerViewAcceuil">
    <center>
-      <Button fx:id="buttonStart" mnemonicParsing="false" prefHeight="155.0" prefWidth="289.0" style="-fx-background-color: yellow;" BorderPane.alignment="CENTER" onAction="#afficherView2">
-         <graphic>
-            <ImageView fx:id="but" fitHeight="159.0" fitWidth="286.0" pickOnBounds="true" preserveRatio="true">
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="407.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@images/Buttons/play.png" />
+                  <Image url="@images/imgAcceuil.jpg" />
                </image>
             </ImageView>
-         </graphic>
-      </Button>
-   </center>
-   <top>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="62.0" prefWidth="642.0" text="Pirates Warriors" textFill="WHITE" BorderPane.alignment="CENTER">
-         <font>
-            <Font name="System Bold" size="25.0" />
-         </font>
-      </Label>
-   </top>
-   <bottom>
-      <HBox prefHeight="59.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button mnemonicParsing="false" prefHeight="49.0" prefWidth="82.0" style="-fx-background-color: orange;">
+            <Button fx:id="buttonStart" alignment="CENTER" contentDisplay="CENTER" layoutX="464.0" layoutY="297.0" mnemonicParsing="false" onAction="#afficherView2" prefHeight="46.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: grey; -fx-border-radius: 20;" text="Play" textFill="#b5b4b4">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <HBox prefHeight="0.0" prefWidth="600.0" />
+            <Button layoutY="342.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="75.0" style="-fx-background-color: black;">
                <graphic>
-                  <ImageView fitHeight="53.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="21.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/Buttons/exit.png" />
                      </image>
@@ -40,6 +34,13 @@
                </graphic>
             </Button>
          </children>
-      </HBox>
-   </bottom>
+      </Pane>
+   </center>
+   <top>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="0.0" prefWidth="600.0" text="Pirates Warriors" textFill="WHITE" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
+   </top>
 </BorderPane>
