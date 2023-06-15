@@ -41,7 +41,7 @@ public class Environnement {
 
     public Environnement(Carte carte, Pane paneCentral, PorteMonnaie porteMonnaie) {
         this.porteMonnaie = porteMonnaie;
-        //this.porteMonnaie.setNb(9000);
+        this.porteMonnaie.setNb(9000);
         this.paneCentral = paneCentral;
         this.nbVague = new SimpleIntegerProperty(0);
         this.nbScore = new SimpleIntegerProperty(0);

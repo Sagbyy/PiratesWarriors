@@ -88,7 +88,7 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
 
-        creationMap();
+
 
         this.tresor = new Tresor(2000);
         this.tresorVue = new TresorVue(tresor);
@@ -96,7 +96,7 @@ public class Controller implements Initializable {
         this.porteMonnaie = new PorteMonnaie();
         this.porteMonnaieVue = new PorteMonnaieVue(porteMonnaie);
 
-
+        creationMap();
 
         nbPieces.textProperty().bind(porteMonnaie.nbProperty().asString());
         labelVieTresor.setText("vie: " + String.valueOf(tresor.getPv()));
@@ -193,7 +193,7 @@ public class Controller implements Initializable {
 
     public void creationMap(){
         creerMap();
-        this.jeu = new Environnement(carte, paneCentral, porteMonnaie);
+        this.jeu = new Environnement(this.carte, this.paneCentral, this.porteMonnaie);
     }
 
     @FXML
