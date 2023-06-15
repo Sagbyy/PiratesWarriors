@@ -165,7 +165,6 @@ public class Controller implements Initializable {
 
         // Calcul de la distance entre l'ennemi et le trésor
         double distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-        System.out.println("distance: "+ distance);
         double maxDistance = 449;
         if (distance <= maxDistance) {
             return true;
