@@ -71,7 +71,7 @@ public class Environnement {
         }
     }
 
-    private String SelectionMap(){
+    public String SelectionMap(){
         int carte = ControllerViewChoixMap.getMap();
         if (carte == 1){
             map = "map1.csv";

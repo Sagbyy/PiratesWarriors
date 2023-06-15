@@ -4,6 +4,7 @@ module com.pirateswarriors.pirateswarriors {
     requires javafx.controls;
     requires java.desktop;
     requires javafx.media;
+    requires junit;
 
 
     opens com.pirateswarriors to javafx.fxml;
