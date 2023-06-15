@@ -58,8 +58,6 @@ public class Controller implements Initializable {
     private Ennemis ennemis2;
     private EnnemiVue personnageVue;
     private EnnemiVue personnageVue2;
-    private Tresor tresor;
-    private TresorVue tresorVue;
     private Carte carte;
     private Timeline gameLoop;
     private int temps;
@@ -82,20 +80,11 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-
-
-
-        this.tresor = new Tresor(2000);
-        this.tresorVue = new TresorVue(tresor);
-
         this.porteMonnaie = new PorteMonnaie();
         this.porteMonnaieVue = new PorteMonnaieVue(porteMonnaie);
-
         creationMap();
-
         nbPieces.textProperty().bind(porteMonnaie.nbProperty().asString());
-        labelVieTresor.setText("vie: " + String.valueOf(tresor.getPv()));
+        labelVieTresor.setText("vie: " + String.valueOf(jeu.getTresor().getPv()));
 
         //this.jeu = new Environnement(carte, paneCentral, porteMonnaie);
         nbVagues.textProperty().bind(jeu.getNbVaguesProperty().asString());
@@ -135,19 +124,19 @@ public class Controller implements Initializable {
             (ev ->{
 
                 for (int i = 0; i < jeu.getEnnemisList().size(); i++) {
-                    if (tresor.estPasDetruit()){
+                    if (jeu.getTresor().estPasDetruit()){
                         // Infliger des dégâts au trésor
-                        if (ennemiProche(jeu.getEnnemisList().get(i))){
+                        if (jeu.ennemiProche(jeu.getEnnemisList().get(i))){
                             if ((temps%20)==0){
                                 System.out.println("temps:" + temps);
-                                jeu.getEnnemisList().get(i).attaque(this.tresor);
-                                labelVieTresor.setText("vie: " + String.valueOf(this.tresor.getPv()));
+                                jeu.getEnnemisList().get(i).attaque(jeu.getTresor());
+                                labelVieTresor.setText("vie: " + String.valueOf(jeu.getTresor().getPv()));
                             }
                         }
                     }
                 }
 
-                if (tresor.estPasDetruit()) {
+                if (jeu.getTresor().estPasDetruit()) {
                     jeu.untour();
                     temps++;
                 } else {
@@ -157,20 +146,6 @@ public class Controller implements Initializable {
             })
         );
         gameLoop.getKeyFrames().add(kf);
-    }
-
-    public boolean ennemiProche(Ennemis ennemis){
-        double distanceX = Math.abs(ennemis.getPositionX() - imgTresor.getX());
-        double distanceY = Math.abs(ennemis.getPositionY() - imgTresor.getY());
-
-        // Calcul de la distance entre l'ennemi et le trésor
-        double distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-        double maxDistance = 449;
-        if (distance <= maxDistance) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     public void creerMap(){

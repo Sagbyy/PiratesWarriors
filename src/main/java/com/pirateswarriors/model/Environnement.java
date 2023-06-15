@@ -6,6 +6,7 @@ import com.pirateswarriors.model.Ennemis.CarteModele;
 import com.pirateswarriors.model.Ennemis.Ennemis;
 import com.pirateswarriors.model.Ennemis.PackEnnemis.BarqueCanon;
 import com.pirateswarriors.model.Ennemis.PackEnnemis.PirateFusil;
+import com.pirateswarriors.view.TresorVue;
 import com.pirateswarriors.view.map.Carte;
 import com.pirateswarriors.model.Ennemis.PackEnnemis.*;
 import com.pirateswarriors.view.EnnemiVue;
@@ -35,11 +36,15 @@ public class Environnement {
     private PorteMonnaie porteMonnaie;
     private ControllerViewChoixMap controllerViewChoixMap;
     private String map;
+    private Tresor tresor;
+    private TresorVue tresorVue;
 
     public Environnement(Carte carte, Pane paneCentral, PorteMonnaie porteMonnaie) {
         this.porteMonnaie = porteMonnaie;
         this.porteMonnaie.setNb(9000);
         this.paneCentral = paneCentral;
+        this.tresor = new Tresor(2000);
+        this.tresorVue = new TresorVue(tresor);
         this.nbVague = new SimpleIntegerProperty(0);
         this.nbScore = new SimpleIntegerProperty(0);
         this.nbArgent = new SimpleIntegerProperty(0);
@@ -52,8 +57,19 @@ public class Environnement {
 
     }
 
+    public boolean ennemiProche(Ennemis ennemis){
+        double distanceX = Math.abs(ennemis.getPositionX() - tresorVue.getImgTresor().getX());
+        double distanceY = Math.abs(ennemis.getPositionY() - tresorVue.getImgTresor().getY());
 
-
+        // Calcul de la distance entre l'ennemi et le trésor
+        double distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+        double maxDistance = 449;
+        if (distance <= maxDistance) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     private String SelectionMap(){
         int carte = ControllerViewChoixMap.getMap();
@@ -69,13 +85,12 @@ public class Environnement {
         return map;
     }
 
+    public Tresor getTresor(){
+        return this.tresor;
+    }
     public PorteMonnaie getPorteMonnaie() {
         return this.porteMonnaie;
     }
-
-//    public CarteModele getCarte(){
-//        return this.carte;
-//    }
     public Pane getPaneCentral() {
         return this.paneCentral;
     }
