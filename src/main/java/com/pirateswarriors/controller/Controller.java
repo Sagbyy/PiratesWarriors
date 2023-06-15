@@ -1,15 +1,12 @@
 package com.pirateswarriors.controller;
 
 import com.pirateswarriors.model.Environnement;
-import com.pirateswarriors.model.ennemies.CarteModele;
 import com.pirateswarriors.model.defense.DefenseActor;
-import com.pirateswarriors.model.ennemies.Ennemis;
+import com.pirateswarriors.model.Ennemis.Ennemis;
 import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.Tresor;
-import com.pirateswarriors.model.ennemies.ObservateurEnnemis;
+import com.pirateswarriors.model.Ennemis.ObservateurEnnemis;
 import com.pirateswarriors.view.EnnemiVue;
-import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
-import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
 import com.pirateswarriors.view.LoosePane;
 import com.pirateswarriors.view.PorteMonnaieVue;
 import com.pirateswarriors.view.TresorVue;
@@ -33,7 +30,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;

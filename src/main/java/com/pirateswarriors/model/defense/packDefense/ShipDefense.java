@@ -2,7 +2,6 @@ package com.pirateswarriors.model.defense.packDefense;
 
 import com.pirateswarriors.model.Environnement;
 import com.pirateswarriors.model.defense.DefenseActor;
-import com.pirateswarriors.model.ennemies.Ennemis;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 

@@ -1,7 +1,7 @@
 package com.pirateswarriors.model.defense;
 
 import com.pirateswarriors.model.Environnement;
-import com.pirateswarriors.model.ennemies.Ennemis;
+import com.pirateswarriors.model.Ennemis.Ennemis;
 import com.pirateswarriors.view.EnnemiVue;
 import javafx.animation.TranslateTransition;
 import javafx.beans.binding.Bindings;

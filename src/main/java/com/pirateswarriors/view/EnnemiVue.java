@@ -1,72 +1,60 @@
 package com.pirateswarriors.view;
 
 
-import com.pirateswarriors.model.ennemies.Ennemis;
+import com.pirateswarriors.model.Ennemis.Ennemis;
+import com.pirateswarriors.model.Ennemis.PackEnnemis.*;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-
 public class EnnemiVue {
 
     private ImageView imageEnnemi;
     private Image image;
-    private Label labelPv;
-    private Pane paneCentrale;
     private Ennemis ennemis;
 
+    /**
+     * Constructeur de la classe EnnemiVue
+     */
     public EnnemiVue(Ennemis ennemi) {
         this.ennemis = ennemi;
-        if(ennemi.getImage() == 1){
+
+        /**
+         * Détermine l'image à associer à l'ennemi selon son type
+         */
+        if(ennemi instanceof PirateFusil){
             this.image = new Image("piratefusil.png") ;
         }
-        else if(ennemi.getImage() == 2){
+        else if(ennemi instanceof EmbarcationFortune){
             this.image = new Image("Embarcationfortune.png") ;
         }
-        else if(ennemi.getImage() == 3){
+        else if(ennemi instanceof BarqueCanon){
             this.image = new Image("barquecanon.png") ;
         }
-        else if(ennemi.getImage() == 4){
+        else if(ennemi instanceof GrosPirate){
             this.image = new Image("grospirate.png") ;
         }
-        else if(ennemi.getImage() == 5){
+        else if(ennemi instanceof Voleur){
             this.image = new Image("Voleur.png") ;
         }
-        else if(ennemi.getImage() == 6){
+        else if(ennemi instanceof GrosNavire){
             this.image = new Image("grosnavire.png") ;
         }
 
         this.imageEnnemi = new ImageView(image);
-        this.imageEnnemi.setId(ennemi.getId());
-
-        //imageBateau.setImage(image);
-
-        this.labelPv = new Label("PV : " + ennemi.getPts_vie());
-        ennemi.getPts_vieProperty().addListener((obs, old, nouv) -> {
-            this.labelPv.setText("PV : " + nouv);
-        });
-        ennemi.positionXProperty().addListener((obs, old, nouv) -> {
-            this.labelPv.setLayoutX((Double) nouv + 15);
-        });
-        ennemi.positionYProperty().addListener((obs, old, nouv) -> {
-            this.labelPv.setLayoutY((Double) nouv);
-        });
+        this.imageEnnemi.setId(ennemi.getId()); // Attribut l'iD de l'ennemi à son image
     }
 
+
+    /**
+     *Getter et Setter
+     */
     public ImageView getImageBateau() {
         return imageEnnemi;
     }
-
-    public double getMiddlePostionX() {
-        return this.ennemis.getPositionX() + this.image.getWidth() / 2;
-    }
-
+    public double getMiddlePostionX() {return this.ennemis.getPositionX() + this.image.getWidth() / 2;}
     public double getMiddlePostionY() {
         return this.ennemis.getPositionY() + this.image.getHeight() / 2;
     }
-
-
 }

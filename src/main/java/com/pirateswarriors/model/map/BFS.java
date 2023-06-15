@@ -1,19 +1,20 @@
 package com.pirateswarriors.model.map;
 
-import com.pirateswarriors.model.ennemies.CarteModele;
+import com.pirateswarriors.model.Ennemis.CarteModele;
 
 import java.util.*;
 
 public class BFS {
+
     private CarteModele g;
-
     private Couple source, objectif;
-
     private ArrayList<Couple> parcours;
-
-    private int x, y;
     private Map<Couple, Couple> predecesseurs;
 
+    /**
+     * Constructeur de la class BFS
+     *  - Prend en argument un modèle de carte et un spawn (apparition)
+     */
     public BFS(CarteModele g, Couple spawn){
         this.g = g;
         this.source = spawn ;
@@ -23,60 +24,40 @@ public class BFS {
         algoBFS();
     }
 
+    /**
+     * Méthode algoBFS()
+     *  - Parcours les routes en commençant par explorer un nœud source,
+     *  puis ses successeurs, puis les successeurs non explorés des successeurs
+     */
     private void algoBFS() {
         LinkedList<Couple> fifo = new LinkedList<>();
         Couple s = this.source;
         predecesseurs.put(s, null);
         parcours.add(s);
         fifo.add(s);
-
         while(!fifo.isEmpty()){
-            //System.out.println(predecesseurs);
             s = fifo.remove();
-            //System.out.println(fifo);
             for(Couple t : g.getadjacents(s.getX(), s.getY())){
-
-                //while(!estDedans(this.objectif, parcours)) {
-                //System.out.println("test");
-                //(g.getPosition(t.getX(), t.getY()) == 148)
-                if (!estDedans(this.objectif, parcours)){
+                if (!parcours.contains(this.objectif)){
                     if (!parcours.contains(t)) {
                         predecesseurs.put(t, s);
                         parcours.add(t);
                         fifo.add(t);
-                        //System.out.println(predecesseurs);
                     }
                 }
-                //}
             }
         }
-
-
     }
 
-    public Couple getObjectif() {
-        return objectif;
-    }
-
-    public static void main(String[] args) {
-
-        //gBfs test = new Bfs()
-    }
-
-    public boolean estDedans(Couple c, ArrayList<Couple> list){
-        for(int i = 0; i< list.size(); i++){
-            if(list.get(i) == c){
-                return true;
-            }
-        }
-        return false;
-    }
-
+    /**
+     * Méthode cheminVersSource()
+     *  - Calcule un chemin en partant de l'arrivée jusqu'a la source
+     *  - Return le chemin en une Arraylist contenant les cases
+     */
     public ArrayList<Couple> cheminVersSource() {
         ArrayList<Couple> chemin = new ArrayList<>();
         chemin.add(this.source);
         Couple courant = predecesseurs.get(this.objectif);
-
         chemin.add(courant);
         while(!courant.equals(source)){
             courant = predecesseurs.get(courant);
