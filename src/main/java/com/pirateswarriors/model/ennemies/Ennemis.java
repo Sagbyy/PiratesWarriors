@@ -105,7 +105,7 @@ public class Ennemis {
         }
 
         else if (env.getMap().equals("map2.csv")){
-            int rand = (int) (Math.random() * 3) + 1;
+            int rand = (int) (Math.random() * 2) + 1;
             if (rand == 1) {
                 c = new Couple(4, 24);
                 setPositionY(getPositionY()+64);
@@ -119,8 +119,22 @@ public class Ennemis {
                 c = new Couple(11, 15);
                 setPositionX(getPositionX()-576);
                 setPositionY(getPositionY()+512);
-                System.out.println(getChemin()+"OOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+                //System.out.println(getChemin()+"OOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
             }
+        }
+
+        if(env.getMap().equals("map3.csv")){
+            int rand = (int) (Math.random() * 2) + 1;
+            if (rand == 1) {
+                c = new Couple(5, 24);
+                setPositionY(getPositionY()+128);
+            }
+            else if (rand == 2) {
+                c = new Couple(6, 24);
+                setPositionY(getPositionY()+192);
+
+            }
+
         }
 
         return c;
