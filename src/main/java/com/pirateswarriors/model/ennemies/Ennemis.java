@@ -9,10 +9,7 @@ import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
 import com.pirateswarriors.model.map.BFS;
 import com.pirateswarriors.model.map.Couple;
 import com.pirateswarriors.view.EnnemiVue;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -29,8 +26,8 @@ public class Ennemis {
     private String id;
     private DoubleProperty x,y; // Position
     protected Environnement env;
-    protected Image image;
-    private String dir;
+    protected int image;
+    private StringProperty dir;
     private int pos;
     public static int compteur=0;
 
@@ -39,14 +36,12 @@ public class Ennemis {
     private Ennemis ennemis;
     private ImageView imgTresor;
     private EnnemiVue ennemiVue;
-
+    private CarteModele carteModele;
     ArrayList chemin;
-    CarteModele g = new CarteModele("newMap2.csv");
     com.pirateswarriors.model.map.BFS BFS ;
 
-    public Ennemis(int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, Image image, EnnemiVue ennemiVue) { // Constructeur de la class mère Ennemis
+    public Ennemis(int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, int image) { // Constructeur de la class mère Ennemis
         this.pts_vie = new SimpleIntegerProperty(pts_vie);
-        this.ennemiVue = ennemiVue;
         this.image = image;
         this.pts_score = pts_score;
         this.pts_pièces = pts_pièces;
@@ -55,61 +50,96 @@ public class Ennemis {
         this.positionY = new SimpleDoubleProperty(192);
         this.vitesse = vitesse;
         this.env = env;
-        this.dir = "";
+        this.dir = new SimpleStringProperty("");
         this.pos = 0;
         this.id = "E"+compteur;
         compteur++;
+        this.carteModele = env.getCarte() ;
+        this.BFS = new BFS(carteModele,apparition() );
         this.chemin = BFS.cheminVersSource();
-        this.BFS = new BFS(g,apparition() );
+
     }
 
 
-    public Ennemis() { // Constructeur de la class mère Ennemis
-
-        this.pts_vie = pts_vie;
-        this.image = image;
-        this.pts_score = pts_score;
-        this.pts_pièces = pts_pièces;
-        this.pts_attaque = pts_attaque;
+      public Ennemis(Environnement env) { // Constructeur de la class mère Ennemis
         this.positionX = new SimpleDoubleProperty(1536);
         this.positionY = new SimpleDoubleProperty(192);
         this.vitesse = vitesse;
         this.env = env;
-        this.BFS = new BFS(g,apparition() );
+        this.carteModele = env.getCarte() ;
+        this.BFS = new BFS(carteModele,apparition() );
         this.chemin = BFS.cheminVersSource();
         this.id = "E"+compteur;
-        this.dir = "";
+          this.dir = new SimpleStringProperty("");
         this.pos = 0;
         compteur++;
+    }
+
+    public String getDir() {
+        return dir.getValue();
     }
 
     public String getId() {
         return id;
     }
 
+    public StringProperty getDirProperty(){
+        return dir;
+    }
+
+
     public Couple apparition(){
         Couple c = null;
 
-        int rand = (int) (Math.random() * 2) + 1;
-        if (rand == 1) {
-             c = new Couple(3, 24);
+
+        if(env.getMap().equals("map1.csv")){
+            int rand = (int) (Math.random() * 2) + 1;
+            if (rand == 1) {
+                c = new Couple(3, 24);
+            }
+            else if (rand == 2) {
+                c = new Couple(11, 22);
+                setPositionX(getPositionX()-128);
+                setPositionY(getPositionY()+512);
+            }
         }
-        if (rand == 2) {
-             c = new Couple(11, 22);
-            setPositionX(getPositionX()-128);
-            setPositionY(getPositionY()+512);
+
+        else if (env.getMap().equals("map2.csv")){
+            int rand = (int) (Math.random() * 2) + 1;
+            if (rand == 1) {
+                c = new Couple(4, 24);
+                setPositionY(getPositionY()+64);
+            }
+            else if (rand == 2) {
+                c = new Couple(11, 11);
+                setPositionX(getPositionX()-832);
+                setPositionY(getPositionY()+512);
+            }
+            else if (rand == 3) {
+                c = new Couple(11, 15);
+                setPositionX(getPositionX()-576);
+                setPositionY(getPositionY()+512);
+                //System.out.println(getChemin()+"OOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+            }
         }
-       return c;
+
+        if(env.getMap().equals("map3.csv")){
+            int rand = (int) (Math.random() * 2) + 1;
+            if (rand == 1) {
+                c = new Couple(5, 24);
+                setPositionY(getPositionY()+128);
+            }
+            else if (rand == 2) {
+                c = new Couple(6, 24);
+                setPositionY(getPositionY()+192);
+
+            }
+
+        }
+
+        return c;
     }
 
-
-    public double getMiddlePostionX() {
-        return this.getPositionX() + this.getImage().getWidth() / 2;
-    }
-
-    public double getMiddlePostionY() {
-        return this.getPositionY() + this.getImage().getHeight() / 2;
-    }
 
     public boolean estMort(){ // Fonction pour verfier si l'ennemi est mort ou non
         return this.pts_vie.getValue() <= 0;
@@ -159,13 +189,10 @@ public class Ennemis {
         this.pts_vie.setValue(this.pts_vie.getValue() + n);
     }
 
-    public Image getImage(){
+    public int getImage(){
         return this.image;
     }
 
-    public void seDeplace(){
-
-    }
 
 
     public void avance(){
@@ -175,24 +202,24 @@ public class Ennemis {
                 Couple case_apres = getChemin().get(pos + 1);
 
                 if (case_apres.equals(new Couple(case_chemin.getX() - 1, case_chemin.getY()))) {
-                    dir = "b";
+                    dir.setValue("h");
                 } else if (case_apres.equals(new Couple(case_chemin.getX(), case_chemin.getY() - 1))) {
-                    dir = "g";
+                    dir.setValue("g");
                 } else if (case_apres.equals(new Couple(case_chemin.getX() + 1, case_chemin.getY()))) {
-                    dir = "h";
+                    dir.setValue("b");
                 }
                 pos++;
             }
 
-            if(dir.equals("b")){
+            if(getDir().equals("h")){
                 setPositionY(getPositionY()-this.vitesse);
             }
 
-            if(dir.equals("g")){
+            if(getDir().equals("g")){
                 setPositionX(getPositionX()-this.vitesse);
             }
 
-            if(dir.equals("h")){
+            if(getDir().equals("b")){
                 setPositionY(getPositionY()+this.vitesse);
             }
         }

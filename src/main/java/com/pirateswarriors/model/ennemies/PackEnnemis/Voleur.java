@@ -6,11 +6,11 @@ import com.pirateswarriors.view.EnnemiVue;
 import javafx.scene.image.Image;
 
 public class Voleur extends Ennemis {
-    public Voleur(int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, Image image, EnnemiVue ennemiVue) {
-        super(vitesse, env, pts_vie, pts_score, pts_pièces, pts_attaque, image, ennemiVue);
+
+    //Sous class d'Ennemis, Voleur
+    public Voleur(Environnement env) {
+        super(4, env, 1000, 20, 20, 5, 5);// Super de toutes les données d'Ennemis
+                                                                                         // avec ses points de vie, son image, etc...
     }
-//    public Voleur(int x, int y, int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque, Image image) {
-//        super(x, y, 40, env, 50, 20, 20, 15, image);
-//    }
 
 }

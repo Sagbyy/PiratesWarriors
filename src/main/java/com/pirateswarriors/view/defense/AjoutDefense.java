@@ -4,7 +4,11 @@ import com.pirateswarriors.model.Environnement;
 import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.defense.DefenseActor;
 import com.pirateswarriors.model.defense.packDefense.*;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -49,7 +53,7 @@ public class AjoutDefense {
                 }
                 case "defense4" -> {
                     imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/cannon.png"))));
-                    this.defense = new CannonDefense(50, 15, 10000,imageShip, paneCentral, env);
+                    this.defense = new CannonDefense(50, 15, 1,imageShip, paneCentral, env);
                 }
                 case "defense5" -> {
                     imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/soldierKnife.png"))));
@@ -64,6 +68,19 @@ public class AjoutDefense {
                 }
             }
             this.porteMonnaie.enleverMonnaie(500);
+
+            this.defense.positionYProperty().addListener((obs, old, nouv) -> {
+                if(!env.getCarte().isRedZone(this.defense.getPositionX(), this.defense.getPositionY())) {
+                    ColorAdjust filter = new ColorAdjust();
+                    filter.setSaturation(-1);
+                    this.defense.getImageProperty().setEffect(filter);
+                }
+                else {
+                    ColorAdjust filter = new ColorAdjust();
+                    filter.setHue(0);
+                    this.defense.getImageProperty().setEffect(filter);
+                }
+            });
 
         }
     }

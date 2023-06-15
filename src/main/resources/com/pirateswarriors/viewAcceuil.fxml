@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pirateswarriors.controller.ControllerViewAcceuil">
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="407.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/imgAcceuil.jpg" />
+               </image>
+            </ImageView>
+            <Button fx:id="buttonStart" alignment="CENTER" contentDisplay="CENTER" layoutX="464.0" layoutY="297.0" mnemonicParsing="false" onAction="#afficherView2" prefHeight="46.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: grey; -fx-border-radius: 20;" text="Play" textFill="#b5b4b4">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <HBox prefHeight="0.0" prefWidth="600.0" />
+            <Button layoutY="342.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="75.0" style="-fx-background-color: black;">
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/Buttons/exit.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </Pane>
+   </center>
+   <top>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="0.0" prefWidth="600.0" text="Pirates Warriors" textFill="WHITE" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
+   </top>
+</BorderPane>
