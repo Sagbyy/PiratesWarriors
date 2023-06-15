@@ -2,15 +2,12 @@ package com.pirateswarriors.model;
 
 import com.pirateswarriors.controller.ControllerViewChoixMap;
 import com.pirateswarriors.model.defense.DefenseActor;
-import com.pirateswarriors.model.ennemies.CarteModele;
-import com.pirateswarriors.model.ennemies.Ennemis;
-import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
-import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
+import com.pirateswarriors.model.Ennemis.CarteModele;
+import com.pirateswarriors.model.Ennemis.Ennemis;
+import com.pirateswarriors.model.Ennemis.PackEnnemis.BarqueCanon;
+import com.pirateswarriors.model.Ennemis.PackEnnemis.PirateFusil;
 import com.pirateswarriors.view.map.Carte;
-import com.pirateswarriors.view.map.Carte_1;
-import com.pirateswarriors.view.map.Carte_2;
-import com.pirateswarriors.view.map.Carte_3;
-import com.pirateswarriors.model.ennemies.PackEnnemis.*;
+import com.pirateswarriors.model.Ennemis.PackEnnemis.*;
 import com.pirateswarriors.view.EnnemiVue;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -41,7 +38,7 @@ public class Environnement {
 
     public Environnement(Carte carte, Pane paneCentral, PorteMonnaie porteMonnaie) {
         this.porteMonnaie = porteMonnaie;
-        //this.porteMonnaie.setNb(9000);
+        this.porteMonnaie.setNb(9000);
         this.paneCentral = paneCentral;
         this.nbVague = new SimpleIntegerProperty(0);
         this.nbScore = new SimpleIntegerProperty(0);
@@ -122,35 +119,38 @@ public class Environnement {
         this.nbVague.set(nbVague);
     }
     boolean go = true;
+    int time = 0;
     public void untour() {
-        if (ennemisList.size() == 0 && go == true) {
-            this.nbEnnemis += 10;
-            vague();
-            this.nbVague.set(getNbVague() + 1);
-            if(getNbVague()%2 == 0 && vag<5){
-                vag++;
+        time++;
+        if(time%1==0) {
+            if (ennemisList.size() == 0 && go == true) {
+                this.nbEnnemis += 10;
+                vague();
+                this.nbVague.set(getNbVague() + 1);
+                if (getNbVague() % 2 == 0 && vag < 5) {
+                    vag++;
+                }
+            } else if (!go) {
+
+                vague();
             }
-        } else if (!go) {
+            sontMorts();
+            tousAvancent();
 
-            vague();
-        }
-        sontMorts();
-        tousAvancent();
-
-        Iterator<Ennemis> ennemisIterator = ennemisList.iterator();
-        while (ennemisIterator.hasNext()) {
-            Ennemis ennemies = ennemisIterator.next();
-            EnnemiVue ennemiVue = new EnnemiVue(ennemies);
+            Iterator<Ennemis> ennemisIterator = ennemisList.iterator();
+            while (ennemisIterator.hasNext()) {
+                Ennemis ennemies = ennemisIterator.next();
+                EnnemiVue ennemiVue = new EnnemiVue(ennemies);
 
 
-            if (ennemies.estMort()) {
-                ennemisIterator.remove();
-            } else {
-                ListIterator<DefenseActor> defenseIterator = defenseList.listIterator();
-                while (defenseIterator.hasNext()) {
-                    DefenseActor defense = defenseIterator.next();
+                if (ennemies.estMort()) {
+                    ennemisIterator.remove();
+                } else {
+                    ListIterator<DefenseActor> defenseIterator = defenseList.listIterator();
+                    while (defenseIterator.hasNext()) {
+                        DefenseActor defense = defenseIterator.next();
 
-                    defense.eachTimeDoSomething();
+                        defense.eachTimeDoSomething();
 
                         if ((defense.getPositionX() + defense.getPorteeDegats() >= ennemiVue.getMiddlePostionX() && defense.getPositionX() - defense.getPorteeDegats() <= ennemiVue.getMiddlePostionX()) && (defense.getPositionY() + defense.getPorteeDegats() >= ennemiVue.getMiddlePostionY() && defense.getPositionY() - defense.getPorteeDegats() <= ennemiVue.getMiddlePostionY())) {
                             defense.attaque(ennemies, ennemiVue);
@@ -158,17 +158,19 @@ public class Environnement {
                             // Si il ne tire pas
                             if (!defense.ifHasBullet()) {
                                 if (ennemies.estMort()) {
-                                    this.paneCentral.getChildren().remove(this.paneCentral.lookup("#"+ennemies.getId()));
+                                    this.paneCentral.getChildren().remove(this.paneCentral.lookup("#" + ennemies.getId()));
                                 }
                             }
                         }
 
-                    if (defense.getPv() <= 0) {
-                        defenseIterator.remove();
+                        if (defense.getPv() <= 0) {
+                            defenseIterator.remove();
+                        }
                     }
                 }
             }
         }
+
 
     }
 

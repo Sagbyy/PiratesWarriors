@@ -1,15 +1,12 @@
 package com.pirateswarriors.controller;
 
 import com.pirateswarriors.model.Environnement;
-import com.pirateswarriors.model.ennemies.CarteModele;
 import com.pirateswarriors.model.defense.DefenseActor;
-import com.pirateswarriors.model.ennemies.Ennemis;
+import com.pirateswarriors.model.Ennemis.Ennemis;
 import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.Tresor;
-import com.pirateswarriors.model.ennemies.ObservateurEnnemis;
+import com.pirateswarriors.model.Ennemis.ObservateurEnnemis;
 import com.pirateswarriors.view.EnnemiVue;
-import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
-import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
 import com.pirateswarriors.view.LoosePane;
 import com.pirateswarriors.view.PorteMonnaieVue;
 import com.pirateswarriors.view.TresorVue;
@@ -33,7 +30,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -88,7 +84,7 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
 
-        creationMap();
+
 
         this.tresor = new Tresor(2000);
         this.tresorVue = new TresorVue(tresor);
@@ -96,7 +92,7 @@ public class Controller implements Initializable {
         this.porteMonnaie = new PorteMonnaie();
         this.porteMonnaieVue = new PorteMonnaieVue(porteMonnaie);
 
-
+        creationMap();
 
         nbPieces.textProperty().bind(porteMonnaie.nbProperty().asString());
         labelVieTresor.setText("vie: " + String.valueOf(tresor.getPv()));
@@ -133,7 +129,7 @@ public class Controller implements Initializable {
 
         KeyFrame kf = new KeyFrame(
             // on définit le FPS (nbre de frame par seconde)
-            Duration.seconds(0.017),
+            Duration.seconds(0.030),
             // on définit ce qui se passe à chaque frame
             // c'est un eventHandler d'ou le lambda
             (ev ->{
@@ -193,7 +189,7 @@ public class Controller implements Initializable {
 
     public void creationMap(){
         creerMap();
-        this.jeu = new Environnement(carte, paneCentral, porteMonnaie);
+        this.jeu = new Environnement(this.carte, this.paneCentral, this.porteMonnaie);
     }
 
     @FXML

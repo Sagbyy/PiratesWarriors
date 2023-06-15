@@ -1,7 +1,6 @@
 package com.pirateswarriors.model;
 
-import com.pirateswarriors.model.ennemies.Ennemis;
-import com.pirateswarriors.model.ennemies.Ennemis;
+import com.pirateswarriors.model.Ennemis.Ennemis;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 

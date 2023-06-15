@@ -1,6 +1,5 @@
-package com.pirateswarriors.model.ennemies;
+package com.pirateswarriors.model.Ennemis;
 
-import com.pirateswarriors.model.map.BFS;
 import com.pirateswarriors.model.map.Couple;
 
 import java.io.BufferedReader;
@@ -9,14 +8,6 @@ import java.io.FileReader;
 import java.util.*;
 
 public class CarteModele {
-
-
-    private int obj = 132;
-    private int route = 54;
-    private int route2 = 131;
-
-//    public static void main(String[] args) {
-//    }
 
     // Nombre de ligne de la map
     public final int ROWS_MAP = 25;
@@ -28,19 +19,23 @@ public class CarteModele {
 
     int[][] tabCarte = new int[COLUMNS_MAP][ROWS_MAP];
 
+    /**
+     * Constructeur de la class CarteModele
+     */
     public CarteModele(String fileCsv){
         this.genererMap(fileCsv);
-        this.greenZone = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 128, 129, 130, 131, 132, 133, 160, 161, 162, 163, 164, 165};
-    }
-
-    public int[][] getTabCarte() {
-        return tabCarte;
-
+        this.greenZone = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 128, 129, 130, 131, 132, 133, 160, 161, 162, 163, 164, 165, 235, 236, 237, 238, 239, 240};
     }
 
 
+
+    /**
+     * Méthode getadjacents()
+     *   - Prend en argument un i et un j correspondant à une position sur la map
+     *   - Regarde si les cases adjcentes sont des cases disponible pour etre parcourus
+     *   - Return un Set des adjacents disponibles
+     */
     public Set<Couple> getadjacents(int i, int j){
-        //System.out.println(tabCarte[i][j]);
         Set<Couple> ads = new HashSet<Couple>(4);
         if((i+1) != COLUMNS_MAP) {
             Couple h = new Couple(i + 1, j);
@@ -87,13 +82,15 @@ public class CarteModele {
 
     }
 
+    /**
+     * Méthode genererMap(String fileCsvName)
+     *   - Prend en argument un String qui correspondra à un fichier CSV
+     *   - Parcours le CSV et en fait un tableau à double dimension
+     */
     public void genererMap(String fileCsvName) {
-
         try {
             // Overture du fichier CSV
             BufferedReader file = new BufferedReader(new FileReader("assets/MapCSV/" + fileCsvName));
-
-
 
             // Boucle pour parcourir chaque ligne
             Scanner scanner = new Scanner(file);
@@ -112,16 +109,11 @@ public class CarteModele {
                 }
                 i++;
             }
-
             this.tabCarte = tabValues;
             // Ferme le scanner
             scanner.close();
         } catch (FileNotFoundException e) {
             System.out.println("Le fichier n'a pas été trouvée");
         }
-
-
     }
-
-
 }
