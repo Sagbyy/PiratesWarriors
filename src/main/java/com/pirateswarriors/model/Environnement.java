@@ -2,7 +2,7 @@ package com.pirateswarriors.model;
 
 import com.pirateswarriors.controller.ControllerViewChoixMap;
 import com.pirateswarriors.model.defense.DefenseActor;
-import com.pirateswarriors.model.Ennemis.CarteModele;
+import com.pirateswarriors.model.map.CarteModele;
 import com.pirateswarriors.model.Ennemis.Ennemis;
 import com.pirateswarriors.model.Ennemis.PackEnnemis.BarqueCanon;
 import com.pirateswarriors.model.Ennemis.PackEnnemis.PirateFusil;

@@ -4,6 +4,7 @@ package com.pirateswarriors.model.Ennemis;
 import com.pirateswarriors.model.Tresor;
 import com.pirateswarriors.model.Environnement;
 import com.pirateswarriors.model.map.BFS;
+import com.pirateswarriors.model.map.CarteModele;
 import com.pirateswarriors.model.map.Couple;
 import javafx.beans.property.*;
 
@@ -20,8 +21,8 @@ public class Ennemis {
     private StringProperty dir;
     public static int compteur=0;
     private CarteModele carteModele;
-    ArrayList chemin;
-    com.pirateswarriors.model.map.BFS BFS ;
+    private ArrayList chemin;
+    private com.pirateswarriors.model.map.BFS BFS ;
 
     /**
      *Constructeur de la classe Mère "Ennemis"

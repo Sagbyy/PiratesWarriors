@@ -1,4 +1,4 @@
-package com.pirateswarriors.model.Ennemis;
+package com.pirateswarriors.model.map;
 
 import com.pirateswarriors.model.map.Couple;
 
@@ -79,7 +79,6 @@ public class CarteModele {
             }
         }
         return false;
-
     }
 
     /**
