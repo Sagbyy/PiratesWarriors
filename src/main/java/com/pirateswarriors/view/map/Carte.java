@@ -1,14 +1,14 @@
 package com.pirateswarriors.view.map;
 
 import javafx.geometry.Rectangle2D;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -23,11 +23,10 @@ public abstract class Carte {
     public final int ROWS_MAP = 12;
 
     // Nombre de colonne de la map
-    public final int COLUMNS_MAP = 20;
+    public final int COLUMNS_MAP = 25;
 
-    public Carte(TilePane tilePane, String fileCsvName) {
+    public Carte(TilePane tilePane) {
         this.tilePane = tilePane;
-        this.genererMap(fileCsvName);
     }
 
     public void genererMap(String fileCsvName) {
@@ -37,7 +36,7 @@ public abstract class Carte {
 
         try {
             // Overture du fichier CSV
-            BufferedReader file = new BufferedReader(new FileReader("assets/MapCSV/" + fileCsvName));
+            BufferedReader file = new BufferedReader(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/MapCSV/" + fileCsvName))));
 
             // Récuperation de l'image tileset
             Image tileSet = new Image(Objects.requireNonNull(getClass().getResource("tiles_sheet@2.png")).openStream());
@@ -87,5 +86,15 @@ public abstract class Carte {
         int y = Integer.parseInt(value) - 32 * x;
 
         tile.setViewport(new Rectangle2D(y * TILE_SIZE, x * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+
+        ColorAdjust filter = new ColorAdjust();
+        filter.setSaturation(-1);
+
+        tile.setOnMouseEntered(event -> tile.setEffect(filter));
+
+        ColorAdjust originalFilter = new ColorAdjust();
+        originalFilter.setSaturation(0);
+
+        tile.setOnMouseExited(event -> tile.setEffect(originalFilter));
     }
 }
