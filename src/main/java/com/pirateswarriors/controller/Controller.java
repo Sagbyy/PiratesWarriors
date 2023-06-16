@@ -139,7 +139,6 @@ public class Controller implements Initializable {
                         // Infliger des dégâts au trésor
                         if (ennemiProche(jeu.getEnnemisList().get(i))){
                             if ((temps%20)==0){
-                                System.out.println("temps:" + temps);
                                 jeu.getEnnemisList().get(i).attaque(this.tresor);
                                 labelVieTresor.setText("vie: " + String.valueOf(this.tresor.getPv()));
                             }
@@ -165,7 +164,6 @@ public class Controller implements Initializable {
 
         // Calcul de la distance entre l'ennemi et le trésor
         double distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-        System.out.println("distance: "+ distance);
         double maxDistance = 449;
         if (distance <= maxDistance) {
             return true;
