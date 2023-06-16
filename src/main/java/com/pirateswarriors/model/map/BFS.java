@@ -1,7 +1,5 @@
 package com.pirateswarriors.model.map;
 
-import com.pirateswarriors.model.Ennemis.CarteModele;
-
 import java.util.*;
 
 public class BFS {

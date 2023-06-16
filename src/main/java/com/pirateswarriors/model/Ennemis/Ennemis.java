@@ -4,6 +4,7 @@ package com.pirateswarriors.model.Ennemis;
 import com.pirateswarriors.model.Tresor;
 import com.pirateswarriors.model.Environnement;
 import com.pirateswarriors.model.map.BFS;
+import com.pirateswarriors.model.map.CarteModele;
 import com.pirateswarriors.model.map.Couple;
 import javafx.beans.property.*;
 
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 public class Ennemis {
 
     protected IntegerProperty pts_vie;
+    private int pvEntier;
     private DoubleProperty positionX;
     private DoubleProperty positionY;
     private String id;
@@ -20,14 +22,15 @@ public class Ennemis {
     private StringProperty dir;
     public static int compteur=0;
     private CarteModele carteModele;
-    ArrayList chemin;
-    com.pirateswarriors.model.map.BFS BFS ;
+    private ArrayList chemin;
+    private com.pirateswarriors.model.map.BFS BFS ;
 
     /**
      *Constructeur de la classe Mère "Ennemis"
      *avec tout ses attributs
      */
     public Ennemis(int vitesse, Environnement env, int pts_vie, int pts_score, int pts_pièces, int pts_attaque) {
+        this.pvEntier = pts_vie;
         this.pts_vie = new SimpleIntegerProperty(pts_vie);
         this.pts_score = pts_score;
         this.pts_pièces = pts_pièces;
@@ -62,6 +65,15 @@ public class Ennemis {
     /**
      *Getter et Setter
      */
+    public IntegerProperty pts_vieProperty() {
+        return this.pts_vie;
+    }
+    public int getPts_vie() {
+        return this.pts_vie.getValue();
+    }
+    public int getPvEntier() {
+        return this.pvEntier;
+    }
     public String getDir() {return dir.getValue();}
     public String getId() {return id;}
     public StringProperty getDirProperty(){return dir;}
