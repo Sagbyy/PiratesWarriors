@@ -41,7 +41,7 @@ public class AjoutDefense {
                     // Récupère l'image de la défense
                     imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/manBlue_gun.png"))));
                     // Nouvelle instance de la défense
-                    this.defense = new ManGunDefense(100, 500, 300, imageShip, paneCentral, env);
+                    this.defense = new ManGunDefense(100, 100, 300, imageShip, paneCentral, env);
                 }
                 case "defense2" -> {
                     imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/tank_blue.png"))));
@@ -53,15 +53,15 @@ public class AjoutDefense {
                 }
                 case "defense4" -> {
                     imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/cannon.png"))));
-                    this.defense = new CannonDefense(100, 500, 500,imageShip, paneCentral, env);
+                    this.defense = new CannonDefense(100, 400, 500,imageShip, paneCentral, env);
                 }
                 case "defense5" -> {
                     imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/soldierKnife.png"))));
-                    this.defense = new SoldierKnifeDefense(50, 500, 10000, imageShip, paneCentral, env);
+                    this.defense = new SoldierKnifeDefense(50, 300, 10000, imageShip, paneCentral, env);
                 }
                 case "defense6" -> {
                     imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/bomb.png"))));
-                    this.defense = new BombDefense(50, 500, 10000, imageShip, paneCentral, env);
+                    this.defense = new BombDefense(50, 700, 10000, imageShip, paneCentral, env);
                 }
                 default -> {
                     System.out.println("Erreur : defense n'existe pas");
