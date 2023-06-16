@@ -22,9 +22,6 @@ public class ControllerViewAcceuil {
     public void setStage(Stage stage){
         this.stage = stage;
     }
-
-
-
     @FXML
     private void afficherView2(ActionEvent event) {
         try {

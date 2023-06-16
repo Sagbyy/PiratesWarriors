@@ -1,7 +1,7 @@
 package com.pirateswarriors.model.defense;
 
 import com.pirateswarriors.model.Environnement;
-import com.pirateswarriors.model.ennemies.Ennemis;
+import com.pirateswarriors.model.Ennemis.Ennemis;
 import com.pirateswarriors.view.EnnemiVue;
 import javafx.animation.TranslateTransition;
 import javafx.beans.binding.Bindings;
@@ -167,7 +167,7 @@ public class DefenseActor {
         if (currentTime - lastExecutionTime >= this.delayMS) { // Vérifier si deux secondes se sont écoulées
             if (ifHasBullet) {
                 // Création de l'animation de déplacement de la balle
-                pane.getChildren().add(bullet);
+                //pane.getChildren().add(bullet);
                 TranslateTransition transition = new TranslateTransition(Duration.seconds(1), this.bullet);
                 transition.setDuration(Duration.seconds(0.5));
                 transition.setFromX(this.positionXProperty().getValue());

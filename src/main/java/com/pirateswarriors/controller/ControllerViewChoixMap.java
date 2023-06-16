@@ -28,6 +28,10 @@ public class ControllerViewChoixMap {
     private RadioButton buttonMap3;
     private static int map;
 
+    public static void setMap(int map) {
+        ControllerViewChoixMap.map = map;
+    }
+
     public void setStage(Stage stage){
         this.stage = stage;
     }
@@ -37,6 +41,7 @@ public class ControllerViewChoixMap {
     }
 
     private int choixMap(){
+        //attribut un numéro lorsque le bouton est selectionné
         int map = 0;
         if (buttonMap1.isSelected()){
             map = 1;

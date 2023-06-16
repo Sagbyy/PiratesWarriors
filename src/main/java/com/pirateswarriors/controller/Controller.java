@@ -1,15 +1,12 @@
 package com.pirateswarriors.controller;
 
 import com.pirateswarriors.model.Environnement;
-import com.pirateswarriors.model.ennemies.CarteModele;
 import com.pirateswarriors.model.defense.DefenseActor;
-import com.pirateswarriors.model.ennemies.Ennemis;
+import com.pirateswarriors.model.Ennemis.Ennemis;
 import com.pirateswarriors.model.PorteMonnaie;
 import com.pirateswarriors.model.Tresor;
-import com.pirateswarriors.model.ennemies.ObservateurEnnemis;
+import com.pirateswarriors.model.Ennemis.ObservateurEnnemis;
 import com.pirateswarriors.view.EnnemiVue;
-import com.pirateswarriors.model.ennemies.PackEnnemis.BarqueCanon;
-import com.pirateswarriors.model.ennemies.PackEnnemis.PirateFusil;
 import com.pirateswarriors.view.LoosePane;
 import com.pirateswarriors.view.PorteMonnaieVue;
 import com.pirateswarriors.view.TresorVue;
@@ -33,7 +30,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -57,20 +53,11 @@ public class Controller implements Initializable {
     private Button buttonAddDefense;
     private DoubleProperty mouseX;
     private DoubleProperty mouseY;
-
-    private Ennemis ennemis;
-    private Ennemis ennemis2;
-    private EnnemiVue personnageVue;
-    private EnnemiVue personnageVue2;
-    private Tresor tresor;
-    private TresorVue tresorVue;
     private Carte carte;
     private Timeline gameLoop;
     private int temps;
     private PorteMonnaie porteMonnaie;
-    private PorteMonnaieVue porteMonnaieVue;
     private int lcn;
-
     private Environnement jeu;
     @FXML
     private Label labelVieTresor;
@@ -86,20 +73,10 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-
-
-
-        this.tresor = new Tresor(2000);
-        this.tresorVue = new TresorVue(tresor);
-
         this.porteMonnaie = new PorteMonnaie();
-        this.porteMonnaieVue = new PorteMonnaieVue(porteMonnaie);
-
         creationMap();
-
         nbPieces.textProperty().bind(porteMonnaie.nbProperty().asString());
-        labelVieTresor.setText("vie: " + String.valueOf(tresor.getPv()));
+        labelVieTresor.setText("vie: " + String.valueOf(jeu.getTresor().getPv()));
 
         //this.jeu = new Environnement(carte, paneCentral, porteMonnaie);
         nbVagues.textProperty().bind(jeu.getNbVaguesProperty().asString());
@@ -133,25 +110,25 @@ public class Controller implements Initializable {
 
         KeyFrame kf = new KeyFrame(
             // on définit le FPS (nbre de frame par seconde)
-            Duration.seconds(0.017),
+            Duration.seconds(0.030),
             // on définit ce qui se passe à chaque frame
             // c'est un eventHandler d'ou le lambda
             (ev ->{
 
                 for (int i = 0; i < jeu.getEnnemisList().size(); i++) {
-                    if (tresor.estPasDetruit()){
+                    if (jeu.getTresor().estPasDetruit()){
                         // Infliger des dégâts au trésor
-                        if (ennemiProche(jeu.getEnnemisList().get(i))){
+                        if (jeu.ennemiProche(jeu.getEnnemisList().get(i))){
                             if ((temps%20)==0){
                                 System.out.println("temps:" + temps);
-                                jeu.getEnnemisList().get(i).attaque(this.tresor);
-                                labelVieTresor.setText("vie: " + String.valueOf(this.tresor.getPv()));
+                                jeu.getEnnemisList().get(i).attaque(jeu.getTresor());
+                                labelVieTresor.setText("vie: " + String.valueOf(jeu.getTresor().getPv()));
                             }
                         }
                     }
                 }
 
-                if (tresor.estPasDetruit()) {
+                if (jeu.getTresor().estPasDetruit()) {
                     jeu.untour();
                     temps++;
                 } else {
@@ -161,21 +138,6 @@ public class Controller implements Initializable {
             })
         );
         gameLoop.getKeyFrames().add(kf);
-    }
-
-    public boolean ennemiProche(Ennemis ennemis){
-        double distanceX = Math.abs(ennemis.getPositionX() - imgTresor.getX());
-        double distanceY = Math.abs(ennemis.getPositionY() - imgTresor.getY());
-
-        // Calcul de la distance entre l'ennemi et le trésor
-        double distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-        System.out.println("distance: "+ distance);
-        double maxDistance = 449;
-        if (distance <= maxDistance) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     public void creerMap(){
