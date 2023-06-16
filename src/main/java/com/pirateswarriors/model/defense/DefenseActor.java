@@ -37,9 +37,11 @@ public class DefenseActor {
     private int degatPv;
     private Environnement env;
     private ProgressBar progressHealth;
+    private int pvEntier;
 
     public DefenseActor(int pv, int prix, int degats, int degatPv, ImageView image, Pane pane, String pathSound, Boolean ifHasBullet, double porteeDegats, int delayMS, Environnement env) {
         this.env = env;
+        this.pvEntier = pv;
         this.degatPv = degatPv;
         this.delayMS = delayMS;
         this.porteeDegats = porteeDegats;
@@ -58,7 +60,7 @@ public class DefenseActor {
         this.progressHealth = new ProgressBar();
         this.progressHealth.setPrefWidth(50);
         this.getPvProperty().addListener((obs, old, nouv) -> {
-            this.progressHealth.setProgress((double) this.getPv() / 50);
+            this.progressHealth.setProgress((double) this.getPv() / this.pvEntier);
         });
 
 
@@ -167,7 +169,7 @@ public class DefenseActor {
         if (currentTime - lastExecutionTime >= this.delayMS) { // Vérifier si deux secondes se sont écoulées
             if (ifHasBullet) {
                 // Création de l'animation de déplacement de la balle
-                //pane.getChildren().add(bullet);
+                pane.getChildren().add(bullet);
                 TranslateTransition transition = new TranslateTransition(Duration.seconds(1), this.bullet);
                 transition.setDuration(Duration.seconds(0.5));
                 transition.setFromX(this.positionXProperty().getValue());
@@ -178,6 +180,9 @@ public class DefenseActor {
 
                 // Configuration de l'animation
                 transition.setOnFinished(event -> {
+                    this.enleverPv(this.degatPv);
+                    ennemi.enleverPv(this.degat);
+
                     pane.getChildren().remove(bullet);
 
                     if (ennemi.estMort()) {
@@ -193,8 +198,10 @@ public class DefenseActor {
             this.shootSound.stop();
             this.shootSound.play();
 
-            this.enleverPv(this.degatPv);
-            ennemi.enleverPv(this.degat);
+            if (!ifHasBullet) {
+                this.enleverPv(this.degatPv);
+                ennemi.enleverPv(this.degat);
+            }
 
             lastExecutionTime = currentTime; // Mettre à jour le dernier instant d'exécution
         }

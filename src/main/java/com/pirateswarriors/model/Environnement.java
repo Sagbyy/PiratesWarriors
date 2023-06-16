@@ -2,7 +2,7 @@ package com.pirateswarriors.model;
 
 import com.pirateswarriors.controller.ControllerViewChoixMap;
 import com.pirateswarriors.model.defense.DefenseActor;
-import com.pirateswarriors.model.Ennemis.CarteModele;
+import com.pirateswarriors.model.map.CarteModele;
 import com.pirateswarriors.model.Ennemis.Ennemis;
 import com.pirateswarriors.model.Ennemis.PackEnnemis.BarqueCanon;
 import com.pirateswarriors.model.Ennemis.PackEnnemis.PirateFusil;
@@ -153,16 +153,16 @@ public class Environnement {
         }
     }
 
-    public void sontMorts() {
-        for (int i = getEnnemisList().size() - 1; i >= 0; i--) {
-            Ennemis a = getEnnemisList().get(i);
-            if (a.estMort()) {
-                System.out.println("mort de : " + a.getId());
-                getEnnemisList().remove(i);
-                this.porteMonnaie.ajoutMonnaie(100);
+        public void sontMorts() {
+            for (int i = getEnnemisList().size() - 1; i >= 0; i--) {
+                Ennemis a = getEnnemisList().get(i);
+                if (a.estMort()) {
+                    getEnnemisList().remove(i);
+                    this.porteMonnaie.ajoutMonnaie(100);
+                }
             }
         }
-    }
+
 
 
     int nbenn, lop;

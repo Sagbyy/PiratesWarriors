@@ -129,7 +129,12 @@
             <ImageView>
                <Image url="@images/piece/coin.png" />
             </ImageView>
-            <Label fx:id="nbVagues" alignment="CENTER" prefHeight="128.0" prefWidth="166.0" textFill="WHITE">
+            <Label text="Vague" alignment="CENTER" prefHeight="128.0" prefWidth="166.0" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="nbVagues" alignment="BASELINE_LEFT" prefHeight="128.0" prefWidth="166.0" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>

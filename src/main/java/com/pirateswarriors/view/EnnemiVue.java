@@ -4,21 +4,45 @@ package com.pirateswarriors.view;
 import com.pirateswarriors.model.Ennemis.Ennemis;
 import com.pirateswarriors.model.Ennemis.PackEnnemis.*;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 public class EnnemiVue {
 
     private ImageView imageEnnemi;
     private Image image;
     private Ennemis ennemis;
+    private ProgressBar progressHealth;
 
     /**
      * Constructeur de la classe EnnemiVue
      */
     public EnnemiVue(Ennemis ennemi) {
         this.ennemis = ennemi;
+
+        // Progress Health
+        this.progressHealth = new ProgressBar();
+        this.progressHealth.setPrefWidth(50);
+        this.progressHealth.setStyle("-fx-accent: red;");
+        this.progressHealth.setProgress(1);
+
+        this.ennemis.pts_vieProperty().addListener((obs, old, nouv) -> {
+            this.progressHealth.setProgress((double) this.ennemis.getPts_vie() / this.ennemis.getPvEntier());
+        });
+
+        this.ennemis.positionXProperty().addListener((obs, old, nouv) -> {
+            this.progressHealth.setLayoutX(this.getMiddlePostionX() - 20);
+            this.progressHealth.setLayoutY(this.getMiddlePostionY() - 70);
+        });
+
+        this.ennemis.positionYProperty().addListener((obs, old, nouv) -> {
+            this.progressHealth.setLayoutX(this.getMiddlePostionX() - 20);
+            this.progressHealth.setLayoutY(this.getMiddlePostionY() - 70);
+        });
 
         /**
          * Détermine l'image à associer à l'ennemi selon son type
@@ -44,12 +68,16 @@ public class EnnemiVue {
 
         this.imageEnnemi = new ImageView(image);
         this.imageEnnemi.setId(ennemi.getId()); // Attribut l'iD de l'ennemi à son image
+        this.progressHealth.setId(ennemi.getId());
     }
 
 
     /**
      *Getter et Setter
      */
+    public ProgressBar getProgressHealth() {
+        return this.progressHealth;
+    }
     public ImageView getImageBateau() {
         return imageEnnemi;
     }

@@ -40,7 +40,6 @@ public class ControleurAjoutDefense implements EventHandler<MouseEvent> {
 
                 this.env.ajouterDefense(defenseActor);
             } else {
-                System.out.println("Test");
                 this.mediaPlayer.stop();
                 this.mediaPlayer.play();
             }
