@@ -38,10 +38,12 @@ public class Environnement {
     private String map;
     private Tresor tresor;
     private TresorVue tresorVue;
+    private boolean lockDefense;
 
     public Environnement(Carte carte, Pane paneCentral, PorteMonnaie porteMonnaie) {
+        this.lockDefense = false;
         this.porteMonnaie = porteMonnaie;
-        this.porteMonnaie.setNb(9000);
+        this.porteMonnaie.setNb(7500);
         this.paneCentral = paneCentral;
         this.tresor = new Tresor(2000);
         this.tresorVue = new TresorVue(tresor);
@@ -206,6 +208,17 @@ public class Environnement {
 
 
     }
+
+    // Getter & Setter
+
+    public boolean getLockDefense() {
+        return this.lockDefense;
+    }
+
+    public void setLockDefense(boolean b) {
+        this.lockDefense = b;
+    }
+
     public Tresor getTresor(){
         return this.tresor;
     }

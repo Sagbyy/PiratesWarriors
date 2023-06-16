@@ -41,33 +41,33 @@ public class AjoutDefense {
                     // Récupère l'image de la défense
                     imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/manBlue_gun.png"))));
                     // Nouvelle instance de la défense
-                    this.defense = new ManGunDefense(50, 15, 10000, imageShip, paneCentral, env);
+                    this.defense = new ManGunDefense(100, 500, 300, imageShip, paneCentral, env);
                 }
                 case "defense2" -> {
                     imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/tank_blue.png"))));
-                    this.defense = new TankDefense(50, 15, 10000, imageShip, paneCentral, env);
+                    this.defense = new TankDefense(150, 500, 800, imageShip, paneCentral, env);
                 }
                 case "defense3" -> {
                     imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/ship (3).png"))));
-                    this.defense = new ShipDefense(50, 15, 10000, imageShip, paneCentral, env);
+                    this.defense = new ShipDefense(200, 500, 900, imageShip, paneCentral, env);
                 }
                 case "defense4" -> {
                     imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/cannon.png"))));
-                    this.defense = new CannonDefense(50, 15, 500,imageShip, paneCentral, env);
+                    this.defense = new CannonDefense(100, 500, 500,imageShip, paneCentral, env);
                 }
                 case "defense5" -> {
                     imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/soldierKnife.png"))));
-                    this.defense = new SoldierKnifeDefense(50, 50, 10000, imageShip, paneCentral, env);
+                    this.defense = new SoldierKnifeDefense(50, 500, 10000, imageShip, paneCentral, env);
                 }
                 case "defense6" -> {
                     imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/bomb.png"))));
-                    this.defense = new BombDefense(50, 15, 10000, imageShip, paneCentral, env);
+                    this.defense = new BombDefense(1, 500, 10000, imageShip, paneCentral, env);
                 }
                 default -> {
                     System.out.println("Erreur : defense n'existe pas");
                 }
             }
-            this.porteMonnaie.enleverMonnaie(500);
+            this.porteMonnaie.enleverMonnaie(this.defense.getPrix());
 
             this.defense.positionYProperty().addListener((obs, old, nouv) -> {
                 if(!env.getCarte().isRedZone(this.defense.getPositionX(), this.defense.getPositionY())) {
@@ -86,7 +86,7 @@ public class AjoutDefense {
     }
 
     public void bindImage(DoubleProperty mouseX, DoubleProperty mouseY) {
-        if (!porteMonnaie.argentVide()) {
+        if (porteMonnaie.getNb() >= this.defense.getPrix()) {
             // Bindings des positions de la défense avec celle de la souris
             defense.positionXProperty().bind(mouseX);
             defense.positionYProperty().bind(mouseY);

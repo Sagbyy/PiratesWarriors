@@ -159,7 +159,10 @@ public class Controller implements Initializable {
 
     @FXML
     public void ajoutDefense(ActionEvent event) {
-        if (!porteMonnaie.argentVide()) {
+        if (!jeu.getLockDefense()) {
+            // Bloque la sélection de defense
+            jeu.setLockDefense(true);
+
             if (controleurAjoutDefense != null) {
                 paneCentral.removeEventHandler(MouseEvent.MOUSE_CLICKED, controleurAjoutDefense);
             }

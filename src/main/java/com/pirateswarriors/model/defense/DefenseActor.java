@@ -63,8 +63,6 @@ public class DefenseActor {
             this.progressHealth.setProgress((double) this.getPv() / this.pvEntier);
         });
 
-
-
         this.positionXProperty().addListener((obs, old, nouv) -> {
             this.progressHealth.setLayoutX(this.getMiddlePostionX() - 20);
             this.progressHealth.setLayoutY(this.getMiddlePostionY() - 70);
@@ -90,6 +88,10 @@ public class DefenseActor {
     }
 
     // Getter & Setter
+
+    public int getPrix() {
+        return this.prix;
+    }
 
     public boolean ifHasBullet() {
         return this.ifHasBullet;
@@ -157,7 +159,7 @@ public class DefenseActor {
     public void eachTimeDoSomething() {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastExecutionTimeForPv >= 5000) { // Vérifier si deux secondes se sont écoulées
-            this.enleverPv(5);
+            this.enleverPv(this.degatPv);
             lastExecutionTimeForPv = currentTime; // Mettre à jour le dernier instant d'exécution
         }
     }
