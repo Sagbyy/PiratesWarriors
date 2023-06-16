@@ -24,7 +24,7 @@ public class ControllerViewAcceuil {
         this.stage = stage;
     }
     @FXML
-    private void afficherView2(ActionEvent event) {
+    public void afficherView2(ActionEvent event) {
         try {
             fxmlLoader = new FXMLLoader(Main.class.getResource("viewChoixMap.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
