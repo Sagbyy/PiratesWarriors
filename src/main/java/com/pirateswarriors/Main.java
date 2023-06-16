@@ -27,7 +27,6 @@ public class Main extends Application {
             Media mediaMusic = new Media(getClass().getResource("sounds/PiratesWarriorsMusic.mp3").toString());
             // Creation du lecteur media
             mediaPlayer = new MediaPlayer(mediaMusic);
-
             // Lecture du media au lancement
             mediaPlayer.setVolume(0.44); //  disregarding the volume I set
             mediaPlayer.play();
