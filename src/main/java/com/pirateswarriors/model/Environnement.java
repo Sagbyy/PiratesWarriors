@@ -60,9 +60,9 @@ public class Environnement {
     public boolean ennemiProche(Ennemis ennemis){
         double distanceX = Math.abs(ennemis.getPositionX() - tresorVue.getImgTresor().getX());
         double distanceY = Math.abs(ennemis.getPositionY() - tresorVue.getImgTresor().getY());
-
         // Calcul de la distance entre l'ennemi et le trésor
         double distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+        //definit la position du trésor -> lorsque distance entre ennemi est trésor est inferieur a cette valeur l'ennemi attaque
         double maxDistance = 449;
         if (distance <= maxDistance) {
             return true;
@@ -72,7 +72,9 @@ public class Environnement {
     }
 
     public String SelectionMap(){
+        //récupère le numéro du bouton cliqué
         int carte = ControllerViewChoixMap.getMap();
+        //attribution des noms des fichiers csv des maps
         if (carte == 1){
             map = "map1.csv";
         }
@@ -85,54 +87,6 @@ public class Environnement {
         return map;
     }
 
-    public Tresor getTresor(){
-        return this.tresor;
-    }
-    public PorteMonnaie getPorteMonnaie() {
-        return this.porteMonnaie;
-    }
-    public Pane getPaneCentral() {
-        return this.paneCentral;
-    }
-
-    public ObservableList<Ennemis> getEnnemisList() {
-        return ennemisList;
-    }
-
-    public void ajouter(Ennemis a) {
-        this.ennemisList.add(a);
-    }
-
-    public void ajouterDefense(DefenseActor defense) {
-        this.defenseList.add(defense);
-    }
-    public IntegerProperty getNbVaguesProperty(){
-        return this.nbVague;
-    }
-
-    public void removeDefense(DefenseActor defense) {
-        this.defenseList.remove(defense);
-    }
-
-    public ArrayList<DefenseActor> getDefenseList() {
-        return this.defenseList;
-    }
-
-    public String getMap(){
-        return this.map;
-    }
-
-    public int getNbEnnemis() {
-        return nbEnnemis;
-    }
-
-    public int getNbVague() {
-        return nbVague.get();
-    }
-
-    public void setNbVague(int nbVague) {
-        this.nbVague.set(nbVague);
-    }
     boolean go = true;
     int time = 0;
     public void untour() {
@@ -189,70 +143,117 @@ public class Environnement {
 
     }
 
-
-
     public CarteModele getCarte() {
         return carte;
     }
 
     public void tousAvancent() {
-            for (int i = 0; i < getEnnemisList().size(); i++) {
-                getEnnemisList().get(i).avance();
+        for (int i = 0; i < getEnnemisList().size(); i++) {
+            getEnnemisList().get(i).avance();
+        }
+    }
+
+    public void sontMorts() {
+        for (int i = getEnnemisList().size() - 1; i >= 0; i--) {
+            Ennemis a = getEnnemisList().get(i);
+            if (a.estMort()) {
+                System.out.println("mort de : " + a.getId());
+                getEnnemisList().remove(i);
+                this.porteMonnaie.ajoutMonnaie(100);
             }
         }
+    }
 
-        public void sontMorts() {
-            for (int i = getEnnemisList().size() - 1; i >= 0; i--) {
-                Ennemis a = getEnnemisList().get(i);
-                if (a.estMort()) {
-                    System.out.println("mort de : " + a.getId());
-                    getEnnemisList().remove(i);
-                    this.porteMonnaie.ajoutMonnaie(100);
+
+    int nbenn, lop;
+    int vag = 1;
+
+    public void vague() {
+        if (!(nbenn == this.nbEnnemis)) {
+            if (lop % 75 == 0) {
+                int rand = (int) (Math.random() * vag) + 1;
+                if (rand == 1) {
+                    getEnnemisList().add(new PirateFusil(this));
                 }
-            }
-        }
-
-
-        int nbenn, lop;
-        int vag = 1;
-
-        public void vague() {
-            if (!(nbenn == this.nbEnnemis)) {
-                if (lop % 75 == 0) {
-                    int rand = (int) (Math.random() * vag) + 1;
-                    if (rand == 1) {
-                        getEnnemisList().add(new PirateFusil(this));
-                    }
-                    else if (rand == 2) {
-                        getEnnemisList().add(new EmbarcationFortune(this));
-                    }
-                    else if (rand == 3) {
-                        getEnnemisList().add(new BarqueCanon(this));
-                    }
-                    else if (rand == 4) {
-                        getEnnemisList().add(new GrosPirate(this));
-                    }
-                    else if (rand == 5) {
-                        getEnnemisList().add(new Voleur(this));
-                    }
-                    else if (rand == 6) {
-                        if(getNbVague()%10==0){
-                            getEnnemisList().add(new GrosNavire(this));
-                        }
-
-                    }
-                    nbenn++;
+                else if (rand == 2) {
+                    getEnnemisList().add(new EmbarcationFortune(this));
                 }
-                go = false;
-            } else {
-                go = true;
-                nbenn = 0;
+                else if (rand == 3) {
+                    getEnnemisList().add(new BarqueCanon(this));
+                }
+                else if (rand == 4) {
+                    getEnnemisList().add(new GrosPirate(this));
+                }
+                else if (rand == 5) {
+                    getEnnemisList().add(new Voleur(this));
+                }
+                else if (rand == 6) {
+                    if(getNbVague()%10==0){
+                        getEnnemisList().add(new GrosNavire(this));
+                    }
+
+                }
+                nbenn++;
             }
-            lop = lop + (int) (Math.random() * 3) + 1;
-
-
-
+            go = false;
+        } else {
+            go = true;
+            nbenn = 0;
         }
+        lop = lop + (int) (Math.random() * 3) + 1;
+
+
+
+    }
+    public Tresor getTresor(){
+        return this.tresor;
+    }
+    public PorteMonnaie getPorteMonnaie() {
+        return this.porteMonnaie;
+    }
+    public Pane getPaneCentral() {
+        return this.paneCentral;
+    }
+
+    public ObservableList<Ennemis> getEnnemisList() {
+        return ennemisList;
+    }
+
+    public void ajouter(Ennemis a) {
+        this.ennemisList.add(a);
+    }
+
+    public void ajouterDefense(DefenseActor defense) {
+        this.defenseList.add(defense);
+    }
+    public IntegerProperty getNbVaguesProperty(){
+        return this.nbVague;
+    }
+
+    public void removeDefense(DefenseActor defense) {
+        this.defenseList.remove(defense);
+    }
+
+    public ArrayList<DefenseActor> getDefenseList() {
+        return this.defenseList;
+    }
+
+    public String getMap(){
+        return this.map;
+    }
+
+    public int getNbEnnemis() {
+        return nbEnnemis;
+    }
+
+    public int getNbVague() {
+        return nbVague.get();
+    }
+
+    public void setNbVague(int nbVague) {
+        this.nbVague.set(nbVague);
+    }
+
     }
 
 

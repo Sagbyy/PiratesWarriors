@@ -53,18 +53,11 @@ public class Controller implements Initializable {
     private Button buttonAddDefense;
     private DoubleProperty mouseX;
     private DoubleProperty mouseY;
-
-    private Ennemis ennemis;
-    private Ennemis ennemis2;
-    private EnnemiVue personnageVue;
-    private EnnemiVue personnageVue2;
     private Carte carte;
     private Timeline gameLoop;
     private int temps;
     private PorteMonnaie porteMonnaie;
-    private PorteMonnaieVue porteMonnaieVue;
     private int lcn;
-
     private Environnement jeu;
     @FXML
     private Label labelVieTresor;
@@ -81,7 +74,6 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.porteMonnaie = new PorteMonnaie();
-        this.porteMonnaieVue = new PorteMonnaieVue(porteMonnaie);
         creationMap();
         nbPieces.textProperty().bind(porteMonnaie.nbProperty().asString());
         labelVieTresor.setText("vie: " + String.valueOf(jeu.getTresor().getPv()));
