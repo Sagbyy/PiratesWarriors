@@ -30,6 +30,7 @@ public class PorteMonnaie {
     }
 
     public boolean argentVide(){
+        //lorsque argent en dessous du prix des défenses
         if (nb.get() < 499){
             return true;
         }

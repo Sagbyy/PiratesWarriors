@@ -20,21 +20,33 @@
                   <Image url="@images/imgChoixMap2%20(1).jpg" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" layoutX="129.0" layoutY="145.0" prefHeight="41.0" prefWidth="207.0" text="Choisissez vorte Map">
+            <Label alignment="CENTER" layoutX="103.0" layoutY="138.0" prefHeight="62.0" prefWidth="261.0" text="𝕮𝖍𝖔𝖎𝖘𝖎𝖘𝖘𝖊𝖟 𝖛𝖔𝖙𝖗𝖊 𝖒𝖆𝖕" textFill="#030303">
                <font>
-                  <Font name="System Bold" size="17.0" />
+                  <Font name="System Bold" size="25.0" />
                </font>
             </Label>
             <VBox alignment="CENTER" layoutX="111.0" layoutY="186.0" prefHeight="153.0" prefWidth="149.0" spacing="18.0">
                <children>
-               <RadioButton fx:id="buttonMap1" mnemonicParsing="false" text="Map1">
+               <RadioButton fx:id="buttonMap1" mnemonicParsing="false" text="𝕸𝖆𝖕 1">
                   <toggleGroup>
                      <ToggleGroup fx:id="gestionMaps" />
                   </toggleGroup>
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
                </RadioButton>
-                  <RadioButton fx:id="buttonMap2" mnemonicParsing="false" text="Map2" toggleGroup="$gestionMaps" />
-                  <RadioButton fx:id="buttonMap3" mnemonicParsing="false" text="Map3" toggleGroup="$gestionMaps" />
-                  <Button mnemonicParsing="false" onAction="#jouer" prefHeight="22.0" prefWidth="90.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 20;" text="jouer" />
+                  <RadioButton fx:id="buttonMap2" mnemonicParsing="false" text="𝕸𝖆𝖕 2" toggleGroup="$gestionMaps">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></RadioButton>
+                  <RadioButton fx:id="buttonMap3" mnemonicParsing="false" text="𝕸𝖆𝖕 3" toggleGroup="$gestionMaps">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></RadioButton>
+                  <Button mnemonicParsing="false" onAction="#jouer" prefHeight="32.0" prefWidth="90.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 20;" text="𝒫𝓁𝒶𝓎">
+                     <font>
+                        <Font name="System Bold" size="25.0" />
+                     </font></Button>
                </children>
             </VBox>
          </children>

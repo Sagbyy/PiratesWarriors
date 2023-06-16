@@ -23,7 +23,6 @@ public class LoosePane {
 
         this.quitButton.setOnAction(e -> {
             Platform.exit();
-            System.out.println("click");
         });
     }
 
