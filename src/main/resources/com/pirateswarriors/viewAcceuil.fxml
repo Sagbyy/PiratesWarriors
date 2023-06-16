@@ -13,20 +13,25 @@
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="407.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="413.0" fitWidth="714.0" layoutX="-106.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@images/imgAcceuil.jpg" />
+                  <Image url="@images/imgAcceuil3.jpg" />
                </image>
             </ImageView>
-            <Button fx:id="buttonStart" alignment="CENTER" contentDisplay="CENTER" layoutX="464.0" layoutY="297.0" mnemonicParsing="false" onAction="#afficherView2" prefHeight="46.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: grey; -fx-border-radius: 20;" text="Play" textFill="#b5b4b4">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="12.0" layoutY="14.0" prefHeight="0.0" prefWidth="600.0" text="𝕻𝖎𝖗𝖆𝖙𝖊𝖘 𝖂𝖆𝖗𝖗𝖎𝖔𝖗𝖘" textFill="#435c65">
+               <font>
+                  <Font name="KacstPen" size="25.0" />
+               </font>
+            </Label>
+            <Button fx:id="buttonStart" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="340.0" mnemonicParsing="false" onAction="#afficherView2" prefHeight="46.0" prefWidth="115.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 20;" text="Play" textFill="#b5b4b4">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
             <HBox prefHeight="0.0" prefWidth="600.0" />
-            <Button layoutY="342.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="75.0" style="-fx-background-color: black;">
+            <Button layoutX="136.0" layoutY="349.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="75.0" style="-fx-background-color: transparent;">
                <graphic>
-                  <ImageView fitHeight="21.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="35.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/Buttons/exit.png" />
                      </image>
@@ -36,11 +41,4 @@
          </children>
       </Pane>
    </center>
-   <top>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="0.0" prefWidth="600.0" text="Pirates Warriors" textFill="WHITE" BorderPane.alignment="CENTER">
-         <font>
-            <Font name="System Bold" size="25.0" />
-         </font>
-      </Label>
-   </top>
 </BorderPane>

@@ -120,8 +120,8 @@ public class Controller implements Initializable {
                         // Infliger des dégâts au trésor
                         if (jeu.ennemiProche(jeu.getEnnemisList().get(i))){
                             if ((temps%20)==0){
-                                jeu.getEnnemisList().get(i).attaque(this.tresor);
-                                labelVieTresor.setText("vie: " + String.valueOf(this.tresor.getPv()));
+                                jeu.getEnnemisList().get(i).attaque(jeu.getTresor());
+                                labelVieTresor.setText("vie: " + String.valueOf(jeu.getTresor().getPv()));
                             }
                         }
                     }
