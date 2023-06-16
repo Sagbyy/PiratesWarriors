@@ -43,9 +43,9 @@ public class Environnement {
     public Environnement(Carte carte, Pane paneCentral, PorteMonnaie porteMonnaie) {
         this.lockDefense = false;
         this.porteMonnaie = porteMonnaie;
-        this.porteMonnaie.setNb(7500);
+        this.porteMonnaie.setNb(4500);
         this.paneCentral = paneCentral;
-        this.tresor = new Tresor(2000);
+        this.tresor = new Tresor(3000);
         this.tresorVue = new TresorVue(tresor);
         this.nbVague = new SimpleIntegerProperty(0);
         this.nbScore = new SimpleIntegerProperty(0);
@@ -64,7 +64,6 @@ public class Environnement {
         double distanceY = Math.abs(ennemis.getPositionY() - tresorVue.getImgTresor().getY());
         // Calcul de la distance entre l'ennemi et le trésor
         double distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-        System.out.println(distance);
         //definit la position du trésor -> lorsque distance entre ennemi est trésor est inferieur a cette valeur l'ennemi attaque
         double maxDistance = 449;
         if (distance <= maxDistance) {

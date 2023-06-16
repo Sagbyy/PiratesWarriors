@@ -1,6 +1,5 @@
 package com.pirateswarriors.view.map;
 
-import com.pirateswarriors.controller.ControllerViewChoixMap;
 import javafx.scene.layout.TilePane;
 
 public class Carte_1 extends Carte {
