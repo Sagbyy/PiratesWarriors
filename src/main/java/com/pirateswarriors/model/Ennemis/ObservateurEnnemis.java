@@ -27,7 +27,7 @@ public class ObservateurEnnemis implements ListChangeListener<Ennemis> {
      */
     private void ajoutEnnemis(Ennemis ennemi) {
         EnnemiVue v = new EnnemiVue(ennemi);
-        this.panneauJeu.getChildren().add(v.getImageBateau());
+        this.panneauJeu.getChildren().addAll(v.getImageBateau(), v.getProgressHealth());
         v.getImageBateau().xProperty().bind(ennemi.positionXProperty());
         v.getImageBateau().yProperty().bind(ennemi.positionYProperty());
         ennemi.getDirProperty().addListener(new PositionListener(v));

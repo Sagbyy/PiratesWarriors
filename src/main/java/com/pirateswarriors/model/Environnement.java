@@ -190,7 +190,6 @@ public class Environnement {
             for (int i = getEnnemisList().size() - 1; i >= 0; i--) {
                 Ennemis a = getEnnemisList().get(i);
                 if (a.estMort()) {
-                    System.out.println("mort de : " + a.getId());
                     getEnnemisList().remove(i);
                     this.porteMonnaie.ajoutMonnaie(100);
                 }
