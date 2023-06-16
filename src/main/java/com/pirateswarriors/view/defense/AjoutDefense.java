@@ -61,7 +61,7 @@ public class AjoutDefense {
                 }
                 case "defense6" -> {
                     imageShip.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/images/defense/bomb.png"))));
-                    this.defense = new BombDefense(1, 500, 10000, imageShip, paneCentral, env);
+                    this.defense = new BombDefense(50, 500, 10000, imageShip, paneCentral, env);
                 }
                 default -> {
                     System.out.println("Erreur : defense n'existe pas");

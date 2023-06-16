@@ -1,19 +1,20 @@
 package com.pirateswarriors.view;
 
 import com.pirateswarriors.controller.ControllerViewAcceuil;
-import com.pirateswarriors.controller.ControllerViewChoixMap;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-
-import java.util.Stack;
 
 public class LoosePane {
     private StackPane loosePane;
     private ControllerViewAcceuil controllerViewAcceuil;
     private Button quitButton;
     private Button restart;
+    private HBox hBox;
+    private Insets marge;
 
     public LoosePane() {
         this.loosePane = new StackPane();
@@ -21,12 +22,21 @@ public class LoosePane {
         this.loosePane.setPrefWidth(1920);
         this.loosePane.getStyleClass().add("loosePane");
 
+        this.marge = new Insets(10);
+
+        this.hBox = new HBox();
+        this.hBox.setAlignment(Pos.CENTER);
+        this.hBox.setSpacing(15);
+
         this.quitButton = new Button("Quitter");
         this.quitButton.getStyleClass().add("button");
-        this.loosePane.getChildren().add(this.quitButton);
-        this.restart = new Button("restart");
+        this.hBox.getChildren().add(this.quitButton);
+
+        this.restart = new Button("Rejouer");
         this.restart.getStyleClass().add("button");
-        this.loosePane.getChildren().add(this.restart);
+        this.hBox.getChildren().add(this.restart);
+
+        this.loosePane.getChildren().add(this.hBox);
 
         this.controllerViewAcceuil = new ControllerViewAcceuil();
 

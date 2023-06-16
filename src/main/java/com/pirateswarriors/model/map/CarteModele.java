@@ -5,6 +5,7 @@ import com.pirateswarriors.model.map.Couple;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class CarteModele {
@@ -87,32 +88,28 @@ public class CarteModele {
      *   - Parcours le CSV et en fait un tableau à double dimension
      */
     public void genererMap(String fileCsvName) {
-        try {
-            // Overture du fichier CSV
-            BufferedReader file = new BufferedReader(new FileReader("assets/MapCSV/" + fileCsvName));
+        // Overture du fichier CSV
+        BufferedReader file = new BufferedReader(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/MapCSV/" + fileCsvName))));
 
-            // Boucle pour parcourir chaque ligne
-            Scanner scanner = new Scanner(file);
-            int i =0 ;
-            int[][] tabValues = new int[COLUMNS_MAP][ROWS_MAP];
-            while (scanner.hasNextLine()) {
+        // Boucle pour parcourir chaque ligne
+        Scanner scanner = new Scanner(file);
+        int i =0 ;
+        int[][] tabValues = new int[COLUMNS_MAP][ROWS_MAP];
+        while (scanner.hasNextLine()) {
 
-                // Récuperation de la ligne
-                String line = scanner.nextLine();
+            // Récuperation de la ligne
+            String line = scanner.nextLine();
 
-                // Transforme la ligne en tableau
-                String[] values = line.split(",");
+            // Transforme la ligne en tableau
+            String[] values = line.split(",");
 
-                for(int j = 0; j < values.length; j++){
-                    tabValues[i][j] = Integer.parseInt(values[j]);
-                }
-                i++;
+            for(int j = 0; j < values.length; j++){
+                tabValues[i][j] = Integer.parseInt(values[j]);
             }
-            this.tabCarte = tabValues;
-            // Ferme le scanner
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Le fichier n'a pas été trouvée");
+            i++;
         }
+        this.tabCarte = tabValues;
+        // Ferme le scanner
+        scanner.close();
     }
 }
