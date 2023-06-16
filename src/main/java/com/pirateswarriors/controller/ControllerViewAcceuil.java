@@ -1,6 +1,7 @@
 package com.pirateswarriors.controller;
 
 import com.pirateswarriors.Main;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,7 +24,7 @@ public class ControllerViewAcceuil {
         this.stage = stage;
     }
     @FXML
-    private void afficherView2(ActionEvent event) {
+    public void afficherView2(ActionEvent event) {
         try {
             fxmlLoader = new FXMLLoader(Main.class.getResource("viewChoixMap.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
@@ -34,5 +35,10 @@ public class ControllerViewAcceuil {
             e.printStackTrace();
         }
 
+    }
+
+    @FXML
+    private void sortieJeu(ActionEvent event){
+        Platform.exit();
     }
 }
