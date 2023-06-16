@@ -29,7 +29,7 @@
                </font>
             </Button>
             <HBox prefHeight="0.0" prefWidth="600.0" />
-            <Button layoutX="136.0" layoutY="349.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="75.0" style="-fx-background-color: transparent;">
+            <Button fx:id="buttonExit" layoutX="136.0" layoutY="349.0" mnemonicParsing="false" onAction="#sortieJeu"  prefHeight="19.0" prefWidth="75.0" style="-fx-background-color: transparent;">
                <graphic>
                   <ImageView fitHeight="35.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>

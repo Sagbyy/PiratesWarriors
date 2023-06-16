@@ -1,6 +1,7 @@
 package com.pirateswarriors.controller;
 
 import com.pirateswarriors.Main;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,5 +35,10 @@ public class ControllerViewAcceuil {
             e.printStackTrace();
         }
 
+    }
+
+    @FXML
+    private void sortieJeu(ActionEvent event){
+        Platform.exit();
     }
 }
