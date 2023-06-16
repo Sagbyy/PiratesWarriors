@@ -8,6 +8,6 @@ import javafx.scene.layout.Pane;
 public class TankDefense extends DefenseActor {
     private String pathSound;
     public TankDefense(int pv, int prix, int degats, ImageView image, Pane pane, Environnement env) {
-        super(pv, prix, degats, 10, image, pane, "/com/pirateswarriors/sounds/shoot/ShootShip.mp3", true, 250, 5000, env);
+        super(pv, prix, degats, 15, image, pane, "/com/pirateswarriors/sounds/shoot/ShootShip.mp3", true, 300, 5000, env);
     }
 }

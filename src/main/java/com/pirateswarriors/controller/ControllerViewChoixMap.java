@@ -62,7 +62,7 @@ public class ControllerViewChoixMap {
             Scene scene = new Scene(fxmlLoader.load());
             stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             stage.setScene(scene);
-
+            stage.setFullScreen(true);
             stage.show();
 
         } catch (IOException e) {

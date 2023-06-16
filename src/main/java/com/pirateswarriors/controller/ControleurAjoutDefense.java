@@ -36,9 +36,10 @@ public class ControleurAjoutDefense implements EventHandler<MouseEvent> {
                 this.defenseActor.positionXProperty().unbind();
                 this.defenseActor.positionYProperty().unbind();
 
-                //paneCentral.getChildren().add(new Circle(this.defenseActor.getPositionX(), this.defenseActor.getPositionY(), 150, Color.RED));
-
                 this.env.ajouterDefense(defenseActor);
+
+                // Débloque la selection
+                this.env.setLockDefense(false);
             } else {
                 this.mediaPlayer.stop();
                 this.mediaPlayer.play();

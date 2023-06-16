@@ -8,10 +8,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -39,7 +36,7 @@ public abstract class Carte {
 
         try {
             // Overture du fichier CSV
-            BufferedReader file = new BufferedReader(new FileReader("assets/MapCSV/" + fileCsvName));
+            BufferedReader file = new BufferedReader(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream("/com/pirateswarriors/MapCSV/" + fileCsvName))));
 
             // Récuperation de l'image tileset
             Image tileSet = new Image(Objects.requireNonNull(getClass().getResource("tiles_sheet@2.png")).openStream());
