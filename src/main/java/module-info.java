@@ -1,4 +1,4 @@
-module com.pirateswarriors.pirateswarriors {
+module fr.montreuil.iut.pirateswarriors {
     requires javafx.graphics;
     requires javafx.fxml;
     requires javafx.controls;
@@ -7,11 +7,11 @@ module com.pirateswarriors.pirateswarriors {
     requires junit;
 
 
-    opens com.pirateswarriors to javafx.fxml;
-    exports com.pirateswarriors;
-    exports com.pirateswarriors.controller;
-    opens com.pirateswarriors.controller to javafx.fxml;
+    opens fr.montreuil.iut.pirateswarriors to javafx.fxml;
+    exports fr.montreuil.iut.pirateswarriors;
+    exports fr.montreuil.iut.pirateswarriors.controller;
+    opens fr.montreuil.iut.pirateswarriors.controller to javafx.fxml;
 
-    exports com.pirateswarriors.model;
-    opens com.pirateswarriors.model to javafx.fxml;
+    exports fr.montreuil.iut.pirateswarriors.model;
+    opens fr.montreuil.iut.pirateswarriors.model to javafx.fxml;
 }
