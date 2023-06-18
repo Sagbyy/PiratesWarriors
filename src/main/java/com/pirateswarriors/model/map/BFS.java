@@ -64,4 +64,21 @@ public class BFS {
         Collections.reverse(chemin);
         return chemin;
     }
+
+    /**
+     * Getter
+     * @return ArrayList<Couple>
+     */
+    public ArrayList<Couple> getParcours() {
+        return parcours;
+    }
+
+    /**
+     * Getter
+     * @return Map<Couple, Couple>
+     */
+    public Map<Couple, Couple> getPredecesseurs() {
+        return predecesseurs;
+    }
+
 }

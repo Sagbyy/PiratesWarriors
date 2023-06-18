@@ -43,7 +43,7 @@ public class Environnement {
     public Environnement(Carte carte, Pane paneCentral, PorteMonnaie porteMonnaie) {
         this.lockDefense = false;
         this.porteMonnaie = porteMonnaie;
-        this.porteMonnaie.setNb(4500);
+        this.porteMonnaie.setNb(7000);
         this.paneCentral = paneCentral;
         this.tresor = new Tresor(3000);
         this.tresorVue = new TresorVue(tresor);
@@ -160,7 +160,7 @@ public class Environnement {
                 Ennemis a = getEnnemisList().get(i);
                 if (a.estMort()) {
                     getEnnemisList().remove(i);
-                    this.porteMonnaie.ajoutMonnaie(100);
+                    this.porteMonnaie.ajoutMonnaie(250);
                 }
             }
         }
