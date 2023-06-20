@@ -84,6 +84,19 @@ Profitez de l'excitation et de l'aventure jusqu'à la dernière minute et montre
 
 Pirates Warriors est accompagné d'une musique d'ambiance captivante qui vous plonge dans l'atmosphère de l'aventure. De plus, chaque défense dispose de sons de tirs appropriés pour une expérience de jeu immersive. Les effets sonores ajoutent une dimension supplémentaire à l'expérience de jeu, vous permettant de vous sentir vraiment dans la peau d'un défenseur courageux.
 
+Vous pouvez ajouter une section supplémentaire pour mentionner que le jeu a été développé en utilisant Java et JavaFX. Voici comment vous pouvez l'inclure :
+
+## Technologies utilisées
+
+Pirates Warriors a été développé en utilisant les technologies suivantes :
+
+- Langage de programmation : Java
+- Framework : JavaFX
+
+Java a été utilisé pour la logique du jeu, la gestion des ennemis, des défenses et des interactions avec l'utilisateur. JavaFX a été utilisé pour la création de l'interface utilisateur graphique, y compris les différentes pages du jeu et les éléments visuels tels que les images et les boutons.
+
+N'hésitez pas à personnaliser cette section en ajoutant d'autres détails pertinents sur la manière dont Java et JavaFX ont été utilisés dans votre jeu.
+
 ## Installation
 
 Pour exécuter le jeu de défense des trésors, suivez les étapes ci-dessous :
